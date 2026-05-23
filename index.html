@@ -82,6 +82,52 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
   .cc p,.sd,.ps{color:#333!important;}
   .cc h3{color:#0a3622!important;}
 }
+
+@media (max-width: 768px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--vb);
+    padding: 0;
+    overflow: visible;
+  }
+  .sidebar-mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 1rem;
+    cursor: pointer;
+    color: var(--vw);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .sidebar-mobile-toggle .arrow { transition: transform 0.2s; }
+  .sidebar-mobile-toggle.open .arrow { transform: rotate(180deg); }
+  .sidebar-nav { display: none; }
+  .sidebar-nav.open { display: block; }
+  .slbl { margin-top: 0.25rem; }
+  .main { padding: 1.25rem 1rem; }
+  .topbar { padding: 0 1rem; height: auto; min-height: 52px; flex-wrap: wrap; gap: 6px; padding-top: 8px; padding-bottom: 8px; }
+  .topbar-mid { display: none; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .cc h3 { font-size: 9px; }
+  .cc p { font-size: 13px; }
+  .pt { font-size: 20px; }
+  .sr { flex-wrap: wrap; gap: 6px; }
+  .si { min-width: 0; }
+  .st { font-size: 12px; }
+  .sd { font-size: 11px; }
+  .acts { flex-wrap: wrap; }
+  .bp, .bg2 { width: 100%; text-align: center; padding: 12px; }
+  .dead { flex-wrap: wrap; font-size: 11px; }
+}
+@media (max-width: 480px) {
+  .pt { font-size: 18px; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .n { font-size: 18px !important; }
+}
+
 </style>
 </head>
 <body>
@@ -108,7 +154,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
 </div>
 
 <div class="layout">
-  <nav class="sidebar" id="sidebar">
+  <nav class="sidebar" id="sidebar"><div class="sidebar-mobile-toggle" onclick="toggleSidebar(this)" id="sidebarToggle">☰ &nbsp;Navigate sections <span class="arrow">▼</span></div><div class="sidebar-nav" id="sidebarNav">
     <div class="slbl" style="margin-top:0.25rem;">Navigation</div>
     <div class="ni active" onclick="show('ov',this)">⌂ Overview <span class="ds dd"></span></div>
     <div class="divhr"></div>
@@ -123,7 +169,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
     <div class="ni" onclick="show('sH',this)"><b>H</b> AI &amp; data <span class="ds dd"></span></div>
     <div class="ni" onclick="show('sI',this)"><b>I</b> Risk <span class="ds dd"></span></div>
     <div class="ni" onclick="show('sJ',this)"><b>J</b> Commercial <span class="ds dd"></span></div>
-  </nav>
+  </div></nav>
 
   <main class="main">
 
@@ -1028,7 +1074,15 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
 </div>
 
 <script>
+function toggleSidebar(el) {
+  el.classList.toggle('open');
+  document.getElementById('sidebarNav').classList.toggle('open');
+}
 function show(id,navEl){
+  // Close mobile nav after selection
+  document.getElementById('sidebarNav').classList.remove('open');
+  document.getElementById('sidebarToggle').classList.remove('open');
+
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
