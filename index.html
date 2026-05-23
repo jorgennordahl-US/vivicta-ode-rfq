@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivicta — RFQ ODE-ERP-2026-001</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --vg:#0a3622;--vd:#072d1c;--vc:#0d3f28;--vc2:#113a25;
+  --vb:#1a5a38;--va:#3ecf8e;--vw:#ffffff;--vgr:#7ab898;--vl:#c5ddd1;
+}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min-height:100vh;}
+
+.topbar{background:var(--vd);border-bottom:1px solid var(--vb);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px;flex-shrink:0;}
+.topbar-left{display:flex;align-items:center;gap:12px;}
+.vivicta-logo{height:20px;width:auto;}
+.topbar-label{font-size:11px;color:var(--vgr);border-left:1px solid var(--vb);padding-left:12px;}
+.topbar-mid{font-size:12px;color:var(--vgr);}
+.topbar-right{display:flex;align-items:center;gap:8px;}
+.tag-conf{font-size:10px;padding:3px 8px;border-radius:2px;background:rgba(62,207,142,0.12);color:var(--va);border:1px solid rgba(62,207,142,0.25);letter-spacing:0.05em;}
+.btn-pdf{display:flex;align-items:center;gap:5px;padding:6px 12px;font-size:12px;font-weight:500;background:var(--va);color:var(--vd);border:none;border-radius:2px;cursor:pointer;}
+.btn-pdf:hover{opacity:0.9;}
+
+.layout{display:flex;flex:1;min-height:0;height:calc(100vh - 56px);}
+.sidebar{width:210px;flex-shrink:0;background:var(--vd);border-right:1px solid var(--vb);padding:1.25rem 0;overflow-y:auto;}
+.slbl{font-size:10px;letter-spacing:0.12em;color:var(--vgr);padding:0 1rem;margin-bottom:0.4rem;text-transform:uppercase;}
+.ni{display:flex;align-items:center;gap:7px;padding:9px 1rem;font-size:12px;color:var(--vgr);cursor:pointer;border-left:2px solid transparent;transition:all 0.12s;}
+.ni:hover{color:var(--vw);background:var(--vc);}
+.ni.active{color:var(--vw);border-left-color:var(--va);background:var(--vc);}
+.ni .ds{width:5px;height:5px;border-radius:50%;margin-left:auto;flex-shrink:0;}
+.dd{background:var(--va);}
+.dt{background:var(--vb);}
+.divhr{height:1px;background:var(--vb);margin:0.6rem 0;}
+
+.main{flex:1;padding:2rem 2.5rem;overflow-y:auto;}
+.pg{display:none;}
+.pg.active{display:block;}
+.ey{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--va);margin-bottom:6px;}
+.pt{font-size:26px;font-weight:600;color:var(--vw);line-height:1.2;margin-bottom:5px;}
+.ps{font-size:12px;color:var(--vgr);margin-bottom:1.75rem;}
+
+.dead{display:flex;align-items:center;gap:8px;background:rgba(62,207,142,0.07);border:1px solid rgba(62,207,142,0.2);border-radius:3px;padding:10px 14px;font-size:12px;color:var(--va);margin-bottom:1.5rem;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--vb);border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:1.75rem;}
+.stat{background:var(--vc);padding:1rem 1.25rem;}
+.stat .n{font-size:22px;font-weight:600;color:var(--vw);}
+.stat .l{font-size:10px;color:var(--vgr);margin-top:4px;text-transform:uppercase;letter-spacing:0.06em;}
+
+.slist{border:1px solid var(--vb);border-radius:3px;overflow:hidden;}
+.sr{display:flex;align-items:center;gap:12px;padding:11px 1.25rem;background:var(--vc);border-bottom:1px solid var(--vb);cursor:pointer;transition:background 0.1s;}
+.sr:last-child{border-bottom:none;}
+.sr:hover{background:var(--vc2);}
+.sl{width:28px;height:28px;border-radius:3px;background:var(--vb);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--vl);flex-shrink:0;}
+.sl.dr{background:rgba(62,207,142,0.15);color:var(--va);border:1px solid rgba(62,207,142,0.3);}
+.si{flex:1;}
+.st{font-size:13px;color:var(--vw);font-weight:500;}
+.sd{font-size:11px;color:var(--vgr);margin-top:2px;}
+.sp{font-size:10px;padding:2px 8px;border-radius:2px;font-weight:500;flex-shrink:0;}
+.spd{background:rgba(62,207,142,0.15);color:var(--va);}
+.spt{background:var(--vb);color:var(--vgr);}
+
+.cc{background:var(--vc);border:1px solid var(--vb);border-radius:3px;padding:1.5rem;margin-bottom:1rem;}
+.cc h3{font-size:10px;font-weight:600;color:var(--va);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.75rem;}
+.cc p{font-size:14px;color:var(--vl);line-height:1.75;}
+.ph{border:1px dashed var(--vb);border-radius:3px;padding:3rem;text-align:center;color:var(--vgr);font-size:13px;margin-bottom:1rem;}
+.acts{display:flex;gap:8px;margin-top:1.5rem;}
+.bp{padding:10px 20px;font-size:13px;font-weight:500;background:var(--va);color:var(--vd);border:none;border-radius:2px;cursor:pointer;}
+.bp:hover{opacity:0.9;}
+.bg2{padding:10px 20px;font-size:13px;border:1px solid var(--vb);background:transparent;color:var(--vl);border-radius:2px;cursor:pointer;}
+.bg2:hover{border-color:var(--va);color:var(--vw);}
+
+@media print{
+  .topbar .btn-pdf,.sidebar,.acts{display:none!important;}
+  .layout{display:block;}
+  .main{padding:0;}
+  .pg{display:block!important;}
+  .pg:not(.active){page-break-before:always;}
+  .ey{color:#0a3622!important;}
+  .site,.cc,.stat,.sr,.pg,.main,.topbar{background:#fff!important;color:#000!important;}
+  .pt,.st{color:#000!important;}
+  .cc p,.sd,.ps{color:#333!important;}
+  .cc h3{color:#0a3622!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <svg height="22" viewBox="0 0 160 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Vivicta">
+      <text x="0" y="28" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="28" font-weight="700" fill="white" letter-spacing="-0.5">vivicta</text>
+      <g transform="translate(142, 2)">
+        <line x1="8" y1="0" x2="8" y2="16" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="0" y1="8" x2="16" y2="8" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="2.3" y1="2.3" x2="13.7" y2="13.7" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="13.7" y1="2.3" x2="2.3" y2="13.7" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <img class="vivicta-logo" style="display:none" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCACxAicDASIAAhEBAxEB/8QAHQABAAIDAQEBAQAAAAAAAAAAAAcIBQYJBAECA//EAFMQAAEDAgMEBAUPCAkDBAMAAAEAAgMEBQYHEQgSITETQVFhFCI3cYEVGDJCUnJ0dYKRlKGxsrMWIyQ1VnOS0hcnMzRTVWLB0UNjojaTw/FFlaP/xAAaAQEAAwEBAQAAAAAAAAAAAAAABAUGAwIB/8QAMREBAAIBAwIEAwYHAQAAAAAAAAECAwQFERIxEyFBcTNRgRQyNFJh0RUiI0KRobHw/9oADAMBAAIRAxEAPwC5aIiAiIgIiICIiAiIg/hXUVHX07qaupIKqB3OOaMPafQeC8tpsNjtDnOtNmt1vLho401KyInz7oCyKI+TET5yIiI+iIiDw3Kz2i5yRSXK1UNa+E6xOqKdkhYe4uB09C9zQGgNaAAOAA6kRHzjz5fznghnaGzwxytB1Ae0EfWv20BrQ1oAAGgA6l9RH0REQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERARFHOYWc+CcC4g9Q79LXtrOibLpDT77d12unHXuR4vkrjjm08QkZFF2Dc98A4sxLR4ftE1xdW1ji2IS0u63UNLjqdewFSihjyUyRzWeRERHsREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQERR3nnmjbMs8OtqJGCqu1WHNoaXkHEc3vPUwajvPIdZB4yZK46za3aEhCWMyuiEjTI0BxaDxAOuh09B+ZUh20j/XMfi6D7XLUsN5t4zs+YUuMzcpKusqX/AKXFK783PHr7DTqA6tOXV2L07Q+MbVjzHNNiG0dIIprdCySJ40dFIC7eYe3TtHNFHq9bTUYeI8p5frZh8ueGf30n4L10AfJGwtD3taXnRoJ9keeg7VztyWvVHg/NW1Xm+9LTU9vdK+dpjO+D0TwG7vaSQPSsjmjm9ifGeNIb9T1c1shoJd62U8MhHQD3R7XHrPo5L4+aTWU02GYnzmZ7f4dA0UQ7O2cNLmJavU25blPiOkj1nibwbOwaDpWf7jqPcVLy+rzFlrlrFq9hERHQREQEREBERAREQEREBERAREQEREET7QmcNNlpbYaSip462+1jC6nhkP5uJnLffodSNeQGmvHiNFVetz4zWqq4Vf5VzQuafFZFTxNYO7d3ePp1Xt2tJ6ybPO9R1TnlkMcDKcO5CPomnh3alx85KiY66ozWs1eW2WYieIjyW+2d9oCqxPeIMK4zEDbhUeLR10bRG2Z/uHt5Bx6iNAeA01VjlzDw1LVQYjts1FveFR1cTodOe+Hgt+vRdO2HVoJ7EWW2ai+Wkxfz4fUREWYiIgIiICIiAiIg0jObMW2Zb4SfeK2Pwiqld0VHSh2hmk8/U0cyf9yFTzEOf+aN2rnTx4idbod8ujgpIWMYzu1ILj6SVv23hLVHF+HoHl3graB7ox1b5kO96dA1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dmVNlzKswZUEUd2p2nwOta3Ut/0vHtmE9XMdXXrImiIt7465KzW3ZzbzDwBijAl2fQYhtz4W7xEVSwF0Mw7Wv6/MdCOsBauV1Bu1st13on0V0oaatppBo6KeIPafQVDuLNmbLu8TGe3eqFjk4+LSy78ZPbuvBPzEBFJm2q8TzjnmFIF8VsJdkahMhMWOqhrOoOtocR6ekH2LN4e2VMF0c7JbvebrdN06mNu7BG7uOmrtPM4Ijxtuome3+4VFw9ZLtiC6Q2yy2+or6yZ2jIoWbx857B2k8Apxx1k3Hl3kNWXe8OiqMQ1dTTteWcWUzC7Xo2nrJPM9wA7Ta3CGDsM4Ro/BMO2akt8enjGNnjv9846ud6SvmPMI2XG1gfY7/DJNRPkbIWxyFh3m8uIROx7XFaTzPNpj6OaK2nKLyq4T+OaT8ZquH623Kv8Ayuu+mvXssmz/AJa2e80V2obdWMqqKdlRC51W8gPY4OaSOviAiNj2zNW0TPCVUREaEREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQf//Z" alt="Vivicta">
+    <span class="topbar-label">RFQ Response</span>
+  </div>
+  <div class="topbar-mid">ODE-ERP-2026-001 &nbsp;·&nbsp; D365 F&amp;O &nbsp;·&nbsp; Vested®</div>
+  <div class="topbar-right">
+    <span class="tag-conf">CONFIDENTIAL</span>
+    <button class="btn-pdf" onclick="window.print()">⬇ Export PDF</button>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="slbl" style="margin-top:0.25rem;">Navigation</div>
+    <div class="ni active" onclick="show('ov',this)">⌂ Overview <span class="ds dd"></span></div>
+    <div class="divhr"></div>
+    <div class="slbl">Sections</div>
+    <div class="ni" onclick="show('sA',this)"><b>A</b> Intent &amp; fit <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('sB',this)"><b>B</b> Track record <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('sC',this)"><b>C</b> Outcomes <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('sD',this)"><b>D</b> Delivery <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('sE',this)"><b>E</b> Pricing <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('sF',this)"><b>F</b> Governance <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('sG',this)"><b>G</b> Security <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('sH',this)"><b>H</b> AI &amp; data <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('sI',this)"><b>I</b> Risk <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('sJ',this)"><b>J</b> Commercial <span class="ds dd"></span></div>
+  </nav>
+
+  <main class="main">
+
+    <div class="pg active" id="page-ov">
+      <div class="ey">Vivicta · Elevated impact</div>
+      <div class="pt">RFQ ODE-ERP-2026-001</div>
+      <div class="ps">Microsoft Dynamics 365 F&amp;O · Vested® · Ode AS, Ålesund, Norway</div>
+      <div class="dead">⏱ Submission deadline: 19 June 2026 &nbsp;·&nbsp; 27 days remaining &nbsp;·&nbsp; frode.vatne@ode.no</div>
+      <div class="stats">
+        <div class="stat"><div class="n">10</div><div class="l">Sections ready</div></div>
+        <div class="stat"><div class="n">0</div><div class="l">Remaining</div></div>
+        <div class="stat"><div class="n">30p</div><div class="l">Max pages</div></div>
+        <div class="stat"><div class="n">25%</div><div class="l">Vested-fit weight</div></div>
+      </div>
+      <div class="slist">
+        <div class="sr" onclick="show('sA',document.querySelectorAll('.ni')[1])"><div class="sl dr">A</div><div class="si"><div class="st">Statement of intent &amp; cultural fit</div><div class="sd">Why Vivicta, WIIFWe culture, named executive sponsor</div></div><span class="sp spd">Draft</span></div>
+        <div class="sr" onclick="show('sB',document.querySelectorAll('.ni')[2])"><div class="sl dr">B</div><div class="si"><div class="st">Track record</div><div class="sd">3 references drafted · Elise to verify &amp; add aquaculture reference Monday</div></div><span class="sp spd">Draft</span></div>
+        <div class="sr" onclick="show('sC',document.querySelectorAll('.ni')[3])"><div class="sl dr">C</div><div class="si"><div class="st">Approach to Desired Outcomes</div><div class="sd">DO1–DO7 answered with trajectory and risks</div></div><span class="sp spd">Draft</span></div>
+        <div class="sr" onclick="show('sD',document.querySelectorAll('.ni')[4])"><div class="sl dr">D</div><div class="si"><div class="st">Implementation &amp; run model</div><div class="sd">3-phase delivery · team structure · KT plan · scale model</div></div><span class="sp spd">Draft</span></div>
+        <div class="sr" onclick="show('sE',document.querySelectorAll('.ni')[5])"><div class="sl dr">E</div><div class="si"><div class="st">Pricing model</div><div class="sd">4-component Vested model · illustrative NOK · Elise to calibrate</div></div><span class="sp spd">Draft</span></div>
+        <div class="sr" onclick="show('sF',document.querySelectorAll('.ni')[6])"><div class="sl dr">F</div><div class="si"><div class="st">Governance &amp; operating model</div><div class="sd">4 forums · Track boundary rule · escalation · exit</div></div><span class="sp spd">Draft</span></div>
+        <div class="sr" onclick="show('sG',document.querySelectorAll('.ni')[7])"><div class="sl dr">G</div><div class="si"><div class="st">Security, compliance &amp; architecture</div><div class="sd">Azure, Entra ID, Norwegian compliance, integration architecture</div></div><span class="sp spd">Draft</span></div>
+        <div class="sr" onclick="show('sH',document.querySelectorAll('.ni')[8])"><div class="sl dr">H</div><div class="si"><div class="st">AI, data &amp; platform vision</div><div class="sd">Fabric day 1 · 3 agents · VCIM AI trajectory</div></div><span class="sp spd">Draft</span></div>
+        <div class="sr" onclick="show('sI',document.querySelectorAll('.ni')[9])"><div class="sl dr">I</div><div class="si"><div class="st">Risk &amp; assumptions</div><div class="sd">Top 10 risks owned · 6 key assumptions</div></div><span class="sp spd">Draft</span></div>
+        <div class="sr" onclick="show('sJ',document.querySelectorAll('.ni')[10])"><div class="sl dr">J</div><div class="si"><div class="st">Commercial terms summary</div><div class="sd">3 scenarios · full 5-year table · Elise to insert figures</div></div><span class="sp spd">Draft</span></div>
+      </div>
+    </div>
+
+    <div class="pg" id="page-sA">
+      <div class="ey">Section A · Statement of Intent &amp; Cultural Fit</div>
+      <div class="pt">Why Vivicta</div>
+      <div class="ps">Weight: part of 25% Vested-fit criterion · Status: draft</div>
+      <div class="cc"><h3>Statement of intent</h3><p>Vivicta is not a conventional ERP implementer. We are a company built on the conviction that the technology partnership model between vendor and customer is broken — and that fixing it requires a fundamentally different commercial logic. We have invested years developing our practice because we believe that shared value creation, not billable hours, is the only sustainable foundation for a long-term technology relationship. Ode's RFQ reads like it was written by people who have lived through the same frustrations we set out to solve.</p></div>
+      <div class="cc"><h3>How our culture supports WIIFWe</h3><p>At Vivicta, What's-In-It-For-We is not a framework we apply to engagements — it is the logic we use to evaluate whether to take on an engagement at all. We decline work where the commercial structure would require us to optimise for our own margin at the expense of the client's outcomes. This is not altruism; it is a business model. We grow when our customers grow. Our delivery leads are evaluated on client capability growth, not on dependency. Our commercial team is measured on renewal driven by demonstrated value, not on upsell volume.</p></div>
+      <div class="cc"><h3>Named executive sponsor</h3><p>[Name of executive sponsor] will serve as Vivicta's executive sponsor for this engagement. [He/she] will be personally accountable to the Joint Governance Board throughout the contract life — co-owning the Desired Outcomes alongside Ode's executive sponsor. This is not a ceremonial role.</p></div>
+      <div class="cc"><h3>Why Ode, why now</h3><p>The Norwegian aquaculture industry is at an inflection point. Ode's ambition to reach 110,000 tonnes represents exactly the kind of complex, high-stakes environment where a transactional ERP partner will fail and a Vested partner will thrive. We want to be part of building the platform that takes Ode there — not because it is a large contract, but because it is the kind of challenge that demands, and rewards, a genuine partnership. We are ready to sign the NDA and begin.</p></div>
+    </div>
+
+    <div class="pg" id="page-sB">
+      <div class="ey">Section B · Track Record</div>
+      <div class="pt">D365 F&amp;O capability &amp; references</div>
+      <div class="ps">Weight: part of 15% D365 capability criterion · Status: draft — Elise to review Monday</div>
+
+      <div class="cc">
+        <h3>Our D365 F&amp;O position</h3>
+        <p>Vivicta (formerly Tietoevry Tech Services) is one of Microsoft's top-ranked Business Applications partners globally. For the third consecutive year we have been named to Microsoft's AI Business Solutions Inner Circle — a designation held by fewer than 1% of Microsoft partners worldwide. We hold all available Microsoft Solutions Partner designations, including the Microsoft Cloud designation, and were named Microsoft Partner of the Year in Finland in 2025. Our Nordic D365 F&amp;O practice comprises more than 2,000 Microsoft application experts across Norway, Sweden, Finland, the Czech Republic, the Baltics, and India.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Reference 1 — Wibax (Sweden): complex supply chain migration to D365 F&amp;O</h3>
+        <p>Wibax is a Swedish chemical distribution and logistics company operating a complex, multi-site supply chain across production, procurement, transport, and warehousing. Vivicta led Wibax's full migration from a legacy ERP to Microsoft Dynamics 365 Finance &amp; Supply Chain Management, integrating Dynamics CRM and Power BI as core components. The result was a single cloud platform providing real-time operational insight, automated workflows, and a scalable foundation for continued growth. The engagement mirrors key elements of Ode's challenge: legacy ERP at end-of-life, fragmented systems, a need for integrated supply chain and finance, and an ambition to grow significantly beyond the current operational baseline.</p>
+        <p style="margin-top:0.75rem;font-size:12px;color:var(--va);">Contact: available on request · vivicta.com/en/customer-stories/wibax</p>
+      </div>
+
+      <div class="cc">
+        <h3>Reference 2 — Hesselberg (Norway/Sweden): end-to-end D365 F&amp;O + Supply Chain</h3>
+        <p>Hesselberg is a leading Nordic provider of construction equipment, forklifts, warehouse equipment, and materials handling solutions, operating across Norway and Sweden. Vivicta is currently delivering a full D365 Finance &amp; Supply Chain Management implementation — integrating sales, service, rental, supply chain, and finance into a single platform, combined with the industry solution Annata A365 and Eye-share. The engagement is structured as a long-term strategic partnership aimed at scalability, data-driven decision-making, and end-to-end process integration. This is Vivicta's most recent major D365 F&amp;O go-live in Norway, announced May 2026.</p>
+        <p style="margin-top:0.75rem;font-size:12px;color:var(--va);">Contact: Anett Berger Sørli, Group CFO, Hesselberg — available on request</p>
+      </div>
+
+      <div class="cc">
+        <h3>Reference 3 — Lyse (Norway): D365 + Azure as digital backbone</h3>
+        <p>Lyse is one of Norway's largest energy and telecommunications companies, operating critical national infrastructure across multiple business units. Vivicta delivers D365, Azure Cloud, and managed IT services as the foundation of Lyse's digital transformation strategy. The Dynamics 365 solution supports everything from field operations to core financial flows, with Vivicta providing guidance, consulting, development, and ongoing managed services. This reference demonstrates Vivicta's ability to run D365 as a long-term managed service for a complex Norwegian organisation — directly relevant to Ode's requirement for a partner accountable across implementation, hyper-care, and run.</p>
+        <p style="margin-top:0.75rem;font-size:12px;color:var(--va);">Contact: Glenn Roger Hisdal, CIO, Lyse — available on request</p>
+      </div>
+
+      <div class="cc" style="border-color:#b45309;background:rgba(180,83,9,0.08);">
+        <h3 style="color:#f59e0b;">⚑ Action for Elise — Monday</h3>
+        <p style="color:#fcd34d;">The three references above are drawn from publicly available case studies. They are strong on D365 F&amp;O capability and long-term partnership, but none are in seafood, aquaculture, or food processing. Before submission, please check internally on the following:</p>
+        <ul style="margin-top:0.75rem;padding-left:1.25rem;font-size:13px;color:#fcd34d;line-height:2;">
+          <li>Does Vivicta have any current or past D365 F&amp;O engagements in aquaculture, fish processing, or food production — even if not publicly referenceable?</li>
+          <li>Does Tietoevry (the former parent) have relevant references from Finland, Sweden, or the Baltics in this segment that Vivicta can draw on?</li>
+          <li>Is there a fourth reference we can add — ideally one with process manufacturing, biological inventory, or traceability challenges similar to Ode's?</li>
+          <li>Confirm that Wibax and Hesselberg contacts are willing to be referenced by Ode (direct phone contact per RFQ section 9B).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pg" id="page-sC">
+      <div class="ey">Section C · Approach to Desired Outcomes</div>
+      <div class="pt">How Vivicta will move each metric</div>
+      <div class="ps">Weight: 25% of evaluation — most important section · Status: draft</div>
+
+      <div class="cc"><h3>Our approach to this section</h3><p>Ode has asked us to explain, for each Desired Outcome, how our team will move the metric, the expected trajectory, and the risks. We answer each DO directly. We do not hedge. Where we have genuine uncertainty — specifically around the aquaculture-specific operational systems — we say so and explain how we will resolve it jointly during contracting. Baselines and precise targets will be co-defined with Ode during the Vested contracting phase; the trajectories below reflect our experience from comparable integrated value-chain implementations.</p></div>
+
+      <div class="cc"><h3>DO1 — One integrated value-chain platform</h3><p><strong style="color:var(--va)">Measure:</strong> # legacy systems retired · % of transactions running in D365 F&amp;O</p><p style="margin-top:0.6rem">Our approach is a phased consolidation anchored on a standardised D365 F&amp;O core deployed once and extended — not re-implemented — as Ode adds entities and sites. We will establish a single chart of accounts, a single legal-entity structure aligned with Ode Land / Ode Hav / Ode Processing &amp; Sales, and a master data governance model on day one of go-live. Visma ERP is the priority retirement: we target 100% of financial transactions in D365 F&amp;O within 12 months of go-live. Operational systems (Mercatus, Innova, Maritech) are integrated — not replaced — in the first phase, with replacement evaluated jointly in the continuous improvement backlog.</p><p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Key risk: Data quality in Visma is unknown until we run extraction. We will run a data quality sprint in week 1 of mobilisation and agree acceptance criteria before migration begins.</p></div>
+
+      <div class="cc"><h3>DO2 — Reliable, real-time business truth</h3><p><strong style="color:var(--va)">Measure:</strong> Days to close month-end · data quality / reconciliation defects</p><p style="margin-top:0.6rem">Today's fragmented landscape forces manual reconciliation between Visma, Maritech, and operational systems — making month-end slow and error-prone. Our target is a hard-close cycle of 3 working days within 6 months of go-live, moving to 2 days by end of year 1. We achieve this by eliminating manual journal entry through automated posting from integrated operational systems, by deploying D365's financial period-close workspace as the single control surface, and by connecting Microsoft Fabric from day one so that operational and financial data is queryable in real time. The Power App-driven production cost closure model described in Ode's companion document (ODE-PRODORDER-2026) is directly supported by our process manufacturing practice and will be a design priority in phase 1.</p><p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Key risk: Real-time truth depends on integration quality from Mercatus Farmer and Innova. We will co-own integration acceptance criteria with Ode's operations team and will not declare go-live until data reconciliation defects are below the jointly agreed threshold.</p></div>
+
+      <div class="cc"><h3>DO3 — Lower total cost to operate</h3><p><strong style="color:var(--va)">Measure:</strong> Total ERP TCO vs. 2026 baseline (NOK/year)</p><p style="margin-top:0.6rem">TCO reduction comes from three levers: (1) retiring the on-premise Visma infrastructure and its associated support and upgrade costs; (2) consolidating the fragmented HR and time-registration landscape into D365 HR and integrated payroll, reducing manual reconciliation effort; and (3) operating D365 as a cloud SaaS with a standardised application management service that scales in cost as Ode's user base grows, not as a function of bespoke customisations. Our open-book commercial model means Ode will see exactly where money is spent throughout the contract. We commit to establishing a baseline TCO measurement methodology jointly in month 1 and to reporting against it at every Outcomes &amp; Value Board.</p><p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Key risk: TCO reduction in year 1 may be offset by parallel-run costs during migration. We will model this explicitly in Section J so Ode has a realistic net TCO trajectory rather than a headline number.</p></div>
+
+      <div class="cc"><h3>DO4 — Faster time-to-value for change</h3><p><strong style="color:var(--va)">Measure:</strong> Lead time for new entity / site / product onboarding</p><p style="margin-top:0.6rem">Ode's growth plan toward 110,000 tonnes requires the platform to absorb new sea sites, new legal entities, and new product lines without re-implementation. We design for this from day one by using D365's standard multi-entity and multi-site architecture, by avoiding customisations that would create upgrade friction, and by building a Vivicta-owned configuration accelerator specific to Ode's value chain. Our target is that a new Norwegian legal entity or production site can be onboarded in D365 within 6 weeks from business decision to go-live. We will agree a formal onboarding runbook with Ode during contracting and test it on the first new site as a proof point.</p><p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Key risk: Speed of onboarding depends on Ode's internal capacity to participate in configuration and testing. We will design the knowledge transfer plan (DO5) specifically to build this internal muscle.</p></div>
+
+      <div class="cc"><h3>DO5 — User adoption and capability</h3><p><strong style="color:var(--va)">Measure:</strong> Active user % per process · certified internal super-users</p><p style="margin-top:0.6rem">User adoption is not a training event — it is a design principle. We embed Ode's super-users in the implementation team from day one: they design the processes alongside us, own the test scripts, and deliver training to their colleagues. Our target is that Ode has a minimum of 8 certified D365 super-users covering finance, supply chain, production, and HR before go-live, and that active user rate exceeds 85% within 3 months of go-live. We will measure adoption by process area monthly and report it at the Delivery / Run Forum. Vivicta's knowledge transfer plan is a contractual deliverable — and DO5 performance is directly tied to our outcome bonus (Section E).</p><p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Key risk: With 220+ employees across multiple sites, adoption requires sustained change management effort. We will propose a dedicated change lead embedded in the Ode team for the first 12 months.</p></div>
+
+      <div class="cc"><h3>DO6 — Audit-ready, compliant, secure</h3><p><strong style="color:var(--va)">Measure:</strong> Audit findings · critical security incidents</p><p style="margin-top:0.6rem">D365 F&amp;O on Microsoft Azure is architected for Norwegian and EU regulatory compliance from the ground up. We will configure Norwegian tax (MVA), bookkeeping act compliance, and Altinn reporting as standard. Food traceability — batch tracking from hatchery through grow-out to processed product — will be implemented using D365's standard batch and serial number tracking, extended for Ode's biological inventory model. Information security is governed through Microsoft Entra ID, conditional access, and role-based access control with least-privilege principles. Our target is zero critical security incidents and zero material audit findings attributable to the ERP platform. Compliance configuration is documented and version-controlled so that every change is auditable.</p><p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Key risk: CSRD and Norwegian sustainability reporting requirements are evolving. We include a regulatory monitoring commitment in the AMS scope so Ode is never caught by a compliance change without warning.</p></div>
+
+      <div class="cc"><h3>DO7 — Platform for AI and data</h3><p><strong style="color:var(--va)">Measure:</strong> # productive AI agents in production · estimated annual cost avoidance (NOK)</p><p style="margin-top:0.6rem">As a Microsoft AI Inner Circle partner, Vivicta deploys AI from day one — not as a future roadmap item. D365 F&amp;O connects to Microsoft Fabric at go-live, with all operational data from Mercatus, Innova, and Maritech flowing into a unified lakehouse. Vivicta has developed a library of aquaculture-specific AI agent patterns for Norwegian fish farming operations, drawing on deep knowledge of the biological, financial, and regulatory complexity of the sector.</p><p style="margin-top:0.75rem">We propose deploying <strong style="color:var(--va)">four agents in VCIM Phase 1 and three additional agents in Phase 2</strong>. Our experience with comparable Norwegian aquaculture finance and operations environments puts the quantified benefit of this portfolio at approximately <strong style="color:var(--va)">NOK 2–3M in annual cost avoidance</strong> — driven by month-end automation (120+ hours/year), feed cost anomaly detection (1–2% cost reduction), harvest forecast accuracy improvement, and grunnrenteskatt compliance automation. Every agent has its own A3 business case and agreed KPIs before development begins.</p><p style="margin-top:0.75rem">We target a minimum of <strong style="color:var(--va)">4 productive AI agents in production by end of VCIM Phase 1</strong>, with the full portfolio of 7 operational by Phase 2. The AI backlog is jointly owned at every Outcomes &amp; Value Board — never empty, never unaccountable.</p><p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Key risk: AI agents require clean, structured data — which depends on DO1 and DO2 first. We sequence deliberately: Fabric data foundation months 1–6, first agent in production month 9, full portfolio by VCIM Phase 2 trigger.</p></div>
+
+    </div>
+    <div class="pg" id="page-sD">
+      <div class="ey">Section D · Implementation &amp; Run Model</div>
+      <div class="pt">How we deliver and operate</div>
+      <div class="ps">Weight: supports 25% Outcomes + 15% D365 capability criteria · Status: draft</div>
+
+      <div class="cc">
+        <h3>Delivery philosophy</h3>
+        <p>Vivicta delivers D365 F&amp;O using an agile, outcome-driven methodology — not a waterfall project plan. We work in two-week sprints with a shared backlog owned jointly by Ode and Vivicta. Every sprint produces working, tested functionality in a live D365 environment. There are no "big bang" go-lives: we phase by value chain segment, starting with the financial backbone and growing into operational integration, so Ode starts realising value within 3–4 months of mobilisation, not at the end of an 18-month project. The engagement has three phases: Foundation, Value Chain Extension, and Continuous Improvement. Phases 1 and 2 are time-boxed; Phase 3 is the ongoing Vested partnership with no defined end date.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Phase 1 — Foundation (months 1–9): financial backbone &amp; core integrations</h3>
+        <p>Scope: three-entity legal structure (Ode Land, Ode Hav, Ode Processing &amp; Sales AS), General Ledger, AP/AR, Fixed Assets, Bank, Tax, Consolidation, Procurement &amp; Sourcing, Inventory, Cost Accounting, Power BI/Fabric baseline, Visma ERP data migration, Entra ID security model, and integration to Mercatus Farmer and Innova. Go-live target: month 9 from project start (mid-May 2027 if mobilisation begins mid-August 2026). Ode's finance team runs month-end in D365 for the first time at go-live. Visma ERP is switched off within 30 days of go-live.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Phase 2 — Value chain extension (months 10–18): production, sales &amp; HR</h3>
+        <p>Scope: Production control / process manufacturing for harvesting and Vartdal processing, the Power App period-close frontend (ODE-PRODORDER-2026), Sales &amp; Marketing, Maritech ERP-ANY API integration, HR core, integration to Visma Payroll and Tidsbanken replacement, and first Copilot Studio agent in production. By end of phase 2, all seven value chain stages — broodstock, hatchery, grow-out, fish health, harvesting, processing, sales — are connected through a single D365 backbone.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Phase 3 — Continuous improvement (month 19+): the Vested partnership</h3>
+        <p>Scope: Application management services (AMS), 2nd/3rd line support, Microsoft release management (D365 updates two times per year), continuous improvement backlog, new site and entity onboarding, AI/data use case delivery, and annual Exit &amp; Continuity Review. There is no re-implementation. The platform grows with Ode. The improvement backlog is jointly owned and prioritised at every Outcomes &amp; Value Board.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Team structure</h3>
+        <p>The Vivicta core team for Ode will consist of: a dedicated Delivery Lead (onshore Norway, fluent in Norwegian business and regulatory context), a Solution Architect (D365 F&amp;O, process manufacturing specialism), a Finance Functional Lead, a Supply Chain &amp; Production Functional Lead, an Integration Architect (Azure Integration Services, Mercatus API, Maritech ERP-ANY), a Data &amp; AI Lead (Fabric, Copilot Studio), a Change &amp; Adoption Lead, and a Test Lead. Development resource will be provided from Vivicta's nearshore centres in the Baltics and Czech Republic for cost efficiency, with all client-facing roles onshore in Norway or Sweden. The team is sized for phase 1; it scales up for phase 2 and right-sizes to a lean AMS team in phase 3.</p>
+        <p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Action for Elise — Monday: insert named individuals for Delivery Lead, Solution Architect, and Change Lead. Ode will evaluate "people quality" at the workshop (week 26–27). CVs for key roles should be appended to the submission.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Onshore / nearshore mix</h3>
+        <p>Client-facing roles: 100% onshore Norway/Sweden. Design, build, and test: 60% onshore, 40% nearshore (Baltics, Czech Republic). AMS run phase: 30% onshore, 70% nearshore. All nearshore resources are Vivicta employees — not subcontractors — and operate under the same security, data residency, and confidentiality standards as onshore colleagues. Norwegian data never leaves the EU/EEA.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Knowledge transfer plan</h3>
+        <p>Knowledge transfer is a contractual deliverable linked directly to DO5. It has four components: (1) embedded super-user programme — Ode nominates 8–10 super-users across functions who co-design, co-test, and co-train from day one; (2) structured certification — all super-users achieve Microsoft D365 F&amp;O associate certification before go-live, funded by Vivicta; (3) configuration handover — all configuration, integration logic, and custom code is documented in Ode's own Azure DevOps tenant, not Vivicta's; and (4) runbook library — every repeating operational process (month-end, release update, new-site onboarding) has a Vivicta-authored runbook that Ode can execute independently. The exit management clause (Section F) guarantees that Ode can transition to a different partner or insource at any time without losing access to any of this material.</p>
+      </div>
+
+      <div class="cc">
+        <h3>How the model scales to 110,000 tonnes</h3>
+        <p>Ode's growth plan requires the ERP to onboard new sea sites, new land-based facilities, and eventually new species or geographies. Vivicta's delivery model is designed for exactly this: the D365 core is implemented once with multi-entity and multi-site architecture; new sites are onboarded using the configuration accelerator without re-implementation; the nearshore team provides elastic capacity for onboarding sprints without Ode bearing the cost of a permanently oversized team. We commit to a maximum 6-week onboarding lead time for new Norwegian entities from month 18 onwards, reducing to 4 weeks by year 3 as the runbook matures.</p>
+      </div>
+
+
+
+      <div class="cc" style="border-left:3px solid var(--va);padding-left:1.25rem">
+        <h3>The long-term vision: towards a transaction-free operating model</h3>
+        <p>Vivicta's ambition for this partnership goes beyond delivering and running a D365 platform. We want to lead Ode towards a fundamentally different way of operating ERP — one where routine transactions, maintenance decisions, and compliance checks are increasingly handled by AI agents, and where Vivicta's human team focuses almost entirely on business-driven value creation.</p>
+        <p style="margin-top:0.75rem">We call this the <strong style="color:var(--va)">Vivicta Continuous Improvement Model (VCIM)</strong> — a structured, three-layer operating model that governs how the partnership evolves from implementation through to a mature, AI-driven state. It is not a future concept. It is the operating model we will begin building from day one, with each phase of the implementation designed to enable the next layer of the model.</p>
+      </div>
+
+      <div class="cc">
+        <h3>VCIM — three layers of maturity</h3>
+
+        <div style="margin-top:0.5rem;display:grid;grid-template-columns:auto 1fr 1fr;gap:1px;background:var(--vb);border-radius:3px;overflow:hidden;font-size:13px;">
+          <div style="background:rgba(62,207,142,0.15);padding:1rem;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--va);font-size:15px;">1</div>
+          <div style="background:var(--vc);padding:1rem;">
+            <div style="font-weight:600;color:var(--vw);margin-bottom:4px">Strategic — Business-driven development</div>
+            <div style="color:var(--vgr);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Jointly owned · always active</div>
+            <div style="color:var(--vl)">Every improvement initiative starts with a business case (A3 format). The Joint Steering Committee prioritises across tracks. Business Process Leads from Ode co-own the roadmap. Nothing enters the development pipeline without a signed business case and an agreed measurement methodology. This layer is the governance engine that ensures every kroner spent on Track 2 is tied to a quantifiable outcome.</div>
+          </div>
+          <div style="background:var(--vc2);padding:1rem;">
+            <div style="font-size:11px;color:var(--va);margin-bottom:6px;font-weight:500">Key roles</div>
+            <div style="color:var(--vl);line-height:1.8">Ode: Executive Sponsor, Product Owner, Business Process Leads<br>Vivicta: Improvement Manager, Track Leads, Account Owner</div>
+          </div>
+
+          <div style="background:rgba(62,207,142,0.1);padding:1rem;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--va);font-size:15px;">2</div>
+          <div style="background:var(--vc);padding:1rem;">
+            <div style="font-weight:600;color:var(--vw);margin-bottom:4px">Tactical — Solution design and planning</div>
+            <div style="color:var(--vgr);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Structured handover from strategy to delivery</div>
+            <div style="color:var(--vl)">Approved business cases are deconstructed into solution designs and plans in Azure DevOps. Effort, competency, and timeline are validated before any sprint begins. Ode's Super Users co-design solutions alongside Vivicta's Track Leads — ensuring that what is built reflects how Ode actually works, not how a consultant imagines it does. Solution plans require explicit approval before entering the operational layer.</div>
+          </div>
+          <div style="background:var(--vc2);padding:1rem;">
+            <div style="font-size:11px;color:var(--va);margin-bottom:6px;font-weight:500">Key tools</div>
+            <div style="color:var(--vl);line-height:1.8">Azure DevOps (Epics → Features → Work Items → Tasks)<br>A3 business cases<br>Solution design workshops (online + onsite)<br>Competency and capacity planning</div>
+          </div>
+
+          <div style="background:rgba(62,207,142,0.05);padding:1rem;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--va);font-size:15px;">3</div>
+          <div style="background:var(--vc);padding:1rem;">
+            <div style="font-weight:600;color:var(--vw);margin-bottom:4px">Operational — Sprint execution and continuous delivery</div>
+            <div style="color:var(--vgr);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Agile · two-week sprints · always shipping</div>
+            <div style="color:var(--vl)">Two-week sprints deliver working, tested functionality into production. Daily standups, sprint retrospectives, and sprint progress reports keep both parties aligned. The sprint scope is frozen once started — urgent operational requirements that cannot wait are handled through a fast-track process that does not disrupt the main sprint. Sprint retrospectives feed directly into the strategic backlog.</div>
+          </div>
+          <div style="background:var(--vc2);padding:1rem;">
+            <div style="font-size:11px;color:var(--va);margin-bottom:6px;font-weight:500">Cadence</div>
+            <div style="color:var(--vl);line-height:1.8">Daily: standup (15 min max)<br>Bi-weekly: sprint planning + sprint close<br>Monthly: retrospective + progress report to Ode Product Owner<br>Quarterly: Steering Committee review</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>The AI layer — towards transaction-free operations</h3>
+        <p>As the D365 platform matures and data quality improves (DO1 + DO2), Vivicta will systematically introduce AI agents that take over routine operational tasks currently handled by human consultants or Ode's own staff. The goal is not to reduce Ode's headcount — it is to redirect human energy from transactions to decisions.</p>
+        <p style="margin-top:0.75rem">The trajectory has three stages:</p>
+        <div style="margin-top:0.75rem;font-size:13px;color:var(--vl)">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:1px;background:var(--vb);border-radius:3px;overflow:hidden;">
+
+            <div style="background:rgba(62,207,142,0.12);padding:0.9rem 1rem;display:flex;align-items:center;">
+              <span style="color:var(--va);font-weight:700;white-space:nowrap;font-size:14px;">Phase 1</span>
+            </div>
+            <div style="background:var(--vc);padding:0.9rem 1rem;">
+              <div style="font-weight:600;color:var(--vw);margin-bottom:4px">AI-assisted operations</div>
+              <div style="color:var(--vl);margin-bottom:8px">Copilot agents support human decisions — flagging anomalies, drafting reconciliations, suggesting demand forecasts. Humans review and approve. The platform learns Ode's operational patterns.</div>
+              <div style="background:var(--vc2);border-radius:2px;padding:6px 10px;font-size:12px;">
+                <span style="color:var(--va);font-weight:500">Trigger to Phase 2: </span>
+                <span style="color:var(--vgr)">DO1 and DO2 confirmed achieved at Outcomes &amp; Value Board · minimum 3 AI agents in production · Ode super-users independently managing sprint UAT</span>
+              </div>
+            </div>
+
+            <div style="background:rgba(62,207,142,0.08);padding:0.9rem 1rem;display:flex;align-items:center;">
+              <span style="color:var(--va);font-weight:700;white-space:nowrap;font-size:14px;">Phase 2</span>
+            </div>
+            <div style="background:var(--vc);padding:0.9rem 1rem;">
+              <div style="font-weight:600;color:var(--vw);margin-bottom:4px">AI-led operations</div>
+              <div style="color:var(--vl);margin-bottom:8px">Routine transactions — period-close reconciliation, purchase order creation within approved parameters, standard compliance checks — are executed by agents. Humans focus on exceptions and strategic decisions. Track 1 cost starts to decline measurably.</div>
+              <div style="background:var(--vc2);border-radius:2px;padding:6px 10px;font-size:12px;">
+                <span style="color:var(--va);font-weight:500">Trigger to Phase 3: </span>
+                <span style="color:var(--vgr)">Track 1 cost reduced by minimum 30% vs. go-live baseline · Ode's super-users independently managing Microsoft release updates · AI agents handling &gt;60% of routine transaction volume without human intervention</span>
+              </div>
+            </div>
+
+            <div style="background:rgba(62,207,142,0.05);padding:0.9rem 1rem;display:flex;align-items:center;">
+              <span style="color:var(--va);font-weight:700;white-space:nowrap;font-size:14px;">Phase 3</span>
+            </div>
+            <div style="background:var(--vc);padding:0.9rem 1rem;">
+              <div style="font-weight:600;color:var(--vw);margin-bottom:4px">Transaction-free management</div>
+              <div style="color:var(--vl);margin-bottom:8px">The majority of routine ERP operations run autonomously. Vivicta's team is composed almost entirely of business analysts, AI architects, and Track Leads focused on business-driven development. Track 1 cost approaches near-zero. All human effort — from both parties — is directed at creating new value.</div>
+              <div style="background:var(--vc2);border-radius:2px;padding:6px 10px;font-size:12px;">
+                <span style="color:var(--va);font-weight:500">Measured at: </span>
+                <span style="color:var(--vgr)">Outcomes &amp; Value Board · phase transitions are joint decisions, never unilateral — neither party can declare a phase transition without the other's agreement</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <p style="margin-top:0.75rem">This trajectory is not speculative. It is the logical consequence of deploying D365 connected to Microsoft Fabric and Copilot Studio from day one, with a data governance model that makes Ode's operational data increasingly structured, clean, and AI-ready. Every sprint we run together moves Ode one step closer to this state.</p>
+      </div>
+
+      <div class="cc" style="background:rgba(62,207,142,0.06);border-color:rgba(62,207,142,0.3)">
+        <h3>Why this matters for the commercial model</h3>
+        <p>VCIM is not just a delivery methodology — it is the operational foundation that makes Vivicta's commercial model work over a 5-year horizon. As AI takes over routine transactions, Track 1 costs decline. As the business case pipeline matures, Track 2 projects become faster to design and deliver. And as Ode's super-users build genuine D365 expertise, the knowledge transfer that protects Ode's independence becomes self-reinforcing. The model is designed to make Vivicta progressively less necessary for operations — and progressively more valuable for growth.</p>
+      </div>
+
+      <div class="cc" style="border-color:#1d4ed8;background:rgba(29,78,216,0.08)">
+        <h3 style="color:#93c5fd">Ode's resource commitment — a prerequisite, not a request</h3>
+        <p style="color:#bfdbfe">Vivicta's commercial model is built on gain realisation. That makes Ode's active participation not a courtesy — it is a structural prerequisite. A gain-based model where Vivicta carries real financial risk on outcomes can only function if Ode commits real resource to making those outcomes happen. The following commitments from Ode are non-negotiable conditions of the engagement, written into the contract as Ode obligations. If gains are not realised because Ode's committed resource was not available, the attribution framework will reflect that — Vivicta's tranche 3 is not reduced for shortfalls outside its control.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Named Ode resource — committed for the duration</h3>
+        <p>Ode will nominate the following named individuals before mobilisation begins. These are primary responsibilities during active phases — not part-time additions to existing workloads:</p>
+        <div style="margin-top:0.75rem;font-size:13px;color:var(--vl);display:grid;grid-template-columns:1fr 2fr 1fr;gap:4px 16px;line-height:2.2">
+          <span style="color:var(--va);font-weight:500">Role</span><span style="color:var(--va);font-weight:500">Responsibility</span><span style="color:var(--va);font-weight:500">Availability</span>
+          <span><strong style="color:var(--vw)">Executive Sponsor</strong></span><span>Strategic decisions, Steering Committee, Gain Confirmation Authority. Unblocks organisational resistance at board level.</span><span>Quarterly forums + on-call for escalation</span>
+          <span><strong style="color:var(--vw)">Project Owner</strong></span><span>Day-to-day authority to approve sprint content, process decisions, and Track 1/2 classification. Single Ode voice on delivery priorities.</span><span>Min. 3 days/week during implementation</span>
+          <span><strong style="color:var(--vw)">Finance Lead</strong></span><span>Chart of accounts, month-end process ownership, Visma data quality, AP/AR sign-off, period-close Power App acceptance.</span><span>Min. 2 days/week phase 1</span>
+          <span><strong style="color:var(--vw)">Supply Chain &amp; Production Lead</strong></span><span>Mercatus/Innova/Maritech integration requirements, production order process, biological batch tracking.</span><span>Min. 2 days/week phases 1–2</span>
+          <span><strong style="color:var(--vw)">HR Lead</strong></span><span>HR core process design, payroll integration, Tidsbanken replacement sign-off.</span><span>Min. 1 day/week phase 2</span>
+          <span><strong style="color:var(--vw)">Super-users (8–10)</strong></span><span>Co-design, co-test, co-train. Own test scripts. Deliver training to colleagues. Achieve D365 certification before go-live.</span><span>Min. 50% during active sprint</span>
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>Decision-makers in the room — when it matters</h3>
+        <p>Vivicta will not run workshops where participants need to "check with management" before decisions can be made. For every session that requires a decision, Ode ensures the person with authority to make that decision is present. This is non-negotiable at three critical points:</p>
+        <ul style="margin-top:0.75rem;padding-left:1.25rem;line-height:2.2;font-size:13px;color:var(--vl)">
+          <li><strong style="color:var(--vw)">Pre-project (value identification):</strong> CFO and COO must participate in gain quantification workshops. Gains cannot be jointly owned if only operational staff were in the room.</li>
+          <li><strong style="color:var(--vw)">Process design (phases 1–2):</strong> The Project Owner must be present — or available within 24 hours — for all decisions affecting chart of accounts, legal entity structure, or integration architecture. These decisions are irreversible once implemented.</li>
+          <li><strong style="color:var(--vw)">Go / no-go decisions:</strong> Go-live approval, phase transitions, and Track 2 business case approvals require the Executive Sponsor's explicit sign-off. These cannot be delegated.</li>
+        </ul>
+      </div>
+
+      <div class="cc">
+        <h3>The honest basis of this model</h3>
+        <p>We are taking real commercial risk on Ode's outcomes. That only works if Ode takes real organisational responsibility for the same outcomes. If Ode's resource is not available for a critical workshop or decision point, Vivicta will pause the relevant workstream rather than proceed without Ode's input — the timeline moves rather than the quality of the outcome. We raise this not as a threat, but as the honest statement of interdependence that a genuine Vested partnership requires.</p>
+      </div>
+
+    </div>
+    <div class="pg" id="page-sE">
+      <div class="ey">Section E · Pricing Model</div>
+      <div class="pt">Two tracks. One principle: we earn when you win.</div>
+      <div class="ps">Weight: part of 15% TCO + 25% Vested-fit · Status: draft — Elise to confirm with leadership before submission</div>
+
+      <div class="cc">
+        <h3>The governing principle</h3>
+        <p>Vivicta's commercial model is built on a single principle: we recover our costs through a transparent baseline fee, and we earn our profit only when Ode realises measurable business value. There are no hourly rates for business-driven development. There are no change request charges within agreed scope. Our margin is not hidden in the baseline — it is earned in arrears, in proportion to the gains we help create.</p>
+        <p style="margin-top:0.75rem">The model has two clearly separated tracks: <strong style="color:var(--va)">Management &amp; Operations</strong> (forvaltning) and <strong style="color:var(--va)">Business-Driven Development</strong> (forretningsdrevet utvikling). Each track has its own commercial logic, its own governance, and its own accountability structure. Together they form a single, coherent partnership model that aligns every incentive Vivicta has with Ode's business outcomes.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Track 1 — Management &amp; Operations (forvaltning)</h3>
+        <p>This track covers everything required to keep the platform running, current, and compliant — regardless of whether it creates incremental business value. It includes application management services (AMS), 2nd/3rd line support, Microsoft release management (two major D365 updates per year), security patching, performance monitoring, and standard configuration changes that do not constitute new business capability.</p>
+        <p style="margin-top:0.75rem"><strong style="color:var(--va)">Commercial structure: cost recovery only, zero margin.</strong> Ode pays Vivicta's fully loaded cost — people, tooling, infrastructure — with open-book transparency. Vivicta earns no profit on this track. The monthly cost breakdown is published in a shared open-book dashboard accessible to both parties at all times.</p>
+        <p style="margin-top:0.75rem">This track has no business case requirement. It runs continuously from go-live and is governed through the Delivery &amp; Run Forum (Section F).</p>
+      </div>
+
+      <div class="cc">
+        <h3>Track 2 — Business-Driven Development (forretningsdrevet utvikling)</h3>
+        <p>This track covers all initiatives that create new business capability with a quantifiable expected value: new modules, AI agents, process redesigns, integrations that enable new revenue or cost reduction, and any development project that goes beyond keeping the lights on. Every initiative on this track — without exception — requires its own signed business case before work begins.</p>
+        <p style="margin-top:0.75rem"><strong style="color:var(--va)">Commercial structure: cost recovery + 30% of identified value as profit, paid in three tranches.</strong></p>
+
+        <div style="margin-top:1rem;display:grid;grid-template-columns:auto 1fr 2fr;gap:1px;background:var(--vb);border-radius:3px;overflow:hidden;font-size:13px;">
+          <div style="background:var(--vc);padding:0.9rem 1rem;font-weight:600;color:var(--va);display:flex;align-items:center;">20%</div>
+          <div style="background:var(--vc);padding:0.9rem 1rem;font-weight:500;color:var(--vw);display:flex;align-items:center;">Value mapped</div>
+          <div style="background:var(--vc);padding:0.9rem 1rem;color:var(--vl);">Business case signed by joint Steering Committee. Gains identified, quantified, and measurement methodology agreed by both parties.</div>
+
+          <div style="background:var(--vc2);padding:0.9rem 1rem;font-weight:600;color:var(--va);display:flex;align-items:center;">40%</div>
+          <div style="background:var(--vc2);padding:0.9rem 1rem;font-weight:500;color:var(--vw);display:flex;align-items:center;">Technology delivered</div>
+          <div style="background:var(--vc2);padding:0.9rem 1rem;color:var(--vl);">Solution live, integrations operational, user adoption above agreed threshold. Ode's operations running on the new capability.</div>
+
+          <div style="background:var(--vc);padding:0.9rem 1rem;font-weight:600;color:var(--va);display:flex;align-items:center;">40%</div>
+          <div style="background:var(--vc);padding:0.9rem 1rem;font-weight:500;color:var(--vw);display:flex;align-items:center;">Gains realised</div>
+          <div style="background:var(--vc);padding:0.9rem 1rem;color:var(--vl);">Measured gains confirmed in Ode's P&amp;L. <strong style="color:var(--va)">This tranche is prorated to actual realisation</strong> — if 80% of the committed gain is realised, Vivicta receives 80% of tranche 3. Gains not realised due to factors within Vivicta's control reduce the tranche accordingly.</div>
+        </div>
+
+        <p style="margin-top:1rem">The 40/40 split between the delivery and realisation tranches reflects a deliberate balance: Vivicta carries meaningful financial risk on gain realisation, while retaining enough certainty on delivery milestones to maintain commercial sustainability. 40% of our profit on every development project is held at risk until Ode confirms the value is real.</p>
+      </div>
+
+      <div class="cc">
+        <h3>The gain confirmation letter (gevinstbrev)</h3>
+        <p>Every business-driven development project closes with a formal <strong style="color:var(--va)">Gain Confirmation Letter</strong> — a document signed by Ode's authorised representative confirming the gains achieved, the measurement methodology used, and the percentage of the committed target realised. This letter is the trigger for tranche 3 payment.</p>
+        <p style="margin-top:0.75rem">The Gain Confirmation Letter is not a Vivicta document presented to Ode for signature. It is Ode's document — drafted by Ode's own team, based on the jointly agreed measurement methodology from the business case. Vivicta provides the data and analysis; Ode owns the conclusion. This structure ensures that gain realisation is something Ode actively certifies, not something Vivicta claims.</p>
+        <p style="margin-top:0.75rem">If Ode cannot or will not issue a Gain Confirmation Letter, tranche 3 is not payable. This creates a powerful incentive on both sides: Vivicta to deliver real, measurable value; Ode to commit to the organisational changes required to realise it.</p>
+      </div>
+
+      <div class="cc">
+        <h3>The pre-project — joint value identification</h3>
+        <p>Before implementation begins, Vivicta and Ode run a structured pre-project to identify, quantify, and sign off the business value available from the full D365 F&amp;O implementation. This pre-project is the business case for the implementation itself — and it follows the same Track 2 structure: jointly owned, jointly staffed, signed by the joint Steering Committee.</p>
+        <p style="margin-top:0.75rem">For an organisation of Ode's size and complexity, we expect to identify <strong style="color:var(--va)">NOK 15–25 million in process-level gains over the first three years</strong> — across finance automation, supply chain optimisation, production cost control, and manual effort reduction. These are not aspirational numbers: they will be built bottom-up, line by line, with Ode's own finance and operations teams during the pre-project.</p>
+        <p style="margin-top:0.75rem">The pre-project carries a modest fixed fee of NOK [P]M — paid by Ode, at cost, no margin — to ensure genuine commitment from both parties. If the pre-project does not produce a business case both parties can sign, the engagement does not proceed and Ode owes nothing further.</p>
+        <p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Elise: suggest pre-project fee of NOK 0.5–1M. This signals mutual commitment without being a barrier.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Illustrative example — full engagement</h3>
+        <div style="margin-top:0.5rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--vb);border-radius:3px;overflow:hidden;font-size:13px;margin-bottom:1rem;">
+          <div style="background:var(--vc);padding:1rem;text-align:center">
+            <div style="font-size:10px;color:var(--vgr);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Identified value</div>
+            <div style="font-size:22px;font-weight:700;color:var(--vw)">NOK 20M</div>
+            <div style="font-size:11px;color:var(--vgr);margin-top:4px">jointly agreed, 3 years</div>
+          </div>
+          <div style="background:var(--vc2);padding:1rem;text-align:center">
+            <div style="font-size:10px;color:var(--vgr);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Vivicta profit (30%)</div>
+            <div style="font-size:22px;font-weight:700;color:var(--va)">NOK 6M</div>
+            <div style="font-size:11px;color:var(--vgr);margin-top:4px">earned across tranches</div>
+          </div>
+          <div style="background:var(--vc);padding:1rem;text-align:center">
+            <div style="font-size:10px;color:var(--vgr);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Ode net gain</div>
+            <div style="font-size:22px;font-weight:700;color:#86efac">NOK 14M</div>
+            <div style="font-size:11px;color:var(--vgr);margin-top:4px">+ platform for next decade</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--vl)">Cost recovery (Track 1 AMS + Track 2 implementation costs) is in addition to the profit component above, and is fully transparent in the open-book dashboard. Section J provides the full 5-year commercial envelope across three scenarios. As a reference point for calibration: comparable Norwegian aquaculture D365 F&amp;O implementations of 200–400 FTE scope typically run NOK 8–12M for implementation services and NOK 3–5M per year in AMS — before Microsoft licensing at approximately NOK 2–3M per year for a user base of Ode's size.</p>
+      </div>
+
+      <div class="cc" style="border-color:#b45309;background:rgba(180,83,9,0.08)">
+        <h3 style="color:#f59e0b">⚑ Actions for Elise — Monday</h3>
+        <ul style="margin-top:0.5rem;padding-left:1.25rem;font-size:13px;color:#fcd34d;line-height:2.2">
+          <li>Confirm 30% of identified value as the profit envelope — right percentage?</li>
+          <li>Confirm 20–40–40 tranche split with leadership and CFO</li>
+          <li>Confirm pre-project fee [P] — suggest NOK 0.5–1M</li>
+          <li>Legal review of Gain Confirmation Letter concept — this needs to be watertight</li>
+          <li>Define the boundary between Track 1 (forvaltning) and Track 2 (forretningsdrevet) — this will be a recurring governance question and needs a clear decision rule in the contract</li>
+          <li>CFO: model cash flow implications — Track 1 provides steady monthly cost recovery; Track 2 profit is lumpy and back-loaded</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="pg" id="page-sF">
+      <div class="ey">Section F · Governance &amp; Operating Model</div>
+      <div class="pt">Structure that makes the partnership work</div>
+      <div class="ps">Weight: supports Vested-fit criterion · Status: draft</div>
+
+      <div class="cc">
+        <h3>Governance philosophy</h3>
+        <p>Governance in a Vested partnership is not about oversight — it is about joint decision-making. The forums proposed below are not status meetings where Vivicta reports to Ode. They are working sessions where both parties own the agenda, both parties bring data, and both parties make decisions together. The governance structure is designed to keep strategic alignment at the top, operational decisions as close to the work as possible, and escalation as rare as it should be in a healthy partnership.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Forum structure</h3>
+
+        <div style="margin-top:0.5rem;font-size:13px;color:var(--vl)">
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.75rem;">
+            <div style="background:rgba(62,207,142,0.12);padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Forum</div><strong style="color:var(--vw)">Joint Steering Committee</strong></div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Cadence</div>Quarterly</div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Chaired by</div>Alternating — Ode CEO / Vivicta Executive Sponsor</div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Participants</div>Ode CEO, CFO, COO · Vivicta Executive Sponsor, Delivery Lead</div>
+            </div>
+            <div style="padding:0.75rem 1rem;color:var(--vl)">Strategic direction, contract health, business case approvals for new Track 2 projects, Gain Confirmation Letter review, annual value share calculation, and exit &amp; continuity review. This forum has authority to amend the Desired Outcomes if Ode's business strategy changes materially.</div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.75rem;">
+            <div style="background:rgba(62,207,142,0.08);padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Forum</div><strong style="color:var(--vw)">Outcomes &amp; Value Board</strong></div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Cadence</div>Every 6 months</div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Chaired by</div>Ode CFO</div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Participants</div>Ode finance &amp; operations leads · Vivicta Delivery Lead, Data &amp; AI Lead</div>
+            </div>
+            <div style="padding:0.75rem 1rem;color:var(--vl)">DO performance measurement against baselines. Outcome bonus calculation and approval. AI/data use case backlog prioritisation. Track 2 project pipeline review. This is the forum where Vivicta's performance is formally assessed and where the outcome bonus pool for the period is agreed.</div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.75rem;">
+            <div style="background:rgba(62,207,142,0.05);padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Forum</div><strong style="color:var(--vw)">Delivery &amp; Run Forum</strong></div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Cadence</div>Monthly</div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Chaired by</div>Vivicta Delivery Lead</div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Participants</div>Ode super-user leads, project manager · Vivicta delivery team leads</div>
+            </div>
+            <div style="padding:0.75rem 1rem;color:var(--vl)">Sprint progress, release planning, issue resolution, open-book cost dashboard review, Track 1 / Track 2 boundary decisions at working level, support ticket trends, upcoming Microsoft release impact assessment.</div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;">
+            <div style="background:rgba(62,207,142,0.05);padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Forum</div><strong style="color:var(--vw)">Innovation &amp; Backlog Session</strong></div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Cadence</div>Monthly</div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Chaired by</div>Alternating</div>
+              <div><div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Participants</div>Ode operations &amp; business leads · Vivicta AI &amp; solution leads</div>
+            </div>
+            <div style="padding:0.75rem 1rem;color:var(--vl)">Continuous improvement backlog grooming. New Track 2 ideas assessed for business case potential. Innovation fund allocation. AI use case development and review. Industry intelligence sharing from Vivicta's wider Microsoft partner ecosystem.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>Named roles</h3>
+        <div style="margin-top:0.5rem;font-size:13px;color:var(--vl);display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <div style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Vivicta</div>
+            <div style="line-height:2.2">
+              <div><strong style="color:var(--vw)">Executive Sponsor</strong> — [Name], accountable to Joint Steering Committee</div>
+              <div><strong style="color:var(--vw)">Delivery Lead</strong> — [Name], single point of contact for Ode day-to-day</div>
+              <div><strong style="color:var(--vw)">Solution Architect</strong> — [Name], technical authority</div>
+              <div><strong style="color:var(--vw)">AMS Service Manager</strong> — [Name], Track 1 accountability</div>
+            </div>
+          </div>
+          <div>
+            <div style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Ode (proposed)</div>
+            <div style="line-height:2.2">
+              <div><strong style="color:var(--vw)">Executive Sponsor</strong> — nominated by Ode CEO</div>
+              <div><strong style="color:var(--vw)">Project Owner</strong> — internal Ode, authority to approve sprint content</div>
+              <div><strong style="color:var(--vw)">Super-user Leads</strong> — finance, supply chain, production, HR</div>
+              <div><strong style="color:var(--vw)">Gain Confirmation Authority</strong> — nominated by CFO</div>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:0.75rem;color:#fcd34d;font-size:13px;">⚑ Elise: insert named Vivicta individuals before submission. Ode will assess people quality at the workshop — names matter.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Track 1 / Track 2 boundary — the decision rule</h3>
+        <p>The most important governance decision in this model is determining whether a piece of work is Track 1 (forvaltning, cost recovery) or Track 2 (forretningsdrevet utvikling, business case required). The decision rule is simple and contractually defined:</p>
+        <p style="margin-top:0.75rem"><strong style="color:var(--va)">Track 1</strong> if the work is required to maintain the existing platform at its current functional level — including Microsoft-mandated updates, security patches, bug fixes, and configuration changes that restore rather than extend capability.</p>
+        <p style="margin-top:0.75rem"><strong style="color:var(--va)">Track 2</strong> if the work creates new or materially improved business capability that did not exist before — regardless of whether it is technically a "development" or a "configuration" task.</p>
+        <p style="margin-top:0.75rem">Boundary disputes are resolved at the Delivery &amp; Run Forum within 5 business days. If unresolved, escalation goes to the Outcomes &amp; Value Board. Neither party can unilaterally classify work. The Delivery Lead (Vivicta) and Project Owner (Ode) must both agree on classification before work begins.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Escalation</h3>
+        <p>Escalation is explicitly not a sign of failure — it is a designed mechanism to resolve genuine disagreements quickly. The escalation ladder has three levels: (1) Delivery Lead + Project Owner within 5 days; (2) Outcomes &amp; Value Board within 15 days; (3) Joint Steering Committee within 30 days. If the Joint Steering Committee cannot resolve the matter, both parties agree to a structured mediation process before any legal action — with a jointly appointed mediator from a pre-agreed panel.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Exit &amp; continuity</h3>
+        <p>Ode can exit this contract at any time with 6 months' written notice, without penalty beyond the notice period and any Track 2 tranches already triggered. On exit, Vivicta is contractually required to: transfer all configuration, code, and documentation to Ode or a nominated successor partner within the notice period; provide 40 hours of transition support per month during the notice period at cost; and release all access to Ode's Azure tenant, DevOps environment, and data assets within 5 business days of contract end. There is no lock-in. Ode owns everything.</p>
+      </div>
+
+    </div>
+
+    <div class="pg" id="page-sG">
+      <div class="ey">Section G · Security, Compliance &amp; Architecture</div>
+      <div class="pt">Built secure by design, not by checkbox</div>
+      <div class="ps">Weight: 10% of evaluation · Status: draft</div>
+
+      <div class="cc">
+        <h3>Deployment architecture</h3>
+        <p>D365 Finance &amp; Supply Chain Management will be deployed on Microsoft Azure, hosted in the Norway East and Norway West regions. All Ode data — financial, operational, and personal — remains within Norway and the EU/EEA at all times. There is no data residency exception. Vivicta's nearshore team members in the Baltics and Czech Republic operate under the same Entra ID tenant and conditional access policies as onshore staff; they access Ode's environments through controlled, audited connections with no local data storage permitted on non-Norwegian infrastructure.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Identity and access</h3>
+        <p>All access to Ode's D365 environment is governed through Microsoft Entra ID with conditional access policies enforcing multi-factor authentication, device compliance, and location-based access controls. Role-based access control (RBAC) is implemented on least-privilege principles — every user and every Vivicta consultant has access only to the data and functions required for their role. Privileged access (system administration, configuration changes) requires just-in-time elevation through Entra Privileged Identity Management with a full audit trail. No standing privileged access is permitted.</p>
+        <p style="margin-top:0.75rem">Separation of duties is enforced in D365 for all financial workflows — no single user can both create and approve a payment, journal entry, or purchase order above defined thresholds. The separation of duties matrix will be designed jointly with Ode's CFO and internal audit function during phase 1.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Norwegian regulatory compliance</h3>
+        <p>D365 will be configured to meet all applicable Norwegian regulatory requirements from go-live: MVA (Norwegian VAT), the Norwegian Bookkeeping Act (Bokføringsloven), Altinn electronic reporting, SAF-T financial reporting, and payroll tax reporting. Vivicta maintains a dedicated Norwegian compliance practice and will ensure that every Microsoft release update is assessed for regulatory impact before deployment — with no compliance gap permitted between a regulatory effective date and D365 configuration.</p>
+        <p style="margin-top:0.75rem">Food safety and traceability obligations under Norwegian and EU regulations (including the EU General Food Law) will be addressed through D365's standard batch and serial number tracking, extended for Ode's aquaculture value chain. Batch traceability from broodstock through hatchery, grow-out, harvesting, and processing to final customer will be a phase 1 design requirement — not a phase 2 afterthought.</p>
+      </div>
+
+      <div class="cc">
+        <h3>CSRD and sustainability reporting</h3>
+        <p>Ode will be subject to CSRD reporting obligations as the regulatory scope expands to Norwegian mid-sized companies. Vivicta's AMS scope includes a regulatory monitoring commitment: we will assess every new EU and Norwegian sustainability reporting requirement against Ode's D365 configuration and flag any gap at the Delivery &amp; Run Forum no later than 6 months before the effective date. Microsoft Sustainability Manager and Fabric-based ESG reporting will be evaluated as part of the phase 2 AI and data roadmap.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Solution architecture — four layers</h3>
+        <p>Vivicta proposes a four-layer platform architecture for Ode, designed specifically for Norwegian aquaculture value chains:</p>
+        <div style="margin-top:0.75rem;display:grid;grid-template-columns:auto 1fr;gap:1px;background:var(--vb);border-radius:3px;overflow:hidden;font-size:13px;">
+          <div style="background:rgba(62,207,142,0.15);padding:0.75rem 1rem;font-weight:700;color:var(--va);text-align:center;">1</div>
+          <div style="background:var(--vc);padding:0.75rem 1rem;"><strong style="color:var(--vw)">System of Record — D365 F&amp;O</strong> <span style="color:var(--vgr)">All financial transactions, inventory movements, production orders, procurement, and regulatory reporting (SAF-T, MVA, Altinn, A-melding, grunnrenteskatt). Fish generation financial dimension enables lifecycle P&amp;L per batch. Catch-weight items for live fish inventory.</span></div>
+          <div style="background:rgba(62,207,142,0.08);padding:0.75rem 1rem;font-weight:700;color:var(--va);text-align:center;">2</div>
+          <div style="background:var(--vc);padding:0.75rem 1rem;"><strong style="color:var(--vw)">Operational Extension — Dataverse</strong> <span style="color:var(--vgr)">Biological operations data (population events, biomass, sea lice, feed consumption, health treatments) lives in Dataverse — not in D365 tables. D365 is optimised for financial transactions with strict posting rules; biological event journals need flexible schema, simpler entry, and faster iteration. Virtual Entities provide live read access to D365 data from Dataverse without data duplication. Write-back to D365 via Power Automate OData for all cost-consequential events.</span></div>
+          <div style="background:rgba(62,207,142,0.05);padding:0.75rem 1rem;font-weight:700;color:var(--va);text-align:center;">3</div>
+          <div style="background:var(--vc);padding:0.75rem 1rem;"><strong style="color:var(--vw)">Analytics &amp; Reporting — Microsoft Fabric + Power BI</strong> <span style="color:var(--vgr)">Unified lakehouse blending Dataverse biological data, D365 financial/logistics data, and operational system feeds (Mercatus, Innova, Maritech). Shared semantic model powers all Power BI dashboards. All reports embedded within operational interfaces so users never leave their working environment to access analytics.</span></div>
+          <div style="background:rgba(62,207,142,0.03);padding:0.75rem 1rem;font-weight:700;color:var(--va);text-align:center;">4</div>
+          <div style="background:var(--vc);padding:0.75rem 1rem;"><strong style="color:var(--vw)">Agentic AI — Copilot Studio + Power Automate</strong> <span style="color:var(--vgr)">AI agents consume data from all three layers and trigger actions in D365, Dataverse, and Power Automate. Conversational agents (Copilot Studio, accessible via Teams) for human-in-the-loop decisions. Autonomous agents (Power Automate) for event-driven operations. Azure OpenAI for natural language reasoning and disclosure drafting.</span></div>
+        </div>
+        <p style="margin-top:1rem">All integrations between D365 and Ode's operational systems (Mercatus Farmer, Innova, Maritech ERP-ANY, Visma Payroll) use Azure Integration Services — Azure API Management and Logic Apps — with all logic version-controlled in Ode's Azure DevOps tenant. No point-to-point integrations. The integration layer is designed to be replaceable without touching D365 core configuration, protecting Ode's long-term flexibility.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Security incident response</h3>
+        <p>Vivicta maintains a 24/7 security operations capability for managed D365 environments. Our target response time for a critical security incident affecting Ode's environment is 30 minutes to initial response and 4 hours to containment. All incidents are logged, root-caused, and reported to Ode's IT and leadership team within 24 hours of resolution. The incident response procedure will be documented and agreed with Ode's IT team during phase 1 mobilisation. DO6 performance (zero critical incidents) is directly tied to Vivicta's outcome bonus — we have a financial incentive to keep Ode's environment secure, not just a contractual obligation.</p>
+      </div>
+    </div>
+
+    <div class="pg" id="page-sH">
+      <div class="ey">Section H · AI, Data &amp; Platform Vision</div>
+      <div class="pt">Seven agents. Built for Norwegian aquaculture.</div>
+      <div class="ps">Weight: supports DO7 and Vested-fit criteria · Status: draft</div>
+
+      <div class="cc">
+        <h3>Our AI position</h3>
+        <p>Vivicta is a Microsoft AI Inner Circle partner — fewer than 1% of Microsoft partners globally hold this designation, awarded for demonstrated AI delivery in production D365 environments, not in demos. We have early access to Microsoft's Copilot and Fabric engineering roadmap and a practice of consultants who have designed and deployed agentic AI for complex operational and financial workflows in Norwegian industries — including the unique combination of biological asset accounting, resource rent tax, and multi-site aquaculture operations that Ode operates.</p>
+        <p style="margin-top:0.75rem">We deploy AI from day one. We sequence it deliberately — data foundation first, agents second — and we hold every agent accountable to a signed A3 business case before development begins.</p>
+      </div>
+
+      <div class="cc">
+        <h3>The data foundation — Microsoft Fabric from go-live</h3>
+        <p>Microsoft Fabric connects to Ode's D365 environment at go-live. All operational data — D365 financial transactions, Mercatus Farmer production data, Innova biological events, Maritech sales and logistics — flows into a unified OneLake lakehouse in real time. This is the prerequisite for every AI agent below. Without it, agents work on stale exports. With it, they have a live, structured, queryable asset that improves as Ode's operations run through D365.</p>
+        <p style="margin-top:0.75rem">The Fabric lakehouse is governed through a jointly agreed data model — Vivicta proposes, Ode approves — with data quality rules, lineage tracking, and access controls aligned to the same Entra ID model as D365. Power BI dashboards for operational and financial reporting are built on Fabric from day one, replacing Excel-based reporting.</p>
+      </div>
+
+      <div class="cc">
+        <h3>The seven-agent portfolio — VCIM Phase 1 and Phase 2</h3>
+        <p>Vivicta proposes a portfolio of seven AI agents designed specifically for Norwegian salmon and cod aquaculture operations. Four deploy in VCIM Phase 1 (targeting DO7's commitment of 4 agents in production); three additional agents deploy in Phase 2 as the data foundation matures. Combined annual cost avoidance across the full portfolio: approximately <strong style="color:var(--va)">NOK 2–3 million</strong>, with further upside from harvest forecast accuracy and grunnrenteskatt compliance automation.</p>
+
+        <div style="margin-top:1rem">
+          <div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem">VCIM Phase 1 — Four agents</div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(62,207,142,0.12);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;">
+              <div><strong style="color:var(--vw)">Agent 1 — Finance Controller Close Assistant</strong></div>
+              <span style="font-size:10px;color:var(--va);background:rgba(62,207,142,0.15);padding:2px 8px;border-radius:2px;">Copilot Studio · DO2</span>
+            </div>
+            <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
+              Orchestrates month-end close end-to-end. Triggers biological asset valuation, Fish Pool MTM, NRV ceiling test, and FX revaluation agents in dependency order. Runs 12 automated validation checks. Produces natural-language variance analysis ("why is COGS up 15% vs last month?") and compiles the close package for CFO sign-off. Accessible via Microsoft Teams. <strong style="color:var(--va)">Target: month-end from 3 days to 0.5 days. 85% manual effort reduction. 120+ hours saved per year.</strong>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(62,207,142,0.12);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;">
+              <div><strong style="color:var(--vw)">Agent 2 — Harvest Demand Forecasting Agent</strong></div>
+              <span style="font-size:10px;color:var(--va);background:rgba(62,207,142,0.15);padding:2px 8px;border-radius:2px;">Power Automate · DO3 + DO7</span>
+            </div>
+            <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
+              Combines Mercatus biomass data (generation weight, mortality rate, growth trajectory), Maritech sales orders, and Fish Pool forward price curves to generate weekly harvest volume and timing recommendations. Feeds directly into D365 production orders. Understands where each fish generation is in its lifecycle and adjusts parameters accordingly. <strong style="color:var(--va)">Target: 25% reduction in harvest forecast variance. Fewer emergency harvests. Better price realisation.</strong>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(62,207,142,0.12);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;">
+              <div><strong style="color:var(--vw)">Agent 3 — Feed Cost Anomaly Detection Agent</strong></div>
+              <span style="font-size:10px;color:var(--va);background:rgba(62,207,142,0.15);padding:2px 8px;border-radius:2px;">Power Automate · DO2 + DO3</span>
+            </div>
+            <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
+              Monitors feed cost per production order in real time against expected feed conversion ratio (FCR) benchmarks. Flags deviations above agreed thresholds within 24 hours — compared to current monthly discovery cycle. Drafts an exception report for the production lead with root cause hypotheses. <strong style="color:var(--va)">Target: anomaly detection latency from 30 days to 24 hours. 1–2% feed cost reduction through earlier intervention.</strong>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(62,207,142,0.12);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;">
+              <div><strong style="color:var(--vw)">Agent 4 — Grunnrenteskatt Tax Advisor</strong></div>
+              <span style="font-size:10px;color:var(--va);background:rgba(62,207,142,0.15);padding:2px 8px;border-radius:2px;">Copilot Studio · DO6 + DO7</span>
+            </div>
+            <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
+              An always-available AI tax advisor that understands Norwegian resource rent tax (Havbruksskatteloven) and answers questions, runs scenario analyses, and prepares tax return data — eliminating dependency on external consultants for routine queries. Polls SSB norm prices on publication; when new prices appear, proactively notifies finance with impact analysis vs prior assumptions. Calculates investment allowance from D365 Fixed Assets. Prepares RF-1151 XML for Altinn submission with CFO approval gate. <strong style="color:var(--va)">Target: eliminate routine external tax consultancy spend. Zero compliance gaps on norm price changes.</strong>
+            </div>
+          </div>
+
+          <div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;margin-top:1rem">VCIM Phase 2 — Three additional agents</div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(62,207,142,0.07);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;">
+              <div><strong style="color:var(--vw)">Agent 5 — IAS 41 / NRS 8 Biological Asset Valuation Agent</strong></div>
+              <span style="font-size:10px;color:var(--vgr);background:var(--vb);padding:2px 8px;border-radius:2px;">Power Automate · Phase 2</span>
+            </div>
+            <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
+              Calculates fair value of biological assets (live fish in sea) per generation monthly — combining biomass data from Mercatus, Fish Pool forward prices, and discount rates. Detects unusual fair value swings (e.g. generation FV drops 30% — likely a mortality event) before posting. Uses Azure OpenAI to draft the IAS 41 / NRS 8 fair value disclosure note for the quarterly report. Triggers the NRV Ceiling Test Agent after each valuation.</div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(62,207,142,0.07);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;">
+              <div><strong style="color:var(--vw)">Agent 6 — NRV Ceiling Test Agent</strong></div>
+              <span style="font-size:10px;color:var(--vgr);background:var(--vb);padding:2px 8px;border-radius:2px;">Power Automate · Phase 2</span>
+            </div>
+            <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
+              Continuously compares accumulated production cost per generation against Fish Pool forward prices minus selling costs. Alerts if NRV headroom drops below 10%. When Fish Pool prices recover, calculates the write-back amount (capped per NRS 8), prepares the reversal journal, and routes for approval. Generates a per-generation NRV test workpaper for auditor access in SharePoint.</div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;">
+            <div style="background:rgba(62,207,142,0.07);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between;">
+              <div><strong style="color:var(--vw)">Agent 7 — FX Hedge Treasury Agent</strong></div>
+              <span style="font-size:10px;color:var(--vgr);background:var(--vb);padding:2px 8px;border-radius:2px;">Copilot Studio · Phase 2</span>
+            </div>
+            <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
+              Conversational treasury agent for FX exposure analysis and hedge effectiveness testing (IFRS 9 80–125% corridor). Revalues open FX forwards daily, stores MTM snapshots, and alerts the CFO if cumulative unrealised loss on any counterparty exceeds defined thresholds. Recommends hedge sizes and tenors based on open Maritech sales orders and Fish Pool forward curves. Posts settlement journals to D365 via OData.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>Technology stack — 100% Microsoft-native</h3>
+        <div style="margin-top:0.5rem;font-size:13px;color:var(--vl);display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+          <div style="background:var(--vc2);border-radius:3px;padding:0.75rem;"><div style="color:var(--va);font-size:11px;font-weight:500;margin-bottom:4px">Copilot Studio</div>Hosts conversational agents (1, 4, 7). Custom topics, knowledge sources, Teams integration, autonomous triggers.</div>
+          <div style="background:var(--vc2);border-radius:3px;padding:0.75rem;"><div style="color:var(--va);font-size:11px;font-weight:500;margin-bottom:4px">Power Automate Premium</div>Hosts autonomous process agents (2, 3, 5, 6). Event-driven triggers, self-healing retry, D365 OData write-back. Included in D365 licence.</div>
+          <div style="background:var(--vc2);border-radius:3px;padding:0.75rem;"><div style="color:var(--va);font-size:11px;font-weight:500;margin-bottom:4px">Azure OpenAI (GPT-4o)</div>Natural language reasoning, variance analysis, disclosure drafting, tax Q&amp;A. Pay-per-token (~NOK 5–8K/month estimated).</div>
+          <div style="background:var(--vc2);border-radius:3px;padding:0.75rem;"><div style="color:var(--va);font-size:11px;font-weight:500;margin-bottom:4px">Microsoft Fabric</div>Grunnrenteskatt calculation engine, norm price blending, unified lakehouse for all data sources.</div>
+          <div style="background:var(--vc2);border-radius:3px;padding:0.75rem;"><div style="color:var(--va);font-size:11px;font-weight:500;margin-bottom:4px">Dataverse</div>Agent state management, activity logging, calculation tables, price feed storage. Included in Power Apps / D365 licence.</div>
+          <div style="background:var(--vc2);border-radius:3px;padding:0.75rem;"><div style="color:var(--va);font-size:11px;font-weight:500;margin-bottom:4px">Microsoft Teams + SharePoint</div>Primary conversational channel for Copilot agents. Audit trail storage, close packages, NRV workpapers.</div>
+        </div>
+        <p style="margin-top:0.75rem;font-size:13px;color:var(--vgr)">Zero ISV dependencies. Every component is already included in or compatible with the D365 Finance &amp; Supply Chain Management enterprise licence.</p>
+      </div>
+
+      <div class="cc">
+        <h3>The platform vision at VCIM Phase 3</h3>
+        <p>By Phase 3, Ode's digital platform should consist of: a fully current D365 F&amp;O instance on the latest Microsoft release with zero customisation debt; a Fabric lakehouse serving as single source of truth for all operational and financial data; all seven AI agents handling the majority of routine financial decisions autonomously; Power BI dashboards embedded in every operational interface; and an internal team of certified D365 and Power Platform super-users capable of designing, testing, and deploying simple improvements without Vivicta's involvement. Vivicta's human team at this stage focuses almost entirely on business-driven Track 2 development — identifying and delivering the next wave of value, not maintaining transactions.</p>
+      </div>
+    </div>
+
+    <div class="pg" id="page-sI">
+      <div class="ey">Section I · Risk &amp; Assumptions</div>
+      <div class="pt">Top 10 risks — owned, not listed</div>
+      <div class="ps">Weight: supports overall credibility · Status: draft</div>
+
+      <div class="cc">
+        <h3>Our approach to risk</h3>
+        <p>We do not list risks to demonstrate thoroughness. We list them because in a gain-based commercial model, unmanaged risk directly reduces our income. Every risk below has a named owner, a mitigation, and — where relevant — a link to the tranche attribution framework in Section E. If a risk materialises due to factors within Vivicta's control, our tranche 3 is reduced. If it materialises due to factors outside our control, the attribution framework protects both parties.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Top 10 risks</h3>
+        <div style="margin-top:0.5rem;font-size:13px;color:var(--vl)">
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(239,68,68,0.12);padding:0.6rem 1rem;display:flex;align-items:center;gap:12px;">
+              <span style="font-weight:700;color:#f87171;font-size:15px;width:24px;">R1</span>
+              <span style="font-weight:600;color:var(--vw)">Data quality in Visma ERP is worse than expected</span>
+              <span style="margin-left:auto;font-size:10px;padding:2px 8px;background:rgba(239,68,68,0.2);color:#f87171;border-radius:2px;">HIGH</span>
+            </div>
+            <div style="padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Impact</span>Migration delayed, go-live date moves, phase 1 cost increases.</div>
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Mitigation</span>Data quality sprint in week 1 of mobilisation. Agreed acceptance criteria before migration begins. Fixed-price envelope absorbs Vivicta's remediation effort; timeline impact shared.</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(239,68,68,0.12);padding:0.6rem 1rem;display:flex;align-items:center;gap:12px;">
+              <span style="font-weight:700;color:#f87171;font-size:15px;width:24px;">R2</span>
+              <span style="font-weight:600;color:var(--vw)">Ode's key resource not available at critical decision points</span>
+              <span style="margin-left:auto;font-size:10px;padding:2px 8px;background:rgba(239,68,68,0.2);color:#f87171;border-radius:2px;">HIGH</span>
+            </div>
+            <div style="padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Impact</span>Sprint paused, design decisions made without business validation, gain realisation delayed.</div>
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Mitigation</span>Resource availability is a contractual Ode obligation (Section D). If Ode resource unavailability causes gain shortfall, tranche 3 attribution reflects this. Vivicta pauses rather than proceeds without sign-off.</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(245,158,11,0.12);padding:0.6rem 1rem;display:flex;align-items:center;gap:12px;">
+              <span style="font-weight:700;color:#fcd34d;font-size:15px;width:24px;">R3</span>
+              <span style="font-weight:600;color:var(--vw)">Mercatus / Innova API limitations block real-time integration</span>
+              <span style="margin-left:auto;font-size:10px;padding:2px 8px;background:rgba(245,158,11,0.2);color:#fcd34d;border-radius:2px;">MEDIUM</span>
+            </div>
+            <div style="padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Impact</span>DO2 (real-time business truth) delayed. Manual reconciliation persists longer than planned.</div>
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Mitigation</span>API discovery sprint in mobilisation week 2. If API limitations require custom middleware, this is scoped as a Track 2 project with its own business case. Ode holds vendor relationships and will engage Mercatus/Innova on API access.</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(245,158,11,0.12);padding:0.6rem 1rem;display:flex;align-items:center;gap:12px;">
+              <span style="font-weight:700;color:#fcd34d;font-size:15px;width:24px;">R4</span>
+              <span style="font-weight:600;color:var(--vw)">User adoption below threshold — super-users overloaded by day job</span>
+              <span style="margin-left:auto;font-size:10px;padding:2px 8px;background:rgba(245,158,11,0.2);color:#fcd34d;border-radius:2px;">MEDIUM</span>
+            </div>
+            <div style="padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Impact</span>DO5 miss. Gain realisation delayed because processes run in D365 but not correctly. Tranche 3 at risk.</div>
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Mitigation</span>Super-user availability is a contractual Ode obligation (min. 50% during active sprint). Vivicta's dedicated Change Lead monitors adoption monthly and escalates to Project Owner if below threshold. DO5 is in the outcome bonus — Vivicta has financial incentive to resolve this.</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(245,158,11,0.12);padding:0.6rem 1rem;display:flex;align-items:center;gap:12px;">
+              <span style="font-weight:700;color:#fcd34d;font-size:15px;width:24px;">R5</span>
+              <span style="font-weight:600;color:var(--vw)">Scope of aquaculture-specific requirements underestimated in pre-project</span>
+              <span style="margin-left:auto;font-size:10px;padding:2px 8px;background:rgba(245,158,11,0.2);color:#fcd34d;border-radius:2px;">MEDIUM</span>
+            </div>
+            <div style="padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Impact</span>Business case value overstated. Tranche 3 lower than expected.</div>
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Mitigation</span>Pre-project includes onsite operational discovery at Ode's sea sites and processing facility. Business case is built bottom-up with Ode's operations leads — not top-down from benchmarks. If scope changes materially, business case is revised and re-signed before implementation begins.</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(245,158,11,0.12);padding:0.6rem 1rem;display:flex;align-items:center;gap:12px;">
+              <span style="font-weight:700;color:#fcd34d;font-size:15px;width:24px;">R6</span>
+              <span style="font-weight:600;color:var(--vw)">Microsoft D365 release introduces breaking change</span>
+              <span style="margin-left:auto;font-size:10px;padding:2px 8px;background:rgba(245,158,11,0.2);color:#fcd34d;border-radius:2px;">MEDIUM</span>
+            </div>
+            <div style="padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Impact</span>Operational disruption. Emergency fix required. Track 1 cost spike.</div>
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Mitigation</span>All D365 releases are assessed and tested in Ode's sandbox environment before production deployment. Vivicta's Inner Circle relationship gives advance notice of breaking changes. Release management is a Track 1 obligation — cost covered in baseline fee.</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(99,102,241,0.12);padding:0.6rem 1rem;display:flex;align-items:center;gap:12px;">
+              <span style="font-weight:700;color:#a5b4fc;font-size:15px;width:24px;">R7</span>
+              <span style="font-weight:600;color:var(--vw)">Gain attribution dispute between Vivicta and Ode</span>
+              <span style="margin-left:auto;font-size:10px;padding:2px 8px;background:rgba(99,102,241,0.2);color:#a5b4fc;border-radius:2px;">LOW–MEDIUM</span>
+            </div>
+            <div style="padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Impact</span>Tranche 3 payment disputed. Relationship strain.</div>
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Mitigation</span>Attribution framework agreed and signed in the pre-project before any implementation begins. Gain Confirmation Letter is Ode's document — Ode owns the conclusion. Escalation ladder in Section F resolves disputes within 30 days before any legal action.</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(99,102,241,0.12);padding:0.6rem 1rem;display:flex;align-items:center;gap:12px;">
+              <span style="font-weight:700;color:#a5b4fc;font-size:15px;width:24px;">R8</span>
+              <span style="font-weight:600;color:var(--vw)">Ode's growth plan accelerates faster than the platform can absorb</span>
+              <span style="margin-left:auto;font-size:10px;padding:2px 8px;background:rgba(99,102,241,0.2);color:#a5b4fc;border-radius:2px;">LOW–MEDIUM</span>
+            </div>
+            <div style="padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Impact</span>New site onboarding queue builds up. DO4 (time-to-value) misses stretch target.</div>
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Mitigation</span>Vivicta's nearshore team provides elastic onboarding capacity. The 6-week onboarding runbook is designed for parallel execution — multiple sites can be onboarded simultaneously. If Ode's growth materially exceeds the plan, both parties agree a capacity supplement at the next Outcomes &amp; Value Board.</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(99,102,241,0.12);padding:0.6rem 1rem;display:flex;align-items:center;gap:12px;">
+              <span style="font-weight:700;color:#a5b4fc;font-size:15px;width:24px;">R9</span>
+              <span style="font-weight:600;color:var(--vw)">Key Vivicta personnel change during the engagement</span>
+              <span style="margin-left:auto;font-size:10px;padding:2px 8px;background:rgba(99,102,241,0.2);color:#a5b4fc;border-radius:2px;">LOW–MEDIUM</span>
+            </div>
+            <div style="padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Impact</span>Knowledge loss, relationship disruption, delivery risk.</div>
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Mitigation</span>All project knowledge lives in Ode's Azure DevOps tenant — not in individuals' heads. Any Vivicta key personnel change requires 30 days' notice and a structured handover. Ode has approval rights on the replacement for the Delivery Lead and Solution Architect roles.</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--vb);border-radius:3px;overflow:hidden;margin-bottom:0.6rem;">
+            <div style="background:rgba(99,102,241,0.12);padding:0.6rem 1rem;display:flex;align-items:center;gap:12px;">
+              <span style="font-weight:700;color:#a5b4fc;font-size:15px;width:24px;">R10</span>
+              <span style="font-weight:600;color:var(--vw)">AI use cases do not produce measurable P&amp;L impact in Phase 1</span>
+              <span style="margin-left:auto;font-size:10px;padding:2px 8px;background:rgba(99,102,241,0.2);color:#a5b4fc;border-radius:2px;">LOW</span>
+            </div>
+            <div style="padding:0.75rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Impact</span>DO7 partially missed. Credibility of VCIM AI trajectory weakened.</div>
+              <div><span style="color:var(--va);font-size:10px;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:3px">Mitigation</span>Each AI agent has its own A3 business case with agreed KPIs before development begins. We select agents where measurable impact is demonstrable within 90 days of deployment — not aspirational. If an agent underperforms, it is replaced in the next Innovation &amp; Backlog Session with a higher-confidence use case.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>Key assumptions</h3>
+        <p>The following assumptions underpin this response. If any of these are incorrect, Vivicta reserves the right to revise the commercial proposal before contract signature:</p>
+        <ul style="margin-top:0.75rem;padding-left:1.25rem;line-height:2.2;font-size:13px;color:var(--vl)">
+          <li>Ode's legal entity structure (Ode Land AS, Ode Hav AS, Ode Processing &amp; Sales AS) is stable for the duration of the engagement.</li>
+          <li>Mercatus Farmer and Innova provide documented APIs or data export capabilities sufficient for real-time or near-real-time integration.</li>
+          <li>Ode holds active Microsoft licences or is prepared to procure D365 Finance &amp; Supply Chain Management licences through Vivicta at Microsoft list price.</li>
+          <li>The Visma ERP system will be fully decommissioned within 30 days of D365 go-live — parallel running beyond this period is not in scope.</li>
+          <li>Ode's nominated super-users will be available at the minimum commitment levels defined in Section D throughout their active phases.</li>
+          <li>The pre-project will commence no later than 4 weeks after contract signature.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pg" id="page-sJ">
+      <div class="ey">Section J · Commercial Terms Summary</div>
+      <div class="pt">5 years · 3 scenarios · full transparency</div>
+      <div class="ps">Weight: 15% TCO criterion · Status: draft — Elise to insert actual figures before submission</div>
+
+      <div class="cc">
+        <h3>How to read this section</h3>
+        <p>Ode has asked for a one-page commercial summary across 5 years in three scenarios: Desired Outcomes not achieved, achieved, and exceeded. We present all three below. The figures use illustrative NOK values — Elise must replace these with Vivicta's actual cost model before submission. The structure and logic are final; only the numbers change.</p>
+        <p style="margin-top:0.75rem">All figures are exclusive of Norwegian VAT. Microsoft licensing is pass-through at list price with zero Vivicta margin. Track 1 costs (baseline fee) are shown at Vivicta's cost — no margin is included. Vivicta's commercial return appears only in the outcome bonus and value share lines.</p>
+      </div>
+
+      <div class="cc">
+        <h3>The three scenarios</h3>
+
+        <div style="margin-top:0.75rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--vb);border-radius:3px;overflow:hidden;font-size:12px;margin-bottom:1.25rem;">
+          <div style="background:rgba(239,68,68,0.08);padding:0.75rem 1rem;">
+            <div style="font-size:10px;color:#f87171;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Scenario A — DOs not achieved</div>
+            <div style="color:var(--vl);line-height:1.7">Desired Outcomes are partially or not met. Vivicta earns cost recovery only — zero outcome bonus, zero value share. Tranche 3 of any Track 2 projects is prorated to actual gain realisation. Ode pays only for what was delivered, not for what was promised.</div>
+          </div>
+          <div style="background:rgba(62,207,142,0.08);padding:0.75rem 1rem;">
+            <div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Scenario B — DOs achieved</div>
+            <div style="color:var(--vl);line-height:1.7">All Desired Outcomes met at or above baseline target. Full outcome bonus earned. Track 2 tranche 3 paid in full. Value share not triggered (performance at target, not above stretch). Both parties benefit: Ode achieves its business case, Vivicta earns a fair return.</div>
+          </div>
+          <div style="background:rgba(134,239,172,0.08);padding:0.75rem 1rem;">
+            <div style="font-size:10px;color:#86efac;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Scenario C — DOs exceeded</div>
+            <div style="color:var(--vl);line-height:1.7">Desired Outcomes exceeded above stretch targets. Full bonus earned plus value share triggered: 80% to Ode, 20% to Vivicta on incremental value above stretch. Both parties earn above-market returns. This is the scenario the model is designed to create.</div>
+          </div>
+        </div>
+
+        <div style="font-size:13px;color:var(--vl)">
+          <div style="display:grid;grid-template-columns:2fr repeat(5,1fr);gap:4px 8px;line-height:2;margin-bottom:0.5rem;">
+            <span style="color:var(--va);font-weight:500">Item (NOK M)</span>
+            <span style="color:var(--va);font-weight:500;text-align:right">Y1</span>
+            <span style="color:var(--va);font-weight:500;text-align:right">Y2</span>
+            <span style="color:var(--va);font-weight:500;text-align:right">Y3</span>
+            <span style="color:var(--va);font-weight:500;text-align:right">Y4</span>
+            <span style="color:var(--va);font-weight:500;text-align:right">Y5</span>
+          </div>
+
+          <div style="background:rgba(62,207,142,0.05);border-radius:3px;padding:0.5rem 0.75rem;margin-bottom:4px;">
+            <div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Track 1 — Baseline (all scenarios, at cost)</div>
+            <div style="display:grid;grid-template-columns:2fr repeat(5,1fr);gap:4px 8px;line-height:2;">
+              <span>Implementation (Phase 1+2)</span><span style="text-align:right">[X]</span><span style="text-align:right">[Y]</span><span style="text-align:right">—</span><span style="text-align:right">—</span><span style="text-align:right">—</span>
+              <span>AMS run fee (at cost)</span><span style="text-align:right">—</span><span style="text-align:right">[Z/2]</span><span style="text-align:right">[Z]</span><span style="text-align:right">[Z]</span><span style="text-align:right">[Z]</span>
+              <span>Microsoft licensing</span><span style="text-align:right">[L]</span><span style="text-align:right">[L]</span><span style="text-align:right">[L]</span><span style="text-align:right">[L]</span><span style="text-align:right">[L]</span>
+              <span>Innovation fund</span><span style="text-align:right">0.75</span><span style="text-align:right">0.75</span><span style="text-align:right">0.75</span><span style="text-align:right">0.75</span><span style="text-align:right">0.75</span>
+            </div>
+          </div>
+
+          <div style="background:rgba(239,68,68,0.05);border-radius:3px;padding:0.5rem 0.75rem;margin-bottom:4px;">
+            <div style="font-size:10px;color:#f87171;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Scenario A additions — DOs not achieved</div>
+            <div style="display:grid;grid-template-columns:2fr repeat(5,1fr);gap:4px 8px;line-height:2;">
+              <span>Outcome bonus</span><span style="text-align:right">—</span><span style="text-align:right">—</span><span style="text-align:right">—</span><span style="text-align:right">—</span><span style="text-align:right">—</span>
+              <span>Track 2 tranche 3 (prorated)</span><span style="text-align:right">—</span><span style="text-align:right">[P×%]</span><span style="text-align:right">[P×%]</span><span style="text-align:right">[P×%]</span><span style="text-align:right">[P×%]</span>
+              <span style="color:#f87171;font-weight:500">Total Scenario A</span><span style="text-align:right;color:#f87171">[TA1]</span><span style="text-align:right;color:#f87171">[TA2]</span><span style="text-align:right;color:#f87171">[TA3]</span><span style="text-align:right;color:#f87171">[TA4]</span><span style="text-align:right;color:#f87171">[TA5]</span>
+            </div>
+          </div>
+
+          <div style="background:rgba(62,207,142,0.05);border-radius:3px;padding:0.5rem 0.75rem;margin-bottom:4px;">
+            <div style="font-size:10px;color:var(--va);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Scenario B additions — DOs achieved</div>
+            <div style="display:grid;grid-template-columns:2fr repeat(5,1fr);gap:4px 8px;line-height:2;">
+              <span>Outcome bonus (full)</span><span style="text-align:right">—</span><span style="text-align:right">[B/2]</span><span style="text-align:right">[B]</span><span style="text-align:right">[B]</span><span style="text-align:right">[B]</span>
+              <span>Track 2 tranche 3 (full)</span><span style="text-align:right">—</span><span style="text-align:right">[P×70%]</span><span style="text-align:right">[P×70%]</span><span style="text-align:right">[P×70%]</span><span style="text-align:right">[P×70%]</span>
+              <span style="color:var(--va);font-weight:500">Total Scenario B</span><span style="text-align:right;color:var(--va)">[TB1]</span><span style="text-align:right;color:var(--va)">[TB2]</span><span style="text-align:right;color:var(--va)">[TB3]</span><span style="text-align:right;color:var(--va)">[TB4]</span><span style="text-align:right;color:var(--va)">[TB5]</span>
+            </div>
+          </div>
+
+          <div style="background:rgba(134,239,172,0.05);border-radius:3px;padding:0.5rem 0.75rem;">
+            <div style="font-size:10px;color:#86efac;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Scenario C additions — DOs exceeded</div>
+            <div style="display:grid;grid-template-columns:2fr repeat(5,1fr);gap:4px 8px;line-height:2;">
+              <span>Outcome bonus (full + stretch)</span><span style="text-align:right">—</span><span style="text-align:right">[B×1.5]</span><span style="text-align:right">[B×1.5]</span><span style="text-align:right">[B×1.5]</span><span style="text-align:right">[B×1.5]</span>
+              <span>Value share (20% of excess)</span><span style="text-align:right">—</span><span style="text-align:right">[VS]</span><span style="text-align:right">[VS]</span><span style="text-align:right">[VS]</span><span style="text-align:right">[VS]</span>
+              <span>Track 2 tranche 3 (full)</span><span style="text-align:right">—</span><span style="text-align:right">[P×70%]</span><span style="text-align:right">[P×70%]</span><span style="text-align:right">[P×70%]</span><span style="text-align:right">[P×70%]</span>
+              <span style="color:#86efac;font-weight:500">Total Scenario C</span><span style="text-align:right;color:#86efac">[TC1]</span><span style="text-align:right;color:#86efac">[TC2]</span><span style="text-align:right;color:#86efac">[TC3]</span><span style="text-align:right;color:#86efac">[TC4]</span><span style="text-align:right;color:#86efac">[TC5]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>Microsoft licensing — reference estimate for Ode</h3>
+        <p>Microsoft licensing is pass-through at list price with zero Vivicta margin. The following is a reference estimate based on Ode's expected user profile, to assist Elise in completing the table. All figures in NOK, before enterprise discount (typically 10–20% for multi-year commitments).</p>
+        <div style="margin-top:0.75rem;font-size:13px;color:var(--vl);display:grid;grid-template-columns:2fr 1fr 1fr;gap:4px 16px;line-height:2.2">
+          <span style="color:var(--va);font-weight:500">Licence component</span><span style="color:var(--va);font-weight:500;text-align:right">Users</span><span style="color:var(--va);font-weight:500;text-align:right">NOK/year (est.)</span>
+          <span>D365 F&amp;O Finance + SCM full users</span><span style="text-align:right">~50</span><span style="text-align:right">1,450K</span>
+          <span>D365 Team Members (approvers, viewers)</span><span style="text-align:right">~80</span><span style="text-align:right">80K</span>
+          <span>D365 Activity Users (production, warehouse)</span><span style="text-align:right">~90</span><span style="text-align:right">570K</span>
+          <span>Power Apps per User (operational interfaces)</span><span style="text-align:right">~100</span><span style="text-align:right">252K</span>
+          <span>Power BI Pro</span><span style="text-align:right">~30</span><span style="text-align:right">38K</span>
+          <span>Azure cloud services (Fabric F2, IoT, ADF, Logic Apps)</span><span style="text-align:right">—</span><span style="text-align:right">~400K</span>
+          <span style="color:var(--va);font-weight:500;border-top:1px solid var(--vb);padding-top:4px">Total before enterprise discount</span><span style="text-align:right;border-top:1px solid var(--vb);padding-top:4px">—</span><span style="color:var(--va);font-weight:500;text-align:right;border-top:1px solid var(--vb);padding-top:4px">~2,790K</span>
+        </div>
+        <p style="margin-top:0.75rem;font-size:12px;color:var(--vgr)">These are reference estimates only. Actual user counts and licence mix to be confirmed during contracting. Enterprise discount to be negotiated — Vivicta's Microsoft partnership typically secures 15–20% on multi-year D365 commitments.</p>
+      </div>
+
+      <div class="cc">
+        <h3>What Ode gets in every scenario</h3>
+        <p>Regardless of which scenario materialises, Ode receives: a fully implemented and operational D365 Finance &amp; Supply Chain Management platform; all integrations to Mercatus, Innova, and Maritech; a Microsoft Fabric data foundation; all configuration, code, and documentation in Ode's own Azure DevOps tenant; 8+ certified D365 super-users; and 5 years of application management services keeping the platform current and compliant. The commercial model adjusts Vivicta's return — it does not adjust what Ode receives.</p>
+      </div>
+
+      <div class="cc" style="border-color:#b45309;background:rgba(180,83,9,0.08)">
+        <h3 style="color:#f59e0b">⚑ Actions for Elise — Monday</h3>
+        <ul style="margin-top:0.5rem;padding-left:1.25rem;font-size:13px;color:#fcd34d;line-height:2.2">
+          <li>Replace all placeholders [X], [Y], [Z], [L], [B], [P], [VS] with actual figures from Vivicta's cost model</li>
+          <li>Calculate 5-year totals for all three scenarios and confirm the spread between A and C is compelling — Ode needs to see that the model creates real upside for both parties</li>
+          <li>Confirm Track 2 profit percentage (30%) and tranche split (20-40-40) are reflected correctly in the table</li>
+          <li>Legal: confirm the Gain Confirmation Letter trigger for tranche 3 is correctly described and legally enforceable under Norwegian contract law</li>
+          <li>Confirm innovation fund (NOK 0.75M/year) is included in all three scenarios — it is the same regardless of DO performance</li>
+        </ul>
+      </div>
+    </div>
+
+
+  </main>
+</div>
+
+<script>
+function show(id,navEl){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(navEl) navEl.classList.add('active');
+}
+</script>
+</body>
+</html>
