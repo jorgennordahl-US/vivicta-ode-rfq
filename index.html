@@ -157,6 +157,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
   <nav class="sidebar" id="sidebar"><div class="sidebar-mobile-toggle" onclick="toggleSidebar(this)" id="sidebarToggle">☰ &nbsp;Navigate sections <span class="arrow">▼</span></div><div class="sidebar-nav" id="sidebarNav">
     <div class="slbl" style="margin-top:0.25rem;">Navigation</div>
     <div class="ni active" onclick="show('ov',this)">⌂ Overview <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('tl',this)">⏱ Timeline <span class="ds dd"></span></div>
     <div class="divhr"></div>
     <div class="slbl">Sections</div>
     <div class="ni" onclick="show('sA',this)"><b>A</b> Intent &amp; fit <span class="ds dd"></span></div>
@@ -185,7 +186,8 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
         <div class="stat"><div class="n">25%</div><div class="l">Vested-fit weight</div></div>
       </div>
       <div class="slist">
-        <div class="sr" onclick="show('sA',document.querySelectorAll('.ni')[1])"><div class="sl dr">A</div><div class="si"><div class="st">Statement of intent &amp; cultural fit</div><div class="sd">Why Vivicta, WIIFWe culture, named executive sponsor</div></div><span class="sp spd">Draft</span></div>
+        <div class="sr" onclick="show('tl',document.querySelectorAll('.ni')[1])"><div class="sl dr">⏱</div><div class="si"><div class="st">Process &amp; Timeline</div><div class="sd">7 phases · live countdown · Elise action checklist</div></div><span class="sp spd">Live</span></div>
+        <div class="sr" onclick="show('sA',document.querySelectorAll('.ni')[2])"><div class="sl dr">A</div><div class="si"><div class="st">Statement of intent &amp; cultural fit</div><div class="sd">Why Vivicta, WIIFWe culture, named executive sponsor</div></div><span class="sp spd">Draft</span></div>
         <div class="sr" onclick="show('sB',document.querySelectorAll('.ni')[2])"><div class="sl dr">B</div><div class="si"><div class="st">Track record</div><div class="sd">3 references drafted · Elise to verify &amp; add aquaculture reference Monday</div></div><span class="sp spd">Draft</span></div>
         <div class="sr" onclick="show('sC',document.querySelectorAll('.ni')[3])"><div class="sl dr">C</div><div class="si"><div class="st">Approach to Desired Outcomes</div><div class="sd">DO1–DO7 answered with trajectory and risks</div></div><span class="sp spd">Draft</span></div>
         <div class="sr" onclick="show('sD',document.querySelectorAll('.ni')[4])"><div class="sl dr">D</div><div class="si"><div class="st">Implementation &amp; run model</div><div class="sd">3-phase delivery · team structure · KT plan · scale model</div></div><span class="sp spd">Draft</span></div>
@@ -196,6 +198,133 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
         <div class="sr" onclick="show('sI',document.querySelectorAll('.ni')[9])"><div class="sl dr">I</div><div class="si"><div class="st">Risk &amp; assumptions</div><div class="sd">Top 10 risks owned · 6 key assumptions</div></div><span class="sp spd">Draft</span></div>
         <div class="sr" onclick="show('sJ',document.querySelectorAll('.ni')[10])"><div class="sl dr">J</div><div class="si"><div class="st">Commercial terms summary</div><div class="sd">3 scenarios · full 5-year table · Elise to insert figures</div></div><span class="sp spd">Draft</span></div>
       </div>
+    </div>
+
+    <div class="pg" id="page-tl">
+      <div class="ey">Process &amp; Timeline · ODE-ERP-2026-001</div>
+      <div class="pt">Selection process &amp; key dates</div>
+      <div class="ps">Submission deadline: 19 June 2026 · frode.vatne@ode.no</div>
+
+      <div class="dead" style="justify-content:center;gap:0;padding:0;overflow:hidden;margin-bottom:1.5rem;">
+        <div style="flex:1;text-align:center;padding:1rem;background:rgba(62,207,142,0.07);border-right:1px solid rgba(62,207,142,0.2);">
+          <div style="font-size:28px;font-weight:700;color:var(--va)" id="cd-days">--</div>
+          <div style="font-size:10px;color:var(--vgr);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px">Days</div>
+        </div>
+        <div style="flex:1;text-align:center;padding:1rem;background:rgba(62,207,142,0.07);border-right:1px solid rgba(62,207,142,0.2);">
+          <div style="font-size:28px;font-weight:700;color:var(--va)" id="cd-hours">--</div>
+          <div style="font-size:10px;color:var(--vgr);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px">Hours</div>
+        </div>
+        <div style="flex:1;text-align:center;padding:1rem;background:rgba(62,207,142,0.07);border-right:1px solid rgba(62,207,142,0.2);">
+          <div style="font-size:28px;font-weight:700;color:var(--va)" id="cd-mins">--</div>
+          <div style="font-size:10px;color:var(--vgr);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px">Minutes</div>
+        </div>
+        <div style="flex:1;text-align:center;padding:1rem;background:rgba(62,207,142,0.07);">
+          <div style="font-size:28px;font-weight:700;color:var(--va)" id="cd-secs">--</div>
+          <div style="font-size:10px;color:var(--vgr);text-transform:uppercase;letter-spacing:0.08em;margin-top:3px">Seconds</div>
+        </div>
+      </div>
+
+      <div style="position:relative;padding-left:1.5rem;">
+        <div style="position:absolute;left:7px;top:24px;bottom:0;width:2px;background:var(--vb);"></div>
+
+        <!-- Phase 1 -->
+        <div style="position:relative;margin-bottom:1.5rem;">
+          <div style="position:absolute;left:-1.5rem;top:18px;width:16px;height:16px;border-radius:50%;background:var(--va);border:2px solid var(--va);z-index:1;"></div>
+          <div class="cc" style="border-color:rgba(62,207,142,0.3)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <h3 style="color:var(--va)">Phase 1 — RFQ issued</h3>
+              <span style="font-size:10px;padding:2px 8px;background:rgba(62,207,142,0.15);color:var(--va);border-radius:2px;font-weight:500;">✓ Done · 25 May</span>
+            </div>
+            <p>RFQ ODE-ERP-2026-001 sent to Cepheo, Inspirit365, Vivicta, and Columbus under NDA. Vivicta response work begins immediately.</p>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div style="position:relative;margin-bottom:1.5rem;">
+          <div style="position:absolute;left:-1.5rem;top:18px;width:16px;height:16px;border-radius:50%;background:#f59e0b;border:2px solid #f59e0b;box-shadow:0 0 0 4px rgba(245,158,11,0.2);z-index:1;"></div>
+          <div class="cc" style="border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.05)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <h3 style="color:#f59e0b">Phase 2 — Q&amp;A close</h3>
+              <span style="font-size:10px;padding:2px 8px;background:rgba(245,158,11,0.15);color:#f59e0b;border-radius:2px;font-weight:500;">⚑ 5 June · 10 days</span>
+            </div>
+            <p>All written questions submitted by this date. Ode shares consolidated answers with all bidders. <strong style="color:#fcd34d">Consider: should Vivicta ask about Mercatus API access, Visma data quality, or grunnrenteskatt calculation baseline?</strong></p>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div style="position:relative;margin-bottom:1.5rem;">
+          <div style="position:absolute;left:-1.5rem;top:18px;width:16px;height:16px;border-radius:50%;background:var(--va);border:2px solid var(--va);box-shadow:0 0 0 4px rgba(62,207,142,0.2);z-index:1;"></div>
+          <div class="cc" style="border-color:rgba(62,207,142,0.4)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <h3>Phase 3 — Proposal submission</h3>
+              <span style="font-size:10px;padding:2px 8px;background:rgba(62,207,142,0.15);color:var(--va);border-radius:2px;font-weight:500;">⏱ 19 June · 24 days</span>
+            </div>
+            <p>Single PDF to frode.vatne@ode.no · Subject: "ODE-ERP-2026-001 – Vivicta" · Max 30 pages excl. CVs and case studies · Below 25 MB.</p>
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div style="position:relative;margin-bottom:1.5rem;">
+          <div style="position:absolute;left:-1.5rem;top:18px;width:16px;height:16px;border-radius:50%;background:var(--vc);border:2px solid var(--vb);z-index:1;"></div>
+          <div class="cc">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <h3>Phase 4 — Vendor workshops</h3>
+              <span style="font-size:10px;padding:2px 8px;background:var(--vb);color:var(--vgr);border-radius:2px;font-weight:500;">22 Jun – 3 Jul</span>
+            </div>
+            <p>Working sessions on DOs, pricing and governance — not pitch presentations. Ode evaluates people quality. Named key individuals must be in the room: Delivery Lead, Solution Architect, Executive Sponsor.</p>
+          </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div style="position:relative;margin-bottom:1.5rem;">
+          <div style="position:absolute;left:-1.5rem;top:18px;width:16px;height:16px;border-radius:50%;background:var(--vc);border:2px solid var(--vb);z-index:1;"></div>
+          <div class="cc">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <h3>Phase 5 — Selection &amp; Letter of Intent</h3>
+              <span style="font-size:10px;padding:2px 8px;background:var(--vb);color:var(--vgr);border-radius:2px;font-weight:500;">10 July</span>
+            </div>
+            <p>Preferred partner selected. LOI signed. The lowest price will not win — the best joint outcome will. Evaluation criteria: Vested-fit 25%, Desired Outcomes 25%, D365 capability 15%, TCO 15%, Security 10%, Cultural fit 10%.</p>
+          </div>
+        </div>
+
+        <!-- Phase 6 -->
+        <div style="position:relative;margin-bottom:1.5rem;">
+          <div style="position:absolute;left:-1.5rem;top:18px;width:16px;height:16px;border-radius:50%;background:var(--vc);border:2px solid var(--vb);z-index:1;"></div>
+          <div class="cc">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <h3>Phase 6 — Vested® contracting</h3>
+              <span style="font-size:10px;padding:2px 8px;background:var(--vb);color:var(--vgr);border-radius:2px;font-weight:500;">13 Jul – 7 Aug</span>
+            </div>
+            <p>Statement of Intent, Desired Outcomes, gain-share pricing (pre-project + 20-40-40 tranches), and governance model contracted under Vested®. Joint Steering Committee constituted. Attribution framework and Gain Confirmation Letter process agreed and signed.</p>
+          </div>
+        </div>
+
+        <!-- Phase 7 -->
+        <div style="position:relative;margin-bottom:0.5rem;">
+          <div style="position:absolute;left:-1.5rem;top:18px;width:16px;height:16px;border-radius:50%;background:var(--vc);border:2px solid var(--vb);z-index:1;"></div>
+          <div class="cc">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <h3>Phase 7 — Project start</h3>
+              <span style="font-size:10px;padding:2px 8px;background:var(--vb);color:var(--vgr);border-radius:2px;font-weight:500;">Mid-August 2026</span>
+            </div>
+            <p>Joint mobilisation. First Joint Governance Board within 2 weeks. Pre-project (value identification) launches. Data quality sprint week 1. Target Phase 1 go-live: <strong style="color:var(--va)">May 2027.</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc" style="margin-top:1.5rem;border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.05)">
+        <h3 style="color:#f59e0b">⚑ Elise — actions before 19 June</h3>
+        <div style="margin-top:0.75rem;display:flex;flex-direction:column;gap:10px;font-size:13px;color:#fcd34d;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;"><input type="checkbox" style="margin-top:2px;accent-color:#f59e0b;"> <span>Confirm commercial figures with CFO — implementation fee, AMS fee, pre-project fee (Sections E &amp; J)</span></label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;"><input type="checkbox" style="margin-top:2px;accent-color:#f59e0b;"> <span>Check internally for aquaculture / food D365 F&amp;O references (Section B)</span></label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;"><input type="checkbox" style="margin-top:2px;accent-color:#f59e0b;"> <span>Confirm Wibax and Hesselberg contacts willing to be called directly by Ode</span></label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;"><input type="checkbox" style="margin-top:2px;accent-color:#f59e0b;"> <span>Insert named Executive Sponsor, Delivery Lead, Solution Architect (needed for workshop weeks 26–27)</span></label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;"><input type="checkbox" style="margin-top:2px;accent-color:#f59e0b;"> <span>Legal review of Gain Confirmation Letter and 20-40-40 tranche structure</span></label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;"><input type="checkbox" style="margin-top:2px;accent-color:#f59e0b;"> <span>Decide: submit written questions to Ode by 5 June?</span></label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;"><input type="checkbox" style="margin-top:2px;accent-color:#f59e0b;"> <span>Convert final response to PDF and submit before 19 June deadline</span></label>
+        </div>
+      </div>
+
     </div>
 
     <div class="pg" id="page-sA">
@@ -1078,6 +1207,23 @@ function toggleSidebar(el) {
   el.classList.toggle('open');
   document.getElementById('sidebarNav').classList.toggle('open');
 }
+function updateCountdown() {
+  var deadline = new Date('2026-06-19T23:59:00+02:00');
+  var now = new Date();
+  var diff = deadline - now;
+  if (diff <= 0) return;
+  var days = Math.floor(diff / 86400000);
+  var hours = Math.floor((diff % 86400000) / 3600000);
+  var mins = Math.floor((diff % 3600000) / 60000);
+  var secs = Math.floor((diff % 60000) / 1000);
+  ['days','hours','mins','secs'].forEach(function(id, i) {
+    var el = document.getElementById('cd-' + id);
+    if (el) el.textContent = String([days,hours,mins,secs][i]).padStart(2,'0');
+  });
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
 function show(id,navEl){
   // Close mobile nav after selection
   document.getElementById('sidebarNav').classList.remove('open');
