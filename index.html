@@ -164,6 +164,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
   <nav class="sidebar" id="sidebar"><div class="sidebar-mobile-toggle" onclick="toggleSidebar(this)" id="sidebarToggle">☰ &nbsp;Navigate sections <span class="arrow">▼</span></div><div class="sidebar-nav" id="sidebarNav">
     <div class="slbl" style="margin-top:0.25rem;">Navigation</div>
     <div class="ni active" onclick="show('ov',this)">⌂ Overview <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('exec',this)">★ Executive Summary <span class="ds dd"></span></div>
     <div class="ni" onclick="show('tl',this)">⏱ Timeline <span class="ds dd"></span></div>
     <div class="ni" onclick="show('ode',this)">🐟 About Ode <span class="ds dd"></span></div>
     <div class="ni" onclick="show('docs',this)">📄 Documents <span class="ds dd"></span></div>
@@ -195,6 +196,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
         <div class="stat"><div class="n">25%</div><div class="l">Vested-fit weight</div></div>
       </div>
       <div class="slist">
+        <div class="sr" onclick="show('exec',document.querySelectorAll('.ni')[1])" style="background:rgba(62,207,142,0.06);border-color:rgba(62,207,142,0.3)"><div class="sl dr">★</div><div class="si"><div class="st">Executive Summary</div><div class="sd">Who we are · what we propose · why Vivicta · DO commitments at a glance</div></div><span class="sp spd">Start here</span></div>
         <div class="sr" onclick="show('docs',document.querySelectorAll('.ni')[3])"><div class="sl dr">📄</div><div class="si"><div class="st">Source Documents</div><div class="sd">RFQ · Legal structure · Production order model · App portfolio · NDA</div></div><span class="sp spd">5 docs</span></div>
         <div class="sr" onclick="show('ode',document.querySelectorAll('.ni')[2])"><div class="sl dr">🐟</div><div class="si"><div class="st">About Ode AS</div><div class="sd">RFQ background · legal structure · application portfolio · production order model</div></div><span class="sp spd">Reference</span></div>
         <div class="sr" onclick="show('tl',document.querySelectorAll('.ni')[1])"><div class="sl dr">⏱</div><div class="si"><div class="st">Process &amp; Timeline</div><div class="sd">7 phases · live countdown · Elise action checklist</div></div><span class="sp spd">Live</span></div>
@@ -209,6 +211,89 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
         <div class="sr" onclick="show('sI',document.querySelectorAll('.ni')[9])"><div class="sl dr">I</div><div class="si"><div class="st">Risk &amp; assumptions</div><div class="sd">Top 10 risks owned · 6 key assumptions</div></div><span class="sp spd">Draft</span></div>
         <div class="sr" onclick="show('sJ',document.querySelectorAll('.ni')[10])"><div class="sl dr">J</div><div class="si"><div class="st">Commercial terms summary</div><div class="sd">3 scenarios · full 5-year table · Elise to insert figures</div></div><span class="sp spd">Draft</span></div>
       </div>
+    </div>
+
+    <div class="pg" id="page-exec">
+      <div class="ey">Vivicta · ODE-ERP-2026-001</div>
+      <div class="pt">Executive Summary</div>
+      <div class="ps">Submitted to Ode AS · 19 June 2026 · Confidential</div>
+
+      <div class="cc" style="border-color:rgba(62,207,142,0.4);background:rgba(62,207,142,0.06)">
+        <h3>The short version</h3>
+        <p>Vivicta is proposing to be Ode's long-term D365 F&amp;O partner under a commercial model where we recover our costs through a transparent baseline fee, and earn our profit only when Ode realises measurable business value. We charge no hourly rates for business-driven development. Our margin depends entirely on whether the gains we identify together with Ode actually land in Ode's P&amp;L. We believe this is the only commercially honest structure for a Vested partnership — and we are prepared to sign it.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Who we are</h3>
+        <p>Vivicta is a Nordic technology services company with 7,000+ experts and revenue of approximately EUR 1 billion. We are a Microsoft AI Inner Circle partner — a designation held by fewer than 1% of Microsoft partners globally. Our Microsoft practice covers D365 Finance &amp; Supply Chain Management, Azure, Fabric, Power Platform, and Copilot Studio. We are also in the process of transforming our own business toward AI-first operations — deploying the same Microsoft AI tools we are recommending for Ode across our own workforce, service desk, ITSM platform, and software development lifecycle. We are not selling something we have not committed to ourselves.</p>
+        <p style="margin-top:0.75rem">Our primary contact for this engagement is <strong style="color:var(--va)">Elise Karita Halvorsrød</strong> — elise.halvorsrod@vivicta.com.</p>
+      </div>
+
+      <div class="cc">
+        <h3>What we are proposing</h3>
+        <div style="margin-top:0.5rem;display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:13px;color:var(--vl);line-height:1.8;align-items:start">
+          <div style="background:rgba(62,207,142,0.15);color:var(--va);font-weight:700;border-radius:2px;padding:2px 8px;white-space:nowrap;align-self:start">D365 F&amp;O</div>
+          <span>Full implementation of Microsoft Dynamics 365 Finance &amp; Supply Chain Management across all four Ode legal entities — including process manufacturing for biological lot costing, intercompany trade, Norwegian compliance (MVA, Altinn, SAF-T, grunnrenteskatt), and the Power App period-close model described in ODE-PRODORDER-2026.</span>
+
+          <div style="background:rgba(62,207,142,0.15);color:var(--va);font-weight:700;border-radius:2px;padding:2px 8px;white-space:nowrap;align-self:start">AI &amp; data</div>
+          <span>Microsoft Fabric from day one as the unified data foundation. A portfolio of seven aquaculture-specific AI agents deployed across VCIM Phase 1 and Phase 2 — including a Finance Controller Close Assistant targeting 85% month-end effort reduction, a Harvest Demand Forecasting Agent, a Feed Cost Anomaly Detection Agent, and a Grunnrenteskatt Tax Advisor. Combined estimated annual value: NOK 2–3 million in cost avoidance.</span>
+
+          <div style="background:rgba(62,207,142,0.15);color:var(--va);font-weight:700;border-radius:2px;padding:2px 8px;white-space:nowrap;align-self:start">VCIM</div>
+          <span>Vivicta's Continuous Improvement Model — a three-layer operating model (Strategic / Tactical / Operational) that governs how the partnership evolves from implementation through a transaction-free, AI-driven management state. Phase transitions are triggered by measurable outcomes, not by calendar time.</span>
+
+          <div style="background:rgba(62,207,142,0.15);color:var(--va);font-weight:700;border-radius:2px;padding:2px 8px;white-space:nowrap;align-self:start">Commercial</div>
+          <span>Two tracks: Track 1 (forvaltning) at cost recovery, zero margin. Track 2 (business-driven development) at cost recovery plus 30% of jointly identified and agreed value, paid in three tranches — 20% at value mapped, 40% at technology delivered, 40% at gains confirmed by Ode's signed Gain Confirmation Letter. No hourly rates. No change request charges within agreed scope.</span>
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>Our answer to each Desired Outcome</h3>
+        <div style="margin-top:0.5rem;font-size:13px;color:var(--vl)">
+          <div style="display:grid;grid-template-columns:50px 1fr 1fr;gap:4px 16px;line-height:1.8;border-bottom:1px solid var(--vb);padding-bottom:6px;margin-bottom:6px">
+            <span style="color:var(--va);font-weight:500">DO</span>
+            <span style="color:var(--va);font-weight:500">Vivicta's commitment</span>
+            <span style="color:var(--va);font-weight:500">How we measure it</span>
+          </div>
+          <div style="display:grid;grid-template-columns:50px 1fr 1fr;gap:4px 16px;line-height:1.8">
+            <span style="color:var(--va);font-weight:600">DO1</span><span>100% of financial transactions in D365 F&amp;O within 12 months of go-live. Visma ERP retired within 30 days of go-live.</span><span style="color:var(--vgr)"># legacy systems retired; % transactions in D365</span>
+            <span style="color:var(--va);font-weight:600">DO2</span><span>Month-end from 3 days to 0.5 days by VCIM Phase 2, driven by the Finance Controller Close Assistant. 85% manual effort reduction.</span><span style="color:var(--vgr)">Days to close; reconciliation defects; manual hours</span>
+            <span style="color:var(--va);font-weight:600">DO3</span><span>TCO baseline agreed in month 1. Three cost levers: Visma infrastructure retirement, HR consolidation, AMS at declining cost as AI takes over Track 1.</span><span style="color:var(--vgr)">Total ERP TCO vs. 2026 baseline (NOK/year)</span>
+            <span style="color:var(--va);font-weight:600">DO4</span><span>New Norwegian legal entity or production site onboarded in D365 within 6 weeks from business decision by month 18, reducing to 4 weeks by year 3.</span><span style="color:var(--vgr)">Onboarding lead time; weeks from decision to go-live</span>
+            <span style="color:var(--va);font-weight:600">DO5</span><span>8 certified D365 super-users before go-live. 85% active user rate within 3 months of go-live. KT plan is a contractual deliverable.</span><span style="color:var(--vgr)">Active user %; D365 associate certifications</span>
+            <span style="color:var(--va);font-weight:600">DO6</span><span>Zero critical security incidents. Zero material audit findings attributable to the ERP platform. Entra ID, least-privilege RBAC, Norway East data residency.</span><span style="color:var(--vgr)">Critical incidents; audit findings</span>
+            <span style="color:var(--va);font-weight:600">DO7</span><span>4 AI agents in production by end of VCIM Phase 1. 7 agents by Phase 2. NOK 2–3M estimated annual cost avoidance from the full portfolio.</span><span style="color:var(--vgr)"># agents in production; annual cost avoidance (NOK)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>Why Vivicta, why now</h3>
+        <p>Three things set this proposal apart from a conventional ERP response.</p>
+        <p style="margin-top:0.75rem"><strong style="color:var(--va)">First, the commercial structure is real.</strong> We are not proposing outcome-based pricing as a negotiating position. We are proposing a model where we earn zero margin if Ode does not realise the gains we have identified together. The Gain Confirmation Letter — written and signed by Ode, not by Vivicta — is the trigger for 40% of our profit on every Track 2 project. This is a structural commitment, not a promise.</p>
+        <p style="margin-top:0.75rem"><strong style="color:var(--va)">Second, the AI vision is specific to Ode's industry.</strong> We have designed a portfolio of seven AI agents for Norwegian aquaculture finance and operations — covering biological asset valuation under IAS 41/NRS 8, grunnrenteskatt compliance, Fish Pool MTM revaluation, feed cost anomaly detection, and harvest demand forecasting. These agent architectures do not exist yet. No one has built them. That is the point: we are proposing to build them together with Ode, in a domain where no standard playbook exists, as a joint first. The designs are grounded in deep domain knowledge of Norwegian aquaculture finance and regulation — but they will be proven in production at Ode, not imported from elsewhere.</p>
+        <p style="margin-top:0.75rem"><strong style="color:var(--va)">Third, we are building the model we are proposing.</strong> Vivicta is actively transforming its own business toward AI-first operations and outcome-based commercial relationships. We are not advising Ode to take a journey we have not started ourselves. The VCIM model, the governance structure, and the AI-first platform vision are the direction Vivicta has chosen for itself — and we are investing accordingly.</p>
+        <p style="margin-top:0.75rem">We are ready to sign the NDA, begin the pre-project, and stand in front of Ode's board to explain exactly how we will create the value we are committing to.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--vb);border-radius:3px;overflow:hidden;margin-top:0.5rem">
+        <div style="background:var(--vc);padding:1rem;text-align:center">
+          <div style="font-size:22px;font-weight:700;color:var(--va)">0%</div>
+          <div style="font-size:11px;color:var(--vgr);margin-top:4px;text-transform:uppercase;letter-spacing:0.06em">Margin if DOs not met</div>
+        </div>
+        <div style="background:var(--vc2);padding:1rem;text-align:center">
+          <div style="font-size:22px;font-weight:700;color:var(--va)">30%</div>
+          <div style="font-size:11px;color:var(--vgr);margin-top:4px;text-transform:uppercase;letter-spacing:0.06em">Of value as profit (Track 2)</div>
+        </div>
+        <div style="background:var(--vc);padding:1rem;text-align:center">
+          <div style="font-size:22px;font-weight:700;color:var(--va)">7</div>
+          <div style="font-size:11px;color:var(--vgr);margin-top:4px;text-transform:uppercase;letter-spacing:0.06em">AI agents proposed for aquaculture</div>
+        </div>
+        <div style="background:var(--vc2);padding:1rem;text-align:center">
+          <div style="font-size:22px;font-weight:700;color:var(--va)">&lt;1%</div>
+          <div style="font-size:11px;color:var(--vgr);margin-top:4px;text-transform:uppercase;letter-spacing:0.06em">Microsoft AI Inner Circle</div>
+        </div>
+      </div>
+
     </div>
 
     <div class="pg" id="page-docs">
@@ -619,8 +704,8 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
       <div class="ey">Section A · Statement of Intent &amp; Cultural Fit</div>
       <div class="pt">Why Vivicta</div>
       <div class="ps">Weight: part of 25% Vested-fit criterion · Status: draft</div>
-      <div class="cc"><h3>Statement of intent</h3><p>Vivicta is not a conventional ERP implementer. We are a company built on the conviction that the technology partnership model between vendor and customer is broken — and that fixing it requires a fundamentally different commercial logic. We have invested years developing our practice because we believe that shared value creation, not billable hours, is the only sustainable foundation for a long-term technology relationship. Ode's RFQ reads like it was written by people who have lived through the same frustrations we set out to solve.</p></div>
-      <div class="cc"><h3>How our culture supports WIIFWe</h3><p>At Vivicta, What's-In-It-For-We is not a framework we apply to engagements — it is the logic we use to evaluate whether to take on an engagement at all. We decline work where the commercial structure would require us to optimise for our own margin at the expense of the client's outcomes. This is not altruism; it is a business model. We grow when our customers grow. Our delivery leads are evaluated on client capability growth, not on dependency. Our commercial team is measured on renewal driven by demonstrated value, not on upsell volume.</p></div>
+      <div class="cc"><h3>Statement of intent</h3><p>Vivicta is not a conventional ERP implementer. We are a company built on the conviction that the technology partnership model between vendor and customer is broken — and that fixing it requires a fundamentally different commercial logic. We have invested years developing our practice because we believe that shared value creation, not billable hours, is the only sustainable foundation for a long-term technology relationship. Ode's RFQ reads like it was written by people who have lived through the same frustrations we set out to solve.</p><p style="margin-top:0.75rem">This is not positioning. It is the direction Vivicta has chosen for itself. We are in the process of transforming our own commercial model — moving away from time-and-materials contracts toward outcome-based partnerships with shared incentives. The model we are proposing for Ode is the model we are building Vivicta around. We are not selling something we have not committed to ourselves.</p></div>
+      <div class="cc"><h3>How our culture supports WIIFWe</h3><p>At Vivicta, What's-In-It-For-We is not a framework we apply to engagements — it is the logic we use to evaluate whether to take on an engagement at all. We decline work where the commercial structure would require us to optimise for our own margin at the expense of the client's outcomes. This is not altruism; it is a business model. We grow when our customers grow. Our delivery leads are evaluated on client capability growth, not on dependency. Our commercial team is measured on renewal driven by demonstrated value, not on upsell volume.</p><p style="margin-top:0.75rem">Vivicta is also investing in this direction internally. We have made a strategic decision to become an AI-first enterprise — deploying Microsoft Copilot at scale across our own workforce, adopting ServiceNow AI and GenAI agents in our own ITSM operations, using D365 Contact Center with Copilot agents in our own service desk, and integrating AIOps into our own infrastructure operations. We are not advising Ode to do something we are unwilling to do ourselves. The AI-driven, outcome-accountable operating model we are proposing is the one we are building internally — service by service, quarter by quarter.</p></div>
       <div class="cc"><h3>Named executive sponsor</h3><p>[Name of executive sponsor] will serve as Vivicta's executive sponsor for this engagement. [He/she] will be personally accountable to the Joint Governance Board throughout the contract life — co-owning the Desired Outcomes alongside Ode's executive sponsor. This is not a ceremonial role.</p></div>
       <div class="cc"><h3>Why Ode, why now</h3><p>The Norwegian aquaculture industry is at an inflection point. Ode's ambition to reach 110,000 tonnes represents exactly the kind of complex, high-stakes environment where a transactional ERP partner will fail and a Vested partner will thrive. We want to be part of building the platform that takes Ode there — not because it is a large contract, but because it is the kind of challenge that demands, and rewards, a genuine partnership. We are ready to sign the NDA and begin.</p></div>
     </div>
@@ -683,7 +768,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
 
       <div class="cc"><h3>DO6 — Audit-ready, compliant, secure</h3><p><strong style="color:var(--va)">Measure:</strong> Audit findings · critical security incidents</p><p style="margin-top:0.6rem">D365 F&amp;O on Microsoft Azure is architected for Norwegian and EU regulatory compliance from the ground up. We will configure Norwegian tax (MVA), bookkeeping act compliance, and Altinn reporting as standard. Food traceability — batch tracking from hatchery through grow-out to processed product — will be implemented using D365's standard batch and serial number tracking, extended for Ode's biological inventory model. Information security is governed through Microsoft Entra ID, conditional access, and role-based access control with least-privilege principles. Our target is zero critical security incidents and zero material audit findings attributable to the ERP platform. Compliance configuration is documented and version-controlled so that every change is auditable.</p><p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Key risk: CSRD and Norwegian sustainability reporting requirements are evolving. We include a regulatory monitoring commitment in the AMS scope so Ode is never caught by a compliance change without warning.</p></div>
 
-      <div class="cc"><h3>DO7 — Platform for AI and data</h3><p><strong style="color:var(--va)">Measure:</strong> # productive AI agents in production · estimated annual cost avoidance (NOK)</p><p style="margin-top:0.6rem">As a Microsoft AI Inner Circle partner, Vivicta deploys AI from day one — not as a future roadmap item. D365 F&amp;O connects to Microsoft Fabric at go-live, with all operational data from Mercatus, Innova, and Maritech flowing into a unified lakehouse. Vivicta has developed a library of aquaculture-specific AI agent patterns for Norwegian fish farming operations, drawing on deep knowledge of the biological, financial, and regulatory complexity of the sector.</p><p style="margin-top:0.75rem">We propose deploying <strong style="color:var(--va)">four agents in VCIM Phase 1 and three additional agents in Phase 2</strong>. Our experience with comparable Norwegian aquaculture finance and operations environments puts the quantified benefit of this portfolio at approximately <strong style="color:var(--va)">NOK 2–3M in annual cost avoidance</strong> — driven by month-end automation (120+ hours/year), feed cost anomaly detection (1–2% cost reduction), harvest forecast accuracy improvement, and grunnrenteskatt compliance automation. Every agent has its own A3 business case and agreed KPIs before development begins.</p><p style="margin-top:0.75rem">We target a minimum of <strong style="color:var(--va)">4 productive AI agents in production by end of VCIM Phase 1</strong>, with the full portfolio of 7 operational by Phase 2. The AI backlog is jointly owned at every Outcomes &amp; Value Board — never empty, never unaccountable.</p><p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Key risk: AI agents require clean, structured data — which depends on DO1 and DO2 first. We sequence deliberately: Fabric data foundation months 1–6, first agent in production month 9, full portfolio by VCIM Phase 2 trigger.</p></div>
+      <div class="cc"><h3>DO7 — Platform for AI and data</h3><p><strong style="color:var(--va)">Measure:</strong> # productive AI agents in production · estimated annual cost avoidance (NOK)</p><p style="margin-top:0.6rem">As a Microsoft AI Inner Circle partner, Vivicta deploys AI from day one — not as a future roadmap item. D365 F&amp;O connects to Microsoft Fabric at go-live, with all operational data from Mercatus, Innova, and Maritech flowing into a unified lakehouse. Vivicta has designed a portfolio of aquaculture-specific AI agents for Norwegian fish farming operations, grounded in deep domain knowledge of the biological, financial, and regulatory complexity of the sector. <strong style="color:var(--va)">These agents do not yet exist in production anywhere.</strong> They represent a to-be architecture — a joint first that Vivicta and Ode will design, build, test, and prove together. This is not a risk: it is the nature of genuine innovation. The agent patterns are technically feasible on the Microsoft platform today. What has been missing is a client with the ambition and the data foundation to build them. Ode is that client.</p><p style="margin-top:0.75rem">We propose deploying <strong style="color:var(--va)">four agents in VCIM Phase 1 and three additional agents in Phase 2</strong>. Based on our domain analysis of Norwegian aquaculture finance operations — including the regulatory complexity of grunnrenteskatt, IAS 41/NRS 8 biological asset valuation, and feed cost management — we estimate the potential benefit of this agent portfolio at approximately <strong style="color:var(--va)">NOK 2–3M in annual cost avoidance</strong>. This is a forward-looking estimate, not a proven track record. These agent architectures will be designed, built, and proven in production at Ode — as a joint first for both parties — driven by month-end automation (120+ hours/year), feed cost anomaly detection (1–2% cost reduction), harvest forecast accuracy improvement, and grunnrenteskatt compliance automation. Every agent has its own A3 business case and agreed KPIs before development begins.</p><p style="margin-top:0.75rem">We target a minimum of <strong style="color:var(--va)">4 AI agents live in production by end of VCIM Phase 1</strong>, with the full portfolio of 7 operational by Phase 2. These are design targets — each agent is a Track 2 project with its own business case, agreed before development begins. The AI backlog is jointly owned and reviewed at every Outcomes &amp; Value Board — never empty, never unaccountable, and always tied to a signed gain commitment.</p><p style="margin-top:0.6rem;color:#fcd34d;font-size:13px;">⚑ Key risk: AI agents require clean, structured data — which depends on DO1 and DO2 first. We sequence deliberately: Fabric data foundation months 1–6, first agent in production month 9, full portfolio by VCIM Phase 2 trigger.</p></div>
 
     </div>
     <div class="pg" id="page-sD">
@@ -694,6 +779,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
       <div class="cc">
         <h3>Delivery philosophy</h3>
         <p>Vivicta delivers D365 F&amp;O using an agile, outcome-driven methodology — not a waterfall project plan. We work in two-week sprints with a shared backlog owned jointly by Ode and Vivicta. Every sprint produces working, tested functionality in a live D365 environment. There are no "big bang" go-lives: we phase by value chain segment, starting with the financial backbone and growing into operational integration, so Ode starts realising value within 3–4 months of mobilisation, not at the end of an 18-month project. The engagement has three phases: Foundation, Value Chain Extension, and Continuous Improvement. Phases 1 and 2 are time-boxed; Phase 3 is the ongoing Vested partnership with no defined end date.</p>
+        <p style="margin-top:0.75rem">The governance model proposed in Section F — three levels: Strategic, Tactical, and Operational — is Vivicta's standard partnership model, applied consistently across our long-term engagements. It is not designed for this RFQ. It is how we run complex, multi-year partnerships with large Norwegian organisations, with clear forum structures, named roles on both sides, and defined escalation paths. We are proposing it for Ode because it works — and because we have the organisational muscle to operate it.</p>
       </div>
 
       <div class="cc">
@@ -1118,6 +1204,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
         <h3>Our AI position</h3>
         <p>Vivicta is a Microsoft AI Inner Circle partner — fewer than 1% of Microsoft partners globally hold this designation, awarded for demonstrated AI delivery in production D365 environments, not in demos. We have early access to Microsoft's Copilot and Fabric engineering roadmap and a practice of consultants who have designed and deployed agentic AI for complex operational and financial workflows in Norwegian industries — including the unique combination of biological asset accounting, resource rent tax, and multi-site aquaculture operations that Ode operates.</p>
         <p style="margin-top:0.75rem">We deploy AI from day one. We sequence it deliberately — data foundation first, agents second — and we hold every agent accountable to a signed A3 business case before development begins.</p>
+        <p style="margin-top:0.75rem">Vivicta's AI credibility is grounded in our own internal transformation. We have made a strategic commitment to become an AI-first enterprise — not as a marketing position, but as an operational reality we are building service by service. This includes: Microsoft Copilot deployed at scale across our workforce for productivity; ServiceNow AI including GenAI and ML capabilities in our own ITSM platform; D365 Contact Center with Copilot AI agents running our own service desk automation; AIOps with OpenText and HPE OpsRamp in our own infrastructure operations; and GitHub Copilot integrated into our own software development lifecycle. We are not recommending AI to Ode from the outside. We are a practitioner — learning, failing, and improving with the same tools we are proposing to deploy for Ode.</p>
       </div>
 
       <div class="cc">
@@ -1139,7 +1226,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
               <span style="font-size:10px;color:var(--va);background:rgba(62,207,142,0.15);padding:2px 8px;border-radius:2px;">Copilot Studio · DO2</span>
             </div>
             <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
-              Orchestrates month-end close end-to-end. Triggers biological asset valuation, Fish Pool MTM, NRV ceiling test, and FX revaluation agents in dependency order. Runs 12 automated validation checks. Produces natural-language variance analysis ("why is COGS up 15% vs last month?") and compiles the close package for CFO sign-off. Accessible via Microsoft Teams. <strong style="color:var(--va)">Target: month-end from 3 days to 0.5 days. 85% manual effort reduction. 120+ hours saved per year.</strong>
+              Orchestrates month-end close end-to-end. Triggers biological asset valuation, Fish Pool MTM, NRV ceiling test, and FX revaluation agents in dependency order. Runs 12 automated validation checks. Produces natural-language variance analysis ("why is COGS up 15% vs last month?") and compiles the close package for CFO sign-off. Accessible via Microsoft Teams. <strong style="color:var(--va)">Design target: month-end from 3 days to 0.5 days. 85% manual effort reduction. 120+ hours saved per year.</strong> This is a to-be target — it will be confirmed and signed in the A3 business case before development begins, and verified in the Gain Confirmation Letter at close.
             </div>
           </div>
 
@@ -1149,7 +1236,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
               <span style="font-size:10px;color:var(--va);background:rgba(62,207,142,0.15);padding:2px 8px;border-radius:2px;">Power Automate · DO3 + DO7</span>
             </div>
             <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
-              Combines Mercatus biomass data (generation weight, mortality rate, growth trajectory), Maritech sales orders, and Fish Pool forward price curves to generate weekly harvest volume and timing recommendations. Feeds directly into D365 production orders. Understands where each fish generation is in its lifecycle and adjusts parameters accordingly. <strong style="color:var(--va)">Target: 25% reduction in harvest forecast variance. Fewer emergency harvests. Better price realisation.</strong>
+              Combines Mercatus biomass data (generation weight, mortality rate, growth trajectory), Maritech sales orders, and Fish Pool forward price curves to generate weekly harvest volume and timing recommendations. Feeds directly into D365 production orders. Understands where each fish generation is in its lifecycle and adjusts parameters accordingly. <strong style="color:var(--va)">Design target: 25% reduction in harvest forecast variance. Fewer emergency harvests. Better price realisation.</strong> Baseline forecast variance to be measured in the pre-project and confirmed before agent development begins.
             </div>
           </div>
 
@@ -1159,7 +1246,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
               <span style="font-size:10px;color:var(--va);background:rgba(62,207,142,0.15);padding:2px 8px;border-radius:2px;">Power Automate · DO2 + DO3</span>
             </div>
             <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
-              Monitors feed cost per production order in real time against expected feed conversion ratio (FCR) benchmarks. Flags deviations above agreed thresholds within 24 hours — compared to current monthly discovery cycle. Drafts an exception report for the production lead with root cause hypotheses. <strong style="color:var(--va)">Target: anomaly detection latency from 30 days to 24 hours. 1–2% feed cost reduction through earlier intervention.</strong>
+              Monitors feed cost per production order in real time against expected feed conversion ratio (FCR) benchmarks. Flags deviations above agreed thresholds within 24 hours — compared to current monthly discovery cycle. Drafts an exception report for the production lead with root cause hypotheses. <strong style="color:var(--va)">Design target: anomaly detection latency from 30 days to 24 hours. 1–2% feed cost reduction through earlier intervention.</strong> Baseline feed cost variance to be agreed jointly in the pre-project.
             </div>
           </div>
 
@@ -1169,7 +1256,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
               <span style="font-size:10px;color:var(--va);background:rgba(62,207,142,0.15);padding:2px 8px;border-radius:2px;">Copilot Studio · DO6 + DO7</span>
             </div>
             <div style="padding:0.75rem 1rem;font-size:13px;color:var(--vl)">
-              An always-available AI tax advisor that understands Norwegian resource rent tax (Havbruksskatteloven) and answers questions, runs scenario analyses, and prepares tax return data — eliminating dependency on external consultants for routine queries. Polls SSB norm prices on publication; when new prices appear, proactively notifies finance with impact analysis vs prior assumptions. Calculates investment allowance from D365 Fixed Assets. Prepares RF-1151 XML for Altinn submission with CFO approval gate. <strong style="color:var(--va)">Target: eliminate routine external tax consultancy spend. Zero compliance gaps on norm price changes.</strong>
+              An always-available AI tax advisor that understands Norwegian resource rent tax (Havbruksskatteloven) and answers questions, runs scenario analyses, and prepares tax return data — eliminating dependency on external consultants for routine queries. Polls SSB norm prices on publication; when new prices appear, proactively notifies finance with impact analysis vs prior assumptions. Calculates investment allowance from D365 Fixed Assets. Prepares RF-1151 XML for Altinn submission with CFO approval gate. <strong style="color:var(--va)">Design target: eliminate routine external tax consultancy spend on grunnrenteskatt. Zero compliance gaps on norm price changes.</strong> Baseline external consultancy cost to be agreed in the pre-project business case.
             </div>
           </div>
 
@@ -1219,7 +1306,7 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
 
       <div class="cc">
         <h3>The platform vision at VCIM Phase 3</h3>
-        <p>By Phase 3, Ode's digital platform should consist of: a fully current D365 F&amp;O instance on the latest Microsoft release with zero customisation debt; a Fabric lakehouse serving as single source of truth for all operational and financial data; all seven AI agents handling the majority of routine financial decisions autonomously; Power BI dashboards embedded in every operational interface; and an internal team of certified D365 and Power Platform super-users capable of designing, testing, and deploying simple improvements without Vivicta's involvement. Vivicta's human team at this stage focuses almost entirely on business-driven Track 2 development — identifying and delivering the next wave of value, not maintaining transactions.</p>
+        <p>By Phase 3, our ambition for Ode's digital platform is: a fully current D365 F&amp;O instance with zero customisation debt; a Fabric lakehouse as the single source of truth; all seven AI agents handling the majority of routine financial decisions autonomously; Power BI dashboards embedded in every operational interface; and an internal team of certified super-users capable of deploying simple improvements without Vivicta's involvement. <strong style="color:var(--va)">This is a to-be vision — a destination we are designing toward together, not a state any organisation has reached today.</strong> We believe Ode has the ambition, the data complexity, and the leadership to get there first in Norwegian aquaculture. Vivicta has the platform knowledge and the AI practice to make the journey credible. Neither of us can do this alone.</p>
       </div>
     </div>
 
