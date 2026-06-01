@@ -128,6 +128,13 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
   .n { font-size: 18px !important; }
 }
 
+
+.doc-tab{padding:10px 16px;font-size:12px;font-weight:500;background:var(--vc);color:var(--vgr);border:none;cursor:pointer;transition:all 0.12s;border-bottom:2px solid transparent;}
+.doc-tab:hover{color:var(--vw);background:var(--vc2);}
+.doc-tab.active{color:var(--vw);border-bottom-color:var(--va);background:var(--vc2);}
+.doc-content{display:none;}
+.doc-content.active{display:block;}
+
 </style>
 </head>
 <body>
@@ -158,6 +165,8 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
     <div class="slbl" style="margin-top:0.25rem;">Navigation</div>
     <div class="ni active" onclick="show('ov',this)">⌂ Overview <span class="ds dd"></span></div>
     <div class="ni" onclick="show('tl',this)">⏱ Timeline <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('ode',this)">🐟 About Ode <span class="ds dd"></span></div>
+    <div class="ni" onclick="show('docs',this)">📄 Documents <span class="ds dd"></span></div>
     <div class="divhr"></div>
     <div class="slbl">Sections</div>
     <div class="ni" onclick="show('sA',this)"><b>A</b> Intent &amp; fit <span class="ds dd"></span></div>
@@ -186,6 +195,8 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
         <div class="stat"><div class="n">25%</div><div class="l">Vested-fit weight</div></div>
       </div>
       <div class="slist">
+        <div class="sr" onclick="show('docs',document.querySelectorAll('.ni')[3])"><div class="sl dr">📄</div><div class="si"><div class="st">Source Documents</div><div class="sd">RFQ · Legal structure · Production order model · App portfolio · NDA</div></div><span class="sp spd">5 docs</span></div>
+        <div class="sr" onclick="show('ode',document.querySelectorAll('.ni')[2])"><div class="sl dr">🐟</div><div class="si"><div class="st">About Ode AS</div><div class="sd">RFQ background · legal structure · application portfolio · production order model</div></div><span class="sp spd">Reference</span></div>
         <div class="sr" onclick="show('tl',document.querySelectorAll('.ni')[1])"><div class="sl dr">⏱</div><div class="si"><div class="st">Process &amp; Timeline</div><div class="sd">7 phases · live countdown · Elise action checklist</div></div><span class="sp spd">Live</span></div>
         <div class="sr" onclick="show('sA',document.querySelectorAll('.ni')[2])"><div class="sl dr">A</div><div class="si"><div class="st">Statement of intent &amp; cultural fit</div><div class="sd">Why Vivicta, WIIFWe culture, named executive sponsor</div></div><span class="sp spd">Draft</span></div>
         <div class="sr" onclick="show('sB',document.querySelectorAll('.ni')[2])"><div class="sl dr">B</div><div class="si"><div class="st">Track record</div><div class="sd">3 references drafted · Elise to verify &amp; add aquaculture reference Monday</div></div><span class="sp spd">Draft</span></div>
@@ -198,6 +209,283 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
         <div class="sr" onclick="show('sI',document.querySelectorAll('.ni')[9])"><div class="sl dr">I</div><div class="si"><div class="st">Risk &amp; assumptions</div><div class="sd">Top 10 risks owned · 6 key assumptions</div></div><span class="sp spd">Draft</span></div>
         <div class="sr" onclick="show('sJ',document.querySelectorAll('.ni')[10])"><div class="sl dr">J</div><div class="si"><div class="st">Commercial terms summary</div><div class="sd">3 scenarios · full 5-year table · Elise to insert figures</div></div><span class="sp spd">Draft</span></div>
       </div>
+    </div>
+
+    <div class="pg" id="page-docs">
+      <div class="ey">Source Documents · ODE-ERP-2026-001</div>
+      <div class="pt">Ode reference documents</div>
+      <div class="ps">Five companion documents issued with the RFQ · May 2026 · Confidential</div>
+
+      <div style="display:flex;gap:1px;background:var(--vb);border-radius:3px;overflow:hidden;margin-bottom:1.5rem;flex-wrap:wrap;">
+        <button class="doc-tab active" onclick="showDoc('rfq',this)">RFQ</button>
+        <button class="doc-tab" onclick="showDoc('legal',this)">Legal structure</button>
+        <button class="doc-tab" onclick="showDoc('prodorder',this)">Production order model</button>
+        <button class="doc-tab" onclick="showDoc('appportfolio',this)">Application portfolio</button>
+        <button class="doc-tab" onclick="showDoc('nda',this)">NDA</button>
+      </div>
+
+      <!-- RFQ -->
+      <div class="doc-content active" id="doc-rfq">
+        <div class="cc"><h3>Document — RFQ ODE-ERP-2026-001 v1.0</h3>
+          <p style="color:var(--vgr);font-size:12px;margin-bottom:1rem">Issuer: Ode AS · Contact: Frode Vatne, CTO — frode.vatne@ode.no · May 2026</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">1. Statement of Intent</h4>
+          <p>Ode AS is issuing this RFQ to identify a single implementation partner to deliver, operate and continuously improve Microsoft Dynamics 365 Finance &amp; Operations as the core enterprise platform for Ode's fully integrated cod value chain. This RFQ is written under the Vested® methodology. Ode is not buying activities, licenses, or man-days — it is buying business outcomes, and intends to share the upside and downside with a partner who shares its ambition.</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">2. About Ode</h4>
+          <p>Ode is the leading Norwegian producer of farmed Atlantic cod (Gadus morhua), founded in 2019. Ode operates a fully integrated value chain: broodstock and genetics → hatchery / fry / juvenile → grow-out at sea (including submerged operations) → fish health, welfare and quality → harvesting and primary processing (Ode Processing, Vartdal) → sales, trading and customer logistics → finance, HR and group functions.</p>
+          <p style="margin-top:0.5rem"><strong style="color:var(--va)">Current application landscape (to be replaced or integrated):</strong> Visma ERP on-premise (end of life, to be replaced), Maritech (to be integrated, replacement to be evaluated), EQS, Visma Dotti/Payroll/Expense, Tidsbanken, Visma Calendar, and operational systems for hatchery, grow-out and processing.</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">3. Purpose</h4>
+          <p>Select one long-term implementation and run partner for D365 F&amp;O. Establish a relational, outcome-based Vested® contract. Modernize Ode's ERP backbone to support growth from current volumes to <strong style="color:var(--va)">110,000 tonnes per year</strong>. Create a sustainable basis for digital innovation including AI/agents, Fabric, and operational analytics across the value chain.</p>
+          <p style="margin-top:0.5rem">This RFQ does NOT request: a fixed-price waterfall quote; daily rates by role grade; or a traditional functional requirements specification.</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">5. Desired Outcomes</h4>
+          <div style="font-size:12px;color:var(--vl);margin-top:0.5rem">
+            <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:4px 12px;line-height:1.8;border-bottom:1px solid var(--vb);padding-bottom:6px;margin-bottom:6px">
+              <span style="color:var(--va);font-weight:500">#</span><span style="color:var(--va);font-weight:500">Desired Outcome</span><span style="color:var(--va);font-weight:500">Measure</span>
+            </div>
+            <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:4px 12px;line-height:1.8">
+              <span style="color:var(--va);font-weight:600">DO1</span><span>One integrated value-chain platform</span><span style="color:var(--vgr)"># legacy systems retired; % transactions in D365</span>
+              <span style="color:var(--va);font-weight:600">DO2</span><span>Reliable, real-time business truth</span><span style="color:var(--vgr)">Days to close month-end; reconciliation defects</span>
+              <span style="color:var(--va);font-weight:600">DO3</span><span>Lower total cost to operate</span><span style="color:var(--vgr)">Total ERP TCO vs. 2026 baseline (NOK/year)</span>
+              <span style="color:var(--va);font-weight:600">DO4</span><span>Faster time-to-value for change</span><span style="color:var(--vgr)">Lead time for new entity/site/product onboarding</span>
+              <span style="color:var(--va);font-weight:600">DO5</span><span>User adoption and capability</span><span style="color:var(--vgr)">Active user %; certified internal super-users</span>
+              <span style="color:var(--va);font-weight:600">DO6</span><span>Audit-ready, compliant, secure</span><span style="color:var(--vgr)">Audit findings; critical security incidents</span>
+              <span style="color:var(--va);font-weight:600">DO7</span><span>Platform for AI and data</span><span style="color:var(--vgr)"># productive AI/data use cases delivered</span>
+            </div>
+          </div>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">7. Pricing model requirements</h4>
+          <p>Required components: <strong style="color:var(--va)">Baseline service fee</strong> (predictable, open-book, fair margin); <strong style="color:var(--va)">Outcome bonus pool</strong> (meaningful share at risk, earned only when DOs achieved); <strong style="color:var(--va)">Joint value share</strong> (pre-agreed formula for value above DOs); <strong style="color:var(--va)">Innovation fund</strong> (ring-fenced, controlled by Joint Governance Board). Constraints: no CR charges within agreed DOs; no volume-based billing; open-book cost base throughout.</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">10. Evaluation criteria</h4>
+          <p>Vested-fit 25% · Desired Outcomes 25% · D365 capability 15% · TCO 15% · Security 10% · Cultural fit 10%. <strong style="color:var(--va)">The lowest price will not win. The best joint outcome will.</strong></p>
+        </div>
+      </div>
+
+      <!-- Legal structure -->
+      <div class="doc-content" id="doc-legal">
+        <div class="cc"><h3>Document — ODE-LEGAL-STRUCTURE-2026 v1.0</h3>
+          <p style="color:var(--vgr);font-size:12px;margin-bottom:1rem">Author: Frode Vatne, CTO · May 2026</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">Why three entities?</h4>
+          <p>The three-entity model reflects three economically and operationally distinct value chain steps. Each has its own asset base, risk profile, regulatory regime and business logic. Separating them as legal entities supports clarity of P&amp;L, transfer pricing, financing, regulatory compliance and partner relationships. Each entity can also be financed, partnered, or restructured independently as the group grows toward 110,000 tonnes.</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">The four entities in D365</h4>
+          <div style="font-size:12px;color:var(--vl);display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:0.5rem">
+            <div style="background:var(--vc2);border-radius:3px;padding:0.75rem"><div style="color:var(--va);font-weight:500;margin-bottom:4px">Ode AS — Parent</div>Group functions: finance, HR, IT, sustainability, legal. Charges subsidiaries via management fee. Cross-entity access for group finance team.</div>
+            <div style="background:var(--vc2);border-radius:3px;padding:0.75rem"><div style="color:var(--va);font-weight:500;margin-bottom:4px">Ode Land AS</div>Broodstock, hatchery, juveniles. Sells juveniles to Ode Hav AS at internal transfer price. KPIs: cost per juvenile, survival rate, biosecurity incidents.</div>
+            <div style="background:var(--vc2);border-radius:3px;padding:0.75rem"><div style="color:var(--va);font-weight:500;margin-bottom:4px">Ode Hav AS</div>Grow-out at sea, fish health, welfare. Sells harvest-ready fish to Ode Processing &amp; Sales AS. KPIs: eFCR, growth, mortality, cost per kg.</div>
+            <div style="background:var(--vc2);border-radius:3px;padding:0.75rem"><div style="color:var(--va);font-weight:500;margin-bottom:4px">Ode Processing &amp; Sales AS</div>Harvesting, processing at Vartdal, sales and logistics. External customers globally. KPIs: yield, price realisation, OTIF, gross margin.</div>
+          </div>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">Intercompany flows</h4>
+          <div style="font-size:12px;color:var(--vl);display:grid;grid-template-columns:60px 1fr 1fr 1fr;gap:4px 12px;line-height:1.8">
+            <span style="color:var(--va);font-weight:500">Flow</span><span style="color:var(--va);font-weight:500">From</span><span style="color:var(--va);font-weight:500">To</span><span style="color:var(--va);font-weight:500">What</span>
+            <span style="color:var(--va)">IC-1</span><span>Ode Land AS</span><span>Ode Hav AS</span><span>Juveniles at internal transfer price</span>
+            <span style="color:var(--va)">IC-2</span><span>Ode Hav AS</span><span>Ode Processing &amp; Sales AS</span><span>Harvest-ready fish per kg live weight</span>
+            <span style="color:var(--va)">IC-3</span><span>Ode AS</span><span>All subsidiaries</span><span>Shared service management fees</span>
+            <span style="color:var(--va)">IC-4</span><span>Various</span><span>Various</span><span>Intercompany loans, cash pooling</span>
+          </div>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">D365 design principles (confirmed)</h4>
+          <p>One shared chart of accounts and fiscal calendar across all four entities. Shared dimensions (cost centre, project, site, species, year-class) defined once. D365 Intercompany Trade between Ode Land → Ode Hav and Ode Hav → Ode Processing. Automated intercompany postings with group consolidation elimination. Item master and lot/batch traceability spanning all three subsidiaries — fully traceable from final SKU back to juvenile batch. Biomass valuation under IAS 41 / NRS 8 to be confirmed during contracting.</p>
+        </div>
+      </div>
+
+      <!-- Production order model -->
+      <div class="doc-content" id="doc-prodorder">
+        <div class="cc"><h3>Document — ODE-PRODORDER-2026 v2.0</h3>
+          <p style="color:var(--vgr);font-size:12px;margin-bottom:1rem">Production Cost Closure for Fish Lots in D365 F&amp;O · A Power App-driven monthly close · Author: Frode Vatne, CTO · May 2026</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">The two problems being solved</h4>
+          <p><strong style="color:var(--va)">Problem 1 — Monthly closure without losing cost or history.</strong> A fish lot lives 18–30 months from sea transfer to harvest. Standard D365 production orders end-report at completion, but a fish lot cannot be end-reported monthly — the fish are still in the pen. The design keeps one rolling Batch Order open per lot from transfer to harvest, while producing a clean monthly cost waterfall (opening WIP, direct cost, indirect cost, by-products, closing WIP) without losing history when the next month is posted.</p>
+          <p style="margin-top:0.5rem"><strong style="color:var(--va)">Problem 2 — Operational review flow: Mercatus → editable journals → posting.</strong> Raw biology data lives in Mercatus Farmer. The gap is the human review step: someone must look at the data, correct anomalies, decide feed batches, and confirm cost overrides. The Power App is that review and approval surface — not a data-entry tool, but a guided journal-cleansing-and-posting workflow.</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">The four design components</h4>
+          <div style="font-size:12px;color:var(--vl);display:grid;grid-template-columns:auto 1fr;gap:8px 16px;line-height:1.8;align-items:start">
+            <span style="color:var(--va);font-weight:700;font-size:15px">1</span><span><strong style="color:var(--vw)">Rolling Batch Order per fish lot.</strong> Stays open from sea transfer to harvest. Cost accumulates as WIP. Never end-reported at month-end. Single production order per lot per year-class.</span>
+            <span style="color:var(--va);font-weight:700;font-size:15px">2</span><span><strong style="color:var(--vw)">Period Cut-off mechanism.</strong> Snapshots each lot's cost and biomass position at the last day of the month into a dedicated sub-ledger table. Monthly P&amp;L per lot is a delta between two snapshots. Month N remains queryable as a sealed period after month N+1 is posted.</span>
+            <span style="color:var(--va);font-weight:700;font-size:15px">3</span><span><strong style="color:var(--vw)">Power App "Period Close" front-end.</strong> Canvas app on Power Platform, Dataverse staging store, Custom Connector to D365 F&amp;O OData. Pulls events from Mercatus Farmer, lets operator edit variable/indirect costs, runs indirect-cost distribution across all open production orders on the site, and posts to D365. Requires Power Automate approval (Finance Controller, per site, per month) before posting.</span>
+            <span style="color:var(--va);font-weight:700;font-size:15px">4</span><span><strong style="color:var(--vw)">By-product handling via standard journals.</strong> Mortality as Scrap journal. Harvest as Report-as-Finished (output to new batch consumed by Innova at Vartdal). Standing-stock movements as inventory adjustments. All tagged with Period Id and Lot Id so the per-period cost waterfall reconciles.</span>
+          </div>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">Architecture stack</h4>
+          <p>Power Apps Canvas app (tablet/desktop optimised) → Dataverse (staging: events, draft cost overrides, indirect-cost pool, distribution rules, snapshot history) → D365 F&amp;O via Custom Connector OData → Microsoft Fabric for analytics. Integration: Mercatus → Dataverse via Azure Logic Apps (scheduled and event-driven). Identity: Microsoft Entra ID throughout.</p>
+        </div>
+      </div>
+
+      <!-- Application portfolio -->
+      <div class="doc-content" id="doc-appportfolio">
+        <div class="cc"><h3>Document — ODE-APP-PORTFOLIO-2026 v1.0</h3>
+          <p style="color:var(--vgr);font-size:12px;margin-bottom:1rem">Current Application Portfolio and Integration Overview · Author: Frode Vatne, CTO · May 2026</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">Current state at a glance</h4>
+          <p>Ode operates a fragmented, predominantly Norwegian-vendor application portfolio that has grown organically. The financial backbone is an on-premise Visma ERP at end-of-life. Commercial and planning processes run in Maritech. HR, payroll, time and expense are spread across multiple Visma products plus Tidsbanken. Quality and process documentation sit in EQS. Operational systems for hatchery, sea grow-out and the processing plant are best-of-breed and largely disconnected from finance. Integrations are predominantly point-to-point, manual or file-based.</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">Full application inventory</h4>
+          <div style="font-size:12px;color:var(--vl);margin-top:0.5rem">
+            <div style="display:grid;grid-template-columns:1.5fr 1fr 2fr 70px;gap:4px 10px;line-height:1.8;border-bottom:1px solid var(--vb);padding-bottom:4px;margin-bottom:4px">
+              <span style="color:var(--va);font-weight:500">Application</span><span style="color:var(--va);font-weight:500">Category</span><span style="color:var(--va);font-weight:500">Purpose</span><span style="color:var(--va);font-weight:500;text-align:center">Status</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1.5fr 1fr 2fr 70px;gap:4px 10px;line-height:1.8">
+              <span><strong style="color:var(--vw)">Visma ERP</strong></span><span style="color:var(--vgr)">Finance</span><span>GL, AP, AR, inventory, fixed assets</span><span style="text-align:center;color:#f87171;font-size:11px;font-weight:500">Replace</span>
+              <span><strong style="color:var(--vw)">Maritech</strong></span><span style="color:var(--vgr)">Commercial</span><span>Planning, trading, purchase &amp; sales — ERP-ANY API</span><span style="text-align:center;color:#fcd34d;font-size:11px;font-weight:500">Review</span>
+              <span><strong style="color:var(--vw)">EQS</strong></span><span style="color:var(--vgr)">Quality</span><span>Quality, process docs, deviations, audits</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Integrate</span>
+              <span><strong style="color:var(--vw)">Visma Dotti</strong></span><span style="color:var(--vgr)">HR</span><span>HR master data, employee lifecycle</span><span style="text-align:center;color:#fcd34d;font-size:11px;font-weight:500">Review</span>
+              <span><strong style="color:var(--vw)">Visma Payroll</strong></span><span style="color:var(--vgr)">HR/Finance</span><span>Payroll calculation and reporting</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Integrate</span>
+              <span><strong style="color:var(--vw)">Visma Expense</strong></span><span style="color:var(--vgr)">HR/Finance</span><span>Expense and travel claims</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Integrate</span>
+              <span><strong style="color:var(--vw)">Tidsbanken</strong></span><span style="color:var(--vgr)">HR/Ops</span><span>Time and attendance, shift planning</span><span style="text-align:center;color:#f87171;font-size:11px;font-weight:500">Replace</span>
+              <span><strong style="color:var(--vw)">Wintid (CGI)</strong></span><span style="color:var(--vgr)">HR/Ops</span><span>Time, attendance and workforce management</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Integrate</span>
+              <span><strong style="color:var(--vw)">Visma Calendar</strong></span><span style="color:var(--vgr)">HR</span><span>Calendar/absence registration</span><span style="text-align:center;color:#fcd34d;font-size:11px;font-weight:500">Review</span>
+              <span><strong style="color:var(--vw)">Microsoft 365</strong></span><span style="color:var(--vgr)">Productivity</span><span>Email, SharePoint, Teams</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Keep</span>
+              <span><strong style="color:var(--vw)">Microsoft Entra ID</strong></span><span style="color:var(--vgr)">Identity</span><span>Identity, SSO, conditional access</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Keep</span>
+              <span><strong style="color:var(--vw)">Power BI / Fabric</strong></span><span style="color:var(--vgr)">Analytics</span><span>Operational and management reporting</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Keep</span>
+              <span><strong style="color:var(--vw)">Mercatus Farmer</strong></span><span style="color:var(--vgr)">Operations</span><span>Biology, feeding, biomass, growth, mortality</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Integrate</span>
+              <span><strong style="color:var(--vw)">Innova (Marel)</strong></span><span style="color:var(--vgr)">Processing</span><span>Slaughter, yield, quality, traceability at Vartdal</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Integrate</span>
+              <span><strong style="color:var(--vw)">Submerged Cameras</strong></span><span style="color:var(--vgr)">IoT</span><span>Underwater camera data (TaskForce 001)</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Keep</span>
+              <span><strong style="color:var(--vw)">Remora</strong></span><span style="color:var(--vgr)">IoT</span><span>Autonomous net cleaning robotics (TaskForce 002)</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Keep</span>
+              <span><strong style="color:var(--vw)">Datafangst Ode</strong></span><span style="color:var(--vgr)">IoT</span><span>Data capture at processing plant (TaskForce 003)</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Keep</span>
+            </div>
+          </div>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">Key pain points in the current landscape</h4>
+          <p><strong style="color:var(--va)">Visma ERP:</strong> On-premise lifecycle risk; limited extensibility; slow close; weak intercompany support for the three-entity structure; limited cost-accounting depth. <strong style="color:var(--va)">Maritech:</strong> Strong commercial tool but limited financial integration; month-end requires manual reconciliation with Visma. <strong style="color:var(--va)">Mercatus Farmer:</strong> Strong biological operations tool but no automated financial posting — costs must be manually keyed into Visma. <strong style="color:var(--va)">Overall:</strong> No single source of truth; traceability across the value chain is effortful; month-end is slow; AI and data use is severely limited by fragmentation.</p>
+        </div>
+      </div>
+
+      <!-- NDA -->
+      <div class="doc-content" id="doc-nda">
+        <div class="cc"><h3>Document — Mutual NDA · RFQ ODE-ERP-2026-001</h3>
+          <p style="color:var(--vgr);font-size:12px;margin-bottom:1rem">Mutual Non-Disclosure Agreement · Governing law: Norwegian law · Venue: Sunnmøre tingrett</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">Parties</h4>
+          <p>(1) Ode AS (org. no. 925 795 488), Ystenesgata 6B, 6002 Ålesund, Norway and (2) [Vendor legal name] — each a "Party", together the "Parties".</p>
+
+          <h4 style="color:var(--vw);font-size:13px;margin:1rem 0 0.5rem">Key terms</h4>
+          <div style="font-size:12px;color:var(--vl);display:grid;grid-template-columns:auto 1fr;gap:8px 16px;line-height:1.8;align-items:start">
+            <span style="color:var(--va);font-weight:600">Purpose</span><span>Exchange of confidential information in connection with the RFQ and any related contracting and mobilisation.</span>
+            <span style="color:var(--va);font-weight:600">Confidential information</span><span>Any non-public information disclosed by either party in any form — including business plans, commercial and pricing data, customer/supplier/operational data, technical materials, the existence and content of the RFQ and any response, and all discussions between the parties.</span>
+            <span style="color:var(--va);font-weight:600">Obligations</span><span>Use confidential information solely for the purpose; protect with at least reasonable care; disclose only to those who need to know and are bound by equivalent confidentiality; do not copy, reverse engineer or create derivatives beyond what is reasonably necessary.</span>
+            <span style="color:var(--va);font-weight:600">Exclusions</span><span>Information lawfully in possession before disclosure; information that becomes public without breach; independently developed information; information rightfully received from a third party without restriction.</span>
+            <span style="color:var(--va);font-weight:600">Term</span><span>3 years from effective date. Confidentiality obligations survive for a further 5 years from the date of relevant disclosure. Trade secrets protected as long as they remain trade secrets.</span>
+            <span style="color:var(--va);font-weight:600">Return</span><span>On request or termination, recipient shall promptly return or destroy confidential information and certify destruction. No licence or other right in any intellectual property is granted.</span>
+            <span style="color:var(--va);font-weight:600">Remedies</span><span>Discloser entitled to seek injunctive or equitable relief in addition to other available remedies. Governing law: Norwegian law. Venue: Sunnmøre tingrett.</span>
+          </div>
+
+          <div style="margin-top:1rem;background:rgba(62,207,142,0.07);border:1px solid rgba(62,207,142,0.2);border-radius:3px;padding:1rem;font-size:12px;color:var(--va)">
+            ⚑ Vivicta should sign and return the NDA to frode.vatne@ode.no before or together with the proposal submission. Signature by electronic means is accepted.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pg" id="page-ode">
+      <div class="ey">Background · ODE-ERP-2026-001</div>
+      <div class="pt">About Ode AS</div>
+      <div class="ps">The Iconic Cod, Raised in the Pristine Waters of Norway · Ålesund, Norway</div>
+
+      <div class="cc">
+        <h3>Who is Ode?</h3>
+        <p>Ode AS is Norway's leading producer of farmed Atlantic cod (Gadus morhua). Founded in 2019 with the ambition to revolutionize the whitefish category, Ode operates a fully integrated value chain from broodstock and hatchery through grow-out, harvesting, processing and sales — all within Norway. The company has ~220 employees today and is growing toward a target of 110,000 tonnes per year. The primary contact for this RFQ is <strong style="color:var(--va)">Frode Vatne, CTO</strong> — frode.vatne@ode.no.</p>
+      </div>
+
+      <div class="cc">
+        <h3>The value chain — seven stages D365 must support</h3>
+        <div style="margin-top:0.5rem;display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--vb);border-radius:3px;overflow:hidden;font-size:11px;text-align:center;">
+          <div style="background:var(--vc);padding:0.75rem 0.4rem;"><div style="font-size:16px;margin-bottom:4px">🧬</div><div style="color:var(--va);font-weight:500">Broodstock</div><div style="color:var(--vgr);margin-top:3px">Genetics</div></div>
+          <div style="background:var(--vc2);padding:0.75rem 0.4rem;"><div style="font-size:16px;margin-bottom:4px">🥚</div><div style="color:var(--va);font-weight:500">Hatchery</div><div style="color:var(--vgr);margin-top:3px">Larvae · Juveniles</div></div>
+          <div style="background:var(--vc);padding:0.75rem 0.4rem;"><div style="font-size:16px;margin-bottom:4px">🌊</div><div style="color:var(--va);font-weight:500">Grow-out</div><div style="color:var(--vgr);margin-top:3px">Sea pens · Submerged</div></div>
+          <div style="background:var(--vc2);padding:0.75rem 0.4rem;"><div style="font-size:16px;margin-bottom:4px">🩺</div><div style="color:var(--va);font-weight:500">Fish health</div><div style="color:var(--vgr);margin-top:3px">Welfare · Quality</div></div>
+          <div style="background:var(--vc);padding:0.75rem 0.4rem;"><div style="font-size:16px;margin-bottom:4px">🔪</div><div style="color:var(--va);font-weight:500">Harvesting</div><div style="color:var(--vgr);margin-top:3px">Vartdal processing</div></div>
+          <div style="background:var(--vc2);padding:0.75rem 0.4rem;"><div style="font-size:16px;margin-bottom:4px">📦</div><div style="color:var(--va);font-weight:500">Processing</div><div style="color:var(--vgr);margin-top:3px">Yield · Traceability</div></div>
+          <div style="background:var(--vc);padding:0.75rem 0.4rem;"><div style="font-size:16px;margin-bottom:4px">🚢</div><div style="color:var(--va);font-weight:500">Sales</div><div style="color:var(--vgr);margin-top:3px">Trading · Logistics</div></div>
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>Legal structure — three operating entities</h3>
+        <div style="margin-top:0.5rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--vb);border-radius:3px;overflow:hidden;font-size:13px;">
+          <div style="background:var(--vc);padding:1rem;">
+            <div style="color:var(--va);font-weight:600;margin-bottom:6px">Ode Land AS</div>
+            <div style="color:var(--vgr);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Land-based production</div>
+            <div style="color:var(--vl);line-height:1.7">Broodstock, hatchery, juveniles. RAS/flow-through systems. Sells juveniles to Ode Hav AS at internal transfer price. KPIs: cost per juvenile, survival rate, biosecurity incidents.</div>
+          </div>
+          <div style="background:var(--vc2);padding:1rem;">
+            <div style="color:var(--va);font-weight:600;margin-bottom:6px">Ode Hav AS</div>
+            <div style="color:var(--vgr);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Sea-based production</div>
+            <div style="color:var(--vl);line-height:1.7">Grow-out at sea including submerged operations. Feed barges, vessels, sea licences (concessions). Sells harvest-ready fish to Ode Processing &amp; Sales AS. KPIs: eFCR, growth, mortality, welfare.</div>
+          </div>
+          <div style="background:var(--vc);padding:1rem;">
+            <div style="color:var(--va);font-weight:600;margin-bottom:6px">Ode Processing &amp; Sales AS</div>
+            <div style="color:var(--vgr);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Processing &amp; sales</div>
+            <div style="color:var(--vl);line-height:1.7">Harvesting and primary processing at Vartdal. Sales, trading, customer logistics. Sells to retail, food service and export customers. KPIs: yield, product quality, customer service.</div>
+          </div>
+        </div>
+        <p style="margin-top:0.75rem;font-size:12px;color:var(--vgr)">Parent: Ode AS (org. no. 925 795 488), Ystenesgata 6B, 6002 Ålesund. Group functions (finance, HR, IT, sustainability) sit in Ode AS and are charged to subsidiaries via management fee.</p>
+      </div>
+
+      <div class="cc">
+        <h3>Current application portfolio — what D365 replaces or integrates</h3>
+        <div style="margin-top:0.5rem;font-size:13px;color:var(--vl)">
+          <div style="display:grid;grid-template-columns:1.5fr 1fr 2fr 80px;gap:4px 12px;line-height:2;border-bottom:1px solid var(--vb);padding-bottom:6px;margin-bottom:6px;">
+            <span style="color:var(--va);font-weight:500">Application</span>
+            <span style="color:var(--va);font-weight:500">Category</span>
+            <span style="color:var(--va);font-weight:500">Purpose</span>
+            <span style="color:var(--va);font-weight:500;text-align:center">Status</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1.5fr 1fr 2fr 80px;gap:4px 12px;line-height:2;">
+            <span><strong style="color:var(--vw)">Visma ERP</strong> (on-prem)</span><span style="color:var(--vgr)">Finance</span><span>GL, AP, AR, inventory, fixed assets — group backbone</span><span style="text-align:center;color:#f87171;font-size:11px;font-weight:500">Replace</span>
+            <span><strong style="color:var(--vw)">Maritech</strong></span><span style="color:var(--vgr)">Commercial</span><span>Planning, trading, purchase &amp; sales — ERP-ANY API</span><span style="text-align:center;color:#fcd34d;font-size:11px;font-weight:500">Review</span>
+            <span><strong style="color:var(--vw)">Mercatus Farmer</strong></span><span style="color:var(--vgr)">Operations</span><span>Biology, feeding, biomass, growth, mortality across hatchery and sea</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Integrate</span>
+            <span><strong style="color:var(--vw)">Innova</strong> (Marel)</span><span style="color:var(--vgr)">Processing</span><span>Slaughter, yield, quality and traceability at Vartdal</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Integrate</span>
+            <span><strong style="color:var(--vw)">EQS</strong></span><span style="color:var(--vgr)">Quality</span><span>Quality, process documentation, deviations, audits</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Integrate</span>
+            <span><strong style="color:var(--vw)">Visma Dotti</strong></span><span style="color:var(--vgr)">HR</span><span>HR master data, employee lifecycle</span><span style="text-align:center;color:#fcd34d;font-size:11px;font-weight:500">Review</span>
+            <span><strong style="color:var(--vw)">Visma Payroll</strong></span><span style="color:var(--vgr)">HR/Finance</span><span>Payroll calculation and reporting</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Integrate</span>
+            <span><strong style="color:var(--vw)">Tidsbanken</strong></span><span style="color:var(--vgr)">HR/Operations</span><span>Time and attendance registration, shift planning</span><span style="text-align:center;color:#f87171;font-size:11px;font-weight:500">Replace</span>
+            <span><strong style="color:var(--vw)">Microsoft 365</strong></span><span style="color:var(--vgr)">Productivity</span><span>Email, SharePoint, Teams — document of record</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Keep</span>
+            <span><strong style="color:var(--vw)">Power BI / Fabric</strong></span><span style="color:var(--vgr)">Analytics</span><span>Operational and management reporting — target analytics platform</span><span style="text-align:center;color:var(--va);font-size:11px;font-weight:500">Keep</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>Production order model (ODE-PRODORDER-2026)</h3>
+        <p>Ode has designed a specific model for monthly cost closure on biological fish lots in D365 F&amp;O, with a Power App as the operator-facing front-end. This is one of the most technically complex requirements in the RFQ and a key differentiator in how Vivicta responds to DO2.</p>
+        <p style="margin-top:0.75rem">The design has four components: a <strong style="color:var(--va)">rolling Batch Order per fish lot</strong> that stays open from sea transfer to harvest (cost accumulates as WIP, never end-reported at month-end); a <strong style="color:var(--va)">Period Cut-off mechanism</strong> that snapshots each lot's cost and biomass at month-end into a dedicated sub-ledger table; a <strong style="color:var(--va)">Power App "Period Close" front-end</strong> (Canvas app on Dataverse) that pulls events from Mercatus Farmer, lets the operator edit and approve variable/indirect costs, and posts to D365 F&amp;O via OData; and <strong style="color:var(--va)">by-product handling</strong> via standard D365 journals (mortality as Scrap, harvest as Report-as-Finished, standing-stock as inventory adjustments) all tagged with Period Id and Lot Id.</p>
+        <p style="margin-top:0.75rem">This model is supported natively by Vivicta's process manufacturing practice and our Finance Controller Close Assistant (Agent 1) is designed specifically to orchestrate and automate the review cycle on top of this architecture.</p>
+      </div>
+
+      <div class="cc">
+        <h3>The five Vested® rules governing this RFQ</h3>
+        <div style="margin-top:0.5rem;font-size:13px;color:var(--vl)">
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:8px 16px;line-height:1.8;align-items:start">
+            <span style="color:var(--va);font-weight:700;font-size:15px;">1</span><span><strong style="color:var(--vw)">Outcome-based, not transaction-based.</strong> Ode pays for measurable business outcomes — not for hours or deliverables.</span>
+            <span style="color:var(--va);font-weight:700;font-size:15px;">2</span><span><strong style="color:var(--vw)">Focus on the WHAT, not the HOW.</strong> Ode defines the business outcomes; the partner has freedom and accountability to deliver them.</span>
+            <span style="color:var(--va);font-weight:700;font-size:15px;">3</span><span><strong style="color:var(--vw)">Clearly defined and measurable Desired Outcomes.</strong> Seven jointly owned KPIs are the single source of truth for success.</span>
+            <span style="color:var(--va);font-weight:700;font-size:15px;">4</span><span><strong style="color:var(--vw)">Pricing model that optimises the business.</strong> Shared risk and shared reward — the partner's margin is directly tied to outcomes.</span>
+            <span style="color:var(--va);font-weight:700;font-size:15px;">5</span><span><strong style="color:var(--vw)">Governance that provides insight, not oversight.</strong> Joint governance, transparent data, continuous improvement.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc">
+        <h3>Evaluation criteria — how Ode will score responses</h3>
+        <div style="margin-top:0.5rem;font-size:13px;color:var(--vl)">
+          <div style="display:grid;grid-template-columns:3fr 1fr 2fr;gap:4px 16px;line-height:2;">
+            <span style="color:var(--va);font-weight:500">Criterion</span><span style="color:var(--va);font-weight:500;text-align:right">Weight</span><span style="color:var(--va);font-weight:500">Key sections</span>
+            <span>Fit with the Vested operating model</span><span style="text-align:right;color:var(--vw);font-weight:600">25%</span><span style="color:var(--vgr)">A, F, E (credibility of pricing)</span>
+            <span>Credible path to the Desired Outcomes</span><span style="text-align:right;color:var(--vw);font-weight:600">25%</span><span style="color:var(--vgr)">C, supported by D and H</span>
+            <span>D365 F&amp;O capability and track record</span><span style="text-align:right;color:var(--vw);font-weight:600">15%</span><span style="color:var(--vgr)">B, D, references</span>
+            <span>Total cost of ownership over 5 years</span><span style="text-align:right;color:var(--vw);font-weight:600">15%</span><span style="color:var(--vgr)">E, J (open-book validated)</span>
+            <span>Security, compliance and architecture</span><span style="text-align:right;color:var(--vw);font-weight:600">10%</span><span style="color:var(--vgr)">G</span>
+            <span>Cultural fit and people quality</span><span style="text-align:right;color:var(--vw);font-weight:600">10%</span><span style="color:var(--vgr)">A, F, on-site workshop</span>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="pg" id="page-tl">
@@ -1206,6 +1494,12 @@ body{background:var(--vg);color:var(--vw);display:flex;flex-direction:column;min
 function toggleSidebar(el) {
   el.classList.toggle('open');
   document.getElementById('sidebarNav').classList.toggle('open');
+}
+function showDoc(id, btn) {
+  document.querySelectorAll('.doc-content').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.doc-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('doc-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
 }
 function updateCountdown() {
   var deadline = new Date('2026-06-19T23:59:00+02:00');
