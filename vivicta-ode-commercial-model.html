@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commercial Model · Vivicta × Ode AS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #0D3B2E;
+    --forest-2: #1A5C44;
+    --mint: #00C27A;
+    --mint-light: #E0F7EE;
+    --cream: #F8F6F1;
+    --white: #FFFFFF;
+    --ink: #1A1A1A;
+    --muted: #6B6B6B;
+    --line: #E2E2DC;
+    --amber: #F59E0B;
+    --amber-light: #FEF3C7;
+    --coral: #E85D3C;
+    --coral-light: #FEE9E4;
+    --purple: #6B48C8;
+    --purple-light: #EDE9FF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,59,46,0.96);
+    backdrop-filter: blur(8px);
+    padding: 0 40px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-brand {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.3px;
+  }
+  .nav-brand span { color: var(--mint); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--mint); }
+
+  /* HERO */
+  .hero {
+    background: var(--forest);
+    color: var(--white);
+    padding: 80px 40px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 480px; height: 480px;
+    border-radius: 50%;
+    background: var(--mint);
+    opacity: 0.07;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 800;
+    line-height: 1.15;
+    max-width: 720px;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--mint);
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.65);
+    max-width: 560px;
+    line-height: 1.65;
+    margin-bottom: 40px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .hero-stat b {
+    display: block;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--mint);
+    letter-spacing: -0.5px;
+  }
+  .hero-stat span {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  /* WRAP */
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 40px; }
+
+  /* SECTION */
+  section { padding: 72px 0; }
+  section + section { border-top: 1px solid var(--line); }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--forest);
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+  .section-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 620px;
+    line-height: 1.65;
+    margin-bottom: 40px;
+  }
+
+  /* TRACKS */
+  .tracks { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  .track-card {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .track-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .track-card.t1::before { background: var(--mint); }
+  .track-card.t2::before { background: var(--amber); }
+
+  .track-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .t1 .track-label { color: var(--mint); }
+  .t2 .track-label { color: var(--amber); }
+
+  .track-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 14px;
+  }
+  .track-card p {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .track-pill-list { display: flex; flex-direction: column; gap: 8px; }
+  .track-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+  .track-pill::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .t1 .track-pill::before { background: var(--mint); }
+  .t2 .track-pill::before { background: var(--amber); }
+
+  .track-note {
+    margin-top: 20px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.55;
+    font-weight: 500;
+  }
+  .t1 .track-note { background: var(--mint-light); color: #0A5C3A; }
+  .t2 .track-note { background: var(--amber-light); color: #7C4A00; }
+
+  /* TRANCHES */
+  .tranche-flow {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr 40px 1fr;
+    align-items: start;
+    gap: 0;
+    margin-bottom: 40px;
+  }
+  .tranche-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 36px;
+    color: var(--muted);
+    font-size: 18px;
+  }
+  .tranche-card {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    padding: 28px 24px;
+    position: relative;
+  }
+  .tranche-pct {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .tranche-card:nth-child(1) .tranche-pct { color: var(--muted); }
+  .tranche-card:nth-child(3) .tranche-pct { color: var(--forest-2); }
+  .tranche-card:nth-child(5) .tranche-pct { color: var(--mint); }
+
+  .tranche-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 6px;
+  }
+  .tranche-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .tranche-when {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .tranche-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-top: 10px;
+  }
+  .tranche-card:nth-child(1) .tranche-tag { background: #F0EEE8; color: var(--muted); }
+  .tranche-card:nth-child(3) .tranche-tag { background: #E0F0E8; color: var(--forest-2); }
+  .tranche-card:nth-child(5) .tranche-tag { background: var(--mint-light); color: #0A5C3A; }
+
+  .tranche-principle {
+    background: var(--forest);
+    color: var(--white);
+    border-radius: 12px;
+    padding: 24px 28px;
+    font-size: 15px;
+    line-height: 1.65;
+    margin-top: 8px;
+  }
+  .tranche-principle strong { color: var(--mint); }
+
+  /* ATTRIBUTION */
+  .attribution-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+  .attr-card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    padding: 24px;
+  }
+  .attr-card h4 { font-size: 14px; font-weight: 600; color: var(--forest); margin-bottom: 8px; }
+  .attr-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .attr-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .attr-card:nth-child(1) .attr-icon { background: var(--mint-light); }
+  .attr-card:nth-child(2) .attr-icon { background: var(--amber-light); }
+  .attr-card:nth-child(3) .attr-icon { background: var(--purple-light); }
+
+  .attr-note {
+    background: var(--coral-light);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 13.5px;
+    color: #7A2E1A;
+    line-height: 1.6;
+  }
+  .attr-note strong { color: var(--coral); }
+
+  /* RESEARCH */
+  .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .research-card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    padding: 24px;
+  }
+  .research-card .stat {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--forest);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .research-card h4 { font-size: 14px; font-weight: 600; color: var(--forest); margin-bottom: 6px; }
+  .research-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .research-source {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+    font-weight: 500;
+  }
+
+  /* PRINCIPLES */
+  .principles-list { display: flex; flex-direction: column; gap: 1px; }
+  .principle-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .principle-row:last-child { border-bottom: none; }
+  .principle-num {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--mint);
+    min-width: 28px;
+    padding-top: 2px;
+  }
+  .principle-content h4 { font-size: 15px; font-weight: 600; color: var(--forest); margin-bottom: 4px; }
+  .principle-content p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    background: var(--forest);
+    color: rgba(255,255,255,0.5);
+    padding: 32px 40px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer span { color: var(--mint); font-weight: 500; }
+
+  @media (max-width: 720px) {
+    .tracks, .tranche-flow, .attribution-grid, .research-grid {
+      grid-template-columns: 1fr;
+    }
+    .tranche-arrow { display: none; }
+    .wrap { padding: 0 20px; }
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 48px 20px 48px; }
+    footer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Vivicta <span>×</span> Ode AS</div>
+  <div class="nav-links">
+    <a href="#tracks">Two tracks</a>
+    <a href="#tranches">20 – 40 – 40</a>
+    <a href="#attribution">Attribution</a>
+    <a href="#research">Research</a>
+    <a href="#principles">Principles</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-eyebrow">Section E · Pricing model — ODE-ERP-2026-001</div>
+    <h1>Vivicta's earnings are tied to<br><em>Ode's outcomes.</em><br>Not to hours billed.</h1>
+    <p class="hero-sub">A hybrid commercial model that aligns both parties around the same goal: measurable business value. Go-live is not the finish line. The value is.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><b>2</b><span>commercial tracks</span></div>
+      <div class="hero-stat"><b>20–40–40</b><span>payment tranches</span></div>
+      <div class="hero-stat"><b>7</b><span>desired outcomes</span></div>
+      <div class="hero-stat"><b>Open book</b><span>cost base</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- TRACKS -->
+  <section id="tracks">
+    <div class="section-eyebrow">Commercial structure</div>
+    <h2 class="section-title">Two tracks. One aligned interest.</h2>
+    <p class="section-sub">The model is hybrid by design — not to hedge, but because the evidence consistently shows hybrid structures outperform pure gain-share in complex transformation engagements.</p>
+
+    <div class="tracks">
+      <div class="track-card t1">
+        <div class="track-label">Track 1</div>
+        <h3>Cost recovery</h3>
+        <p>Vivicta's cost to serve: team, tools, time, and a transparent fixed margin. Open book — Ode sees exactly what Vivicta costs to run the engagement.</p>
+        <div class="track-pill-list">
+          <div class="track-pill">Fixed, agreed margin — not hidden in day rates</div>
+          <div class="track-pill">No incentive to over-staff or extend timelines</div>
+          <div class="track-pill">No incentive to generate change requests</div>
+          <div class="track-pill">Full cost base transparency throughout</div>
+        </div>
+        <div class="track-note">Track 1 is not where Vivicta makes money. It is where Vivicta does not lose money.</div>
+      </div>
+
+      <div class="track-card t2">
+        <div class="track-label">Track 2</div>
+        <h3>Gain share</h3>
+        <p>Vivicta's upside. A meaningful share of earnings tied exclusively to confirmed Desired Outcome realisation — not go-live, not project closure.</p>
+        <div class="track-pill-list">
+          <div class="track-pill">Earned only when DO metrics are confirmed</div>
+          <div class="track-pill">Weighted across 7 Desired Outcomes</div>
+          <div class="track-pill">Structured across three payment tranches</div>
+          <div class="track-pill">Keeps Vivicta engaged beyond go-live</div>
+        </div>
+        <div class="track-note">Track 2 keeps Vivicta present until the value is real. We cannot extract our earnings and leave.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANCHES -->
+  <section id="tranches">
+    <div class="section-eyebrow">Payment structure</div>
+    <h2 class="section-title">20 – 40 – 40</h2>
+    <p class="section-sub">Track 2 payments are tied to value realisation milestones, not project milestones. The split is deliberately weighted toward the back — because go-live is not success.</p>
+
+    <div class="tranche-flow">
+      <div class="tranche-card">
+        <div class="tranche-pct">20%</div>
+        <div class="tranche-title">Baseline confirmed</div>
+        <div class="tranche-desc">Desired Outcome baselines are jointly agreed, validated, and signed off by both parties. The measurement foundation is in place.</div>
+        <div class="tranche-when">Weeks 1–4</div>
+        <div class="tranche-tag">Mobilisation</div>
+      </div>
+      <div class="tranche-arrow">→</div>
+      <div class="tranche-card">
+        <div class="tranche-pct">40%</div>
+        <div class="tranche-title">Platform live</div>
+        <div class="tranche-desc">D365 F&O is live, core integrations are operational, and the platform is demonstrably capable of supporting the Desired Outcomes.</div>
+        <div class="tranche-when">~Week 16</div>
+        <div class="tranche-tag">Go-live</div>
+      </div>
+      <div class="tranche-arrow">→</div>
+      <div class="tranche-card">
+        <div class="tranche-pct">40%</div>
+        <div class="tranche-title">Value realised</div>
+        <div class="tranche-desc">DO metrics are measured against baseline and outcomes are confirmed as achieved in operation. This is the definition of done.</div>
+        <div class="tranche-when">Year 1–2</div>
+        <div class="tranche-tag">Definition of done</div>
+      </div>
+    </div>
+
+    <div class="tranche-principle">
+      The 20-40-40 split reflects a deliberate commitment: <strong>Vivicta's largest payment is the one that cannot be claimed until the value is real.</strong> No project can be closed, no engagement can end, and no final invoice can be issued until the outcomes are confirmed. That is not a clause in a contract — it is the logic of the model itself.
+    </div>
+  </section>
+
+  <!-- ATTRIBUTION -->
+  <section id="attribution">
+    <div class="section-eyebrow">Risk framework</div>
+    <h2 class="section-title">When outcomes are not achieved — who is accountable?</h2>
+    <p class="section-sub">This is the most important commercial conversation in any outcome-based model. Research shows it is consistently the primary source of conflict. We raise it here because it is better addressed in the commercial design than in a dispute resolution process.</p>
+
+    <div class="attribution-grid">
+      <div class="attr-card">
+        <div class="attr-icon">🟢</div>
+        <h4>Platform failure</h4>
+        <p>The configured solution does not support the process. An integration is unreliable. The architecture is incorrect. This is Vivicta's accountability.</p>
+      </div>
+      <div class="attr-card">
+        <div class="attr-icon">🟡</div>
+        <h4>Organisational failure</h4>
+        <p>The platform is correct but the organisation does not use it. Processes are bypassed. Data is not captured at source. Adoption is low. This is Ode's accountability.</p>
+      </div>
+      <div class="attr-card">
+        <div class="attr-icon">🟣</div>
+        <h4>External factor</h4>
+        <p>Market conditions, regulatory changes, or events outside both parties' control affect the outcome. Neither party bears the consequence alone.</p>
+      </div>
+    </div>
+
+    <div class="attr-note">
+      <strong>The attribution framework</strong> — agreed at contracting — defines, for each Desired Outcome: who provides the measurement data, what constitutes force majeure, and how disputes are resolved. This is not about blame. It is about protecting the shared target picture both parties are committed to.
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="section-eyebrow">Academic foundation</div>
+    <h2 class="section-title">What the evidence says</h2>
+    <p class="section-sub">The Vested model has over 20 years of academic research behind it. The evidence supports the hybrid structure — and is honest about the risks.</p>
+
+    <div class="research-grid">
+      <div class="research-card">
+        <div class="stat">20+</div>
+        <h4>Years of University of Tennessee research</h4>
+        <p>The Vested methodology is built on two decades of research into the world's most successful outsourcing relationships — including P&G, Microsoft, and McDonald's. The win-win approach is documented to deliver lower cost and better service when both parties are genuinely invested in outcomes.</p>
+        <div class="research-source">University of Tennessee · Kate Vitasek</div>
+      </div>
+      <div class="research-card">
+        <div class="stat">70%</div>
+        <h4>Of companies measure outcomes incorrectly</h4>
+        <p>McKinsey research shows that the majority of organisations in outcome-based contracts fail to establish accurate baselines. This is why the first 20% tranche specifically funds the baseline confirmation work — and why both parties must own that process together.</p>
+        <div class="research-source">McKinsey & Company</div>
+      </div>
+      <div class="research-card">
+        <div class="stat">45%</div>
+        <h4>Experience initial margin pressure</h4>
+        <p>Deloitte research shows that nearly half of organisations adopting outcome-based pricing experience early margin pressure. Track 1 cost recovery is the structural answer to this — it protects Vivicta's economics while we wait for value to materialise in Track 2.</p>
+        <div class="research-source">Deloitte</div>
+      </div>
+      <div class="research-card">
+        <div class="stat">150+</div>
+        <h4>Organisations have used the Vested model</h4>
+        <p>Since the model was first introduced in 2010, it has been used across industries and geographies. Outcome-based contracting in Nordic ERP implementation is still rare — but the direction is clear, and Vivicta is committed to it. This engagement is part of that movement.</p>
+        <div class="research-source">University of Tennessee · Vested Way</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section id="principles">
+    <div class="section-eyebrow">What we commit to</div>
+    <h2 class="section-title">The non-negotiables</h2>
+    <p class="section-sub">The exact parameters — gain-share percentage, DO weightings, tranche triggers, and attribution rules — are for the contracting phase. These principles are not.</p>
+
+    <div class="principles-list">
+      <div class="principle-row">
+        <div class="principle-num">01</div>
+        <div class="principle-content">
+          <h4>No charges for in-scope change requests</h4>
+          <p>Changes that fall within the agreed Desired Outcomes scope do not generate a change request. Scope creep inside the DO boundary is not a revenue opportunity for Vivicta.</p>
+        </div>
+      </div>
+      <div class="principle-row">
+        <div class="principle-num">02</div>
+        <div class="principle-content">
+          <h4>Open book on cost base throughout</h4>
+          <p>Ode sees Vivicta's cost structure, resource mix, and margin for the duration of the engagement. No hidden margin on third-party licenses or sub-contractors.</p>
+        </div>
+      </div>
+      <div class="principle-row">
+        <div class="principle-num">03</div>
+        <div class="principle-content">
+          <h4>No volume-based billing beyond Microsoft's license model</h4>
+          <p>No charges for additional users, transactions, integrations, or data volumes outside Microsoft's standard license structure. The commercial model does not scale with usage.</p>
+        </div>
+      </div>
+      <div class="principle-row">
+        <div class="principle-num">04</div>
+        <div class="principle-content">
+          <h4>Go-live is not the finish line</h4>
+          <p>Vivicta remains accountable and engaged until Track 2 is confirmed. The final 40% cannot be claimed until value is measured and verified against the agreed baseline.</p>
+        </div>
+      </div>
+      <div class="principle-row">
+        <div class="principle-num">05</div>
+        <div class="principle-content">
+          <h4>An innovation fund under joint control</h4>
+          <p>A small ring-fenced budget, controlled by the Joint Governance Board, enables both parties to act on ideas that emerge during delivery — without navigating a change request process.</p>
+        </div>
+      </div>
+      <div class="principle-row">
+        <div class="principle-num">06</div>
+        <div class="principle-content">
+          <h4>Vivicta's earnings depend on Ode's outcomes</h4>
+          <p>This is the principle the entire model is built on. It is not negotiable. The mechanics — percentages, weightings, triggers — are. The principle is not.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div>Vivicta AS · Commercial model proposal · ODE-ERP-2026-001 · Confidential</div>
+  <div>Contact: <span>Jørgen Nordahl</span> · Engagement Lead</div>
+</footer>
+
+</body>
+</html>
